@@ -1,0 +1,27 @@
+
+@font-face {
+    font-family: "Helvetica";
+    src: url('../fonts/Helvetica.ttf') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/Helvetica.ttf') format('woff'), /* Modern Browsers */
+    url('../fonts/Helvetica.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../fonts/Helvetica.ttf#svgFontName') format('svg');
+    /* Legacy iOS */
+}
+
+@font-face {
+    font-family: "NimbusSanL-Reg";
+    src: url('../fonts/NimbusSanL-Reg.otf') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/NimbusSanL-Reg.otf') format('woff'), /* Modern Browsers */
+    url('../fonts/NimbusSanL-Reg.otf') format('truetype'), /* Safari, Android, iOS */
+    url('../fonts/NimbusSanL-Reg.otf#svgFontName') format('svg');
+    /* Legacy iOS */
+}
+
+@font-face {
+    font-family: 'Monserrat';
+    src: url('../fonts/Montserrat-Regular.ttf?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/Montserrat-Regular.ttf') format('woff'), /* Modern Browsers */
+    url('../fonts/Montserrat-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../fonts/Montserrat-Regular.ttf#svgFontName') format('svg');
+    /* Legacy iOS */
+}
