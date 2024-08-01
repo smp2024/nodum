@@ -97,7 +97,7 @@
                                             {{ Form::label('description','Descripcion:') }}
                                             <div class="input-group-prepend">
                                                 @foreach ($descriptions as $description)
-                                                    @if ($description->section == $i-1)
+                                                    @if ($description->section == $i)
                                                         {!! Form::textarea('description[]', $description->content, ['class' => 'form-control ', 'id' => 'editor_'.$i]) !!}
                                                     @endif
                                                 @endforeach
@@ -114,7 +114,7 @@
                                             {{ Form::label('video','Video:') }}
                                             <div class="input-group-prepend">
                                                 @foreach ($videos as $video)
-                                                    @if ($video->section == $i-1)
+                                                    @if ($video->section == $i)
                                                         {!! Form::textarea('video[]', $video->content, ['class' => 'form-control ', 'id' => 'video_'.$i]) !!}
                                                     @endif
                                                 @endforeach

@@ -114,20 +114,14 @@
                                     <i class="fal fa-pencil-paintbrush"></i>
                                     Técnicas
                                 </h2>
-                                </div>
+                             </div>
 
-                                <div class="col-md-5">
-                                    {!! Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Ingrese su busqueda', 'required', 'id' => 'buscador_technics']) !!}
-                                </div>
                         </div>
 
                     </div>
-                    <div class="inside" style="max-height: 400px; overflow: auto;">
-                        <div id="preview_technics" class="row d-none" style="padding: 16px;">
+                    <div class="inside"  style="overflow: auto;">
 
-                        </div>
-                        <div id="table_technics" class="row" style="padding: 16px;">
-                            <table class="table">
+                            <table class="table" id="table_technics" >
                                 <thead>
                                     <tr>
 
@@ -170,7 +164,6 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -185,6 +178,8 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
+        $('#table_technics').DataTable();
+
         $('#icon').on('input', function() {
             // Obtener el valor del input
             var iconHtml = $(this).val();
@@ -198,48 +193,7 @@
             // Agregar el nuevo icono al span
             $('#preview_icon').append(iconElement);
         });
-    });
 
-    window.addEventListener('load',function(){
-        document.getElementById("buscador_technics").addEventListener("keyup", () => {
-            if((document.getElementById("buscador_technics").value.length)>1)
-                fetch(`/technics/search?texto=${document.getElementById("buscador_technics").value}`,{ method:'get' })
-                .then(response  =>  response.text() )
-                .then(html      =>  {   document.getElementById("preview_technics").innerHTML = html  })
-            else
-                document.getElementById("preview_technics").innerHTML = ""
-        })
-    });
-    $(document).ready(function() {
-      $('#buscador_technics').on('input', function() {
-        // Obtener el valor del input
-        var inputValor = document.getElementById('buscador_technics').value;
-
-        // Contar el número de caracteres
-        var numeroCaracteres = inputValor.length;
-
-
-        // Convertir el valor a un número
-        // var searchNumber = parseFloat(searchValue);
-        console.log(numeroCaracteres);
-        // Verificar si el valor es igual o mayor a 0
-        if (numeroCaracteres <= 0) {
-          // Si es igual o mayor a 0, remover la clase d-none del div con id 'tabla'
-          $('#table_technics').removeClass('d-none');
-          // Agregar la clase d-none al div con id 'preview'
-          $('#preview_technics').addClass('d-none');
-        } else {
-          // Si es menor a 0, remover la clase d-none del div con id 'preview'
-          $('#preview_technics').removeClass('d-none');
-          // Agregar la clase d-none al div con id 'tabla'
-          $('#table_technics').addClass('d-none');
-        }
-      });
-    });
-
-    //Funcion Change Status
-    $(document).ready(function() {
-        // Manejar el clic en el icono de status
         $('.status-icon').on('click', function() {
             // Obtener el ID del elemento
             var id = $(this).data('id');
@@ -264,6 +218,5 @@
         });
     });
 
-//
     </script>
 @endsection

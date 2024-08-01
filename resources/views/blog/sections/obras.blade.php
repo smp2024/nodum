@@ -1,5 +1,4 @@
 @extends('master')
-{{-- seccion de artista perfil y obras --}}
 @section('title', $section)
 @section('css')
 <style>
@@ -9,17 +8,21 @@
     .image-container {
         height: 60%;
         overflow: hidden;
+        min-width: 100%;
+        text-align: center;
+    }
+    .image-container img{
+        height: 100%;
     }
 
-    /* .zoom  {
-        transition: all .5s ease-in-out;
+    .image-container  {
+        transition: all .05s ease-in-out;
         transform-origin: center center;
-    } */
+    }
 
     .image-container:hover {
-        /* transform: scale(1.5); (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-
-        border-radius: 1px solid #000;
+        padding: 1px;
+        border: 1px solid #000 !important;
     }
     .medidas {
         display: none;
@@ -37,6 +40,122 @@
         overflow: auto;
     }
 
+    input[type='range'] {
+    display: block;
+    width: 100%;
+    }
+
+    input[type='range']:focus {
+    outline: none;
+    }
+
+    input[type='range'],
+    input[type='range']::-webkit-slider-runnable-track,
+    input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+    background-color: #000;
+    width: 21px;
+    height: 21px;
+    border: 3px solid #ddd;
+    border-radius: 50%;
+    margin-top: -9px;
+    }
+
+    input[type=range]::-moz-range-thumb {
+    background-color: #000;
+    width: 16px;
+    height: 16px;
+    border: 3px solid #ddd;
+    border-radius: 50%;
+    }
+
+    input[type=range]::-ms-thumb {
+    background-color: #000;
+    width: 21px;
+    height: 21px;
+    border: 3px solid #ddd;
+    border-radius: 50%;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+    background-color: #333;
+    height: 5px;
+    -webkit-appearance: none;
+    background-image:linear-gradient(to right, #000 calc(var(--value)*1%), black 0);
+    }
+
+    input[type=range]:focus::-webkit-slider-runnable-track {
+    outline: none;
+    }
+
+    input[type=range]::-moz-range-track {
+    -webkit-appearance: none;
+    background-image:linear-gradient(to right, #000 calc(var(--value)*1%), black 0);
+    height: 5px;
+    }
+
+    input[type=range]::-ms-track {
+    background-color: #777;
+    height: 3px;
+    }
+
+
+    .c1 input:checked ~ .checkmark {
+        background-color: #000 !important;
+    }
+    .container {
+        display: block;
+        position: relative;
+        padding-left: 18px;
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+    .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+    .checkmark {
+        margin-top: 4px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 15px;
+        width: 15px;
+        background-color: #eee;
+        border-radius: 3px;
+    }
+    .container:hover input ~ .checkmark {
+    background-color: #000;
+    }
+
+    .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    }
+
+    .container input:checked ~ .checkmark:after {
+    display: block;
+    }
+
+    .container .checkmark:after {
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    }
 </style>
 
 @endsection
@@ -50,7 +169,7 @@
             <!-- Sección de filtrado -->
             <div class="filtro w-100">
                 <div class="content ">
-                    <h4 class="toggle-list-categoria" data-filter="cat"> Categorías <span class="arrow"><i class="far fa-chevron-down"></i></span></h4>
+                    <h4 class="toggle-list-categoria" data-filter="cat"> Categorías <span class="arrow"></span></h4>
                     <ul class="cat medidas" >
 
                         <!-- Lista de categorías -->
@@ -58,9 +177,11 @@
                         @foreach($categories as $category)
 
                             <li>
-                                <input onchange="handleCheckboxChangeCategory(this, {{ $category->id }})" type="checkbox" name="categoria_checkbox[]" value="{{ $category->id }}" id="category_{{ $category->id }}"  >
-
-                                <a href="#" onclick="filterByCategory('{{ $category->id }}')">{{ $category->name }}</a>
+                                <label class="container c1" >
+                                    <input  onchange="handleCheckboxChangeCategory(this, {{ $category->id }})" type="checkbox" name="categoria_checkbox[]" value="{{ $category->id }}" id="category_{{ $category->id }}"  >
+                                    <span class="checkmark"></span>
+                                    <a href="#" onclick="filterByCategory('{{ $category->id }}')">{{ $category->name }}</a>
+                                </label>
                             </li>
 
                         @endforeach
@@ -70,24 +191,27 @@
                 </div>
 
                 <div class="content">
-                    <h4 class="toggle-list-artista" data-filter="artist"> Artistas <span class="arrow"><i class="far fa-chevron-down"></i></span></h4>
+                    <h4 class="toggle-list-artista" data-filter="artist"> Artistas <span class="arrow"></span></h4>
                     <ul class="artist medidas" >
 
                         @php
-                            $artists = ['Todos']; // Add 'Todos' option to the array
+                            $artists = ['Todos'];
                             foreach ($articles as $article) {
                                 $artists[] = $article->artist_id;
                             }
                             $artists = array_unique($artists);
                             sort($artists);
-                            // $artists = array_reverse($artists);
                         @endphp
                         @foreach ($artists as $artist)
                             @foreach ($artistas as $artista)
                                 @if ($artista->id == $artist)
                                     <li>
+
+                                    <label class="container c1" >
                                         <input onchange="handleCheckboxChangeArtist(this, {{ $artista->id }})" type="checkbox" name="artista_checkbox[]" value="{{ $artista->id }}" id="artista_{{ $tecnica->id }}"  >
+                                        <span class="checkmark"></span>
                                         <a href="#" onclick="filterByArtist('{{ $artista->id }}')">{{ $artista->name }} {{ $artista->lastname }} </a>
+                                    </label>
                                     </li>
                                 @endif
                             @endforeach
@@ -97,24 +221,27 @@
                 </div>
 
                 <div class="content">
-                    <h4 class="toggle-list-tecnica" data-filter="tec"> Técnicas <span class="arrow"><i class="far fa-chevron-down"></i></span></h4>
+                    <h4 class="toggle-list-tecnica" data-filter="tec"> Técnicas <span class="arrow"></span></h4>
                     <ul class="tec medidas" >
 
                         @php
-                        $technics = ['Todos']; // Add 'Todos' option to the array
+                        $technics = ['Todos'];
                             foreach ($articles as $article) {
                                 $technics[] = $article->subcategory_id;
                             }
                             $technics = array_unique($technics);
                             sort($technics);
-                            // $technics = array_reverse($technics);
                         @endphp
                         @foreach ($technics as $technic)
                             @foreach ($tecnicas as $tecnica)
                                 @if ($tecnica->id == $technic)
                                 <li>
+
+                                <label class="container c1" >
                                     <input onchange="handleCheckboxChangeTecnic(this, {{ $tecnica->id }})" type="checkbox" name="tecnica_checkbox[]" value="{{ $tecnica->id }}" id="tecnica_{{ $tecnica->id }}"  >
+                                    <span class="checkmark"></span>
                                     <a href="#" onclick="filterByTechnic('{{ $tecnica->id }}')">{{ $tecnica->name }}</a>
+                                </label>
                                 </li>
                                 @endif
                             @endforeach
@@ -125,15 +252,31 @@
 
                 <div class="content">
                     <h4>Precio</h4>
-                    <!-- Rango de precios -->
-
-                    <p id="minPrice" class="m-0">Desde ${{ number_format($articles->min('price_min'), 2, '.', ',') }}</p>
-                    <div style="display: inline-flex">
-                        <input type="range" min="{{ $articles->min('price_min') }}" max="{{ $articles->max('price_max') }}" value="{{ $articles->min('price_min') }}" id="priceRange">
-                        <p id="priceValue" style="width: 33%;" class="m-0 ml-2"> ${{ $articles->min('price_min') }}</p>
+                    <div class="currency-selector">
+                        <span id="mxTab" class="currency-tab active" onclick="showCurrency('mx')">MX</span>
+                        <span id="usTab" class="currency-tab" onclick="showCurrency('us')">USA</span>
                     </div>
 
-                    <p id="maxPrice" class="m-0">Hasta ${{ number_format($articles->max('price_max'), 2, '.', ',') }}</p>
+                    <!-- Rango de precios para MX -->
+                    <div id="mxPrices">
+
+                        <p id="minPrice" class="m-0">Desde <span id="priceValue" style="width: 33%;" class="m-0 ml-2"> ${{ number_format($articles->min('price_min'), 2, '.', ',') }}</span></p>
+                        <div style="display: inline-flex">
+                            <input type="range" min="{{ $articles->min('price_min') }}" max="{{ $articles->max('price_max') }}" value="{{ $articles->min('price_min') }}" id="priceRange">
+
+                        </div>
+                        <p id="maxPrice" class="m-0">Hasta ${{ number_format($articles->max('price_max'), 2, '.', ',') }}</p>
+                    </div>
+
+                    <!-- Rango de precios para USA (inicialmente oculto) -->
+                    <div id="usPrices" style="display: none;">
+                        <p id="minPriceUS" class="m-0">From <span id="priceValueUS" style="width: 33%;" class="m-0 ml-2"> ${{ number_format($articles->min('price_min_us'), 2, '.', ',') }}</span></p>
+                        <div style="display: inline-flex">
+                            <input type="range" min="{{ $articles->min('price_min_us') }}" max="{{ $articles->max('price_max_us') }}" value="{{ $articles->min('price_min_us') }}" id="priceRangeUS">
+                        </div>
+                        <p id="maxPriceUS" class="m-0">To ${{ number_format($articles->max('price_max_us'), 2, '.', ',') }}</p>
+                    </div>
+
                     <hr>
                 </div>
 
@@ -147,24 +290,6 @@
                     </ul>
                 </div>
 
-
-
-                <!-- Rango de años -->
-                {{-- <h4>Año</h4>
-                <ul>
-                    @php
-                        $years = ['Todos']; // Add 'Todos' option to the array
-                        foreach ($articles as $article) {
-                            $years[] = $article->year;
-                        }
-                        $years = array_unique($years);
-                        sort($years);
-                        $years = array_reverse($years);
-                    @endphp
-                    @foreach ($years as $year)
-                        <li><a href="#" onclick="filterByYear('{{ $year }}')">{{ $year }}</a></li>
-                    @endforeach
-                </ul> --}}
             </div>
 
         </div>
@@ -174,37 +299,37 @@
                <!-- Listado de artículos -->
                     @foreach($articles as $article)
 
-                        <div class="col-lg-4 col-md-6 col-sm-12 content-articles mt-4" style="height: auto; max-heigth: 400px;" data-year="{{ $article->year }}" data-category="{{ $article->category_id }}" data-technic="{{ $article->subcategory_id }}" data-pricemin="{{ $article->price_min }}" data-pricemax="{{ $article->price_max }}" data-width="{{ $article->width }}"  data-height="{{ $article->height }}" data-artist="{{ $article->artist_id }}" data-show="0" >
+                    <div class=" content-articles ml-3 mr-3" style="height: 60%;" data-year="{{ $article->year }}" data-category="{{ $article->category_id }}" data-technic="{{ $article->subcategory_id }}" data-pricemin="{{ $article->price_min }}" data-pricemax="{{ $article->price_max }}" data-priceminus="{{ $article->price_min_us }}" data-pricemaxus="{{ $article->price_max_us }}" data-width="{{ $article->width }}"  data-height="{{ $article->height }}" data-artist="{{ $article->artist_id }}" data-show="0" >
 
-                            <a href="{{ url('seccion/obras/'.$article->id) }}">
-                                <div class="card justify-content-center" style=" border: none;">
+                        <a href="{{ url('seccion/obras/'.$article->id) }}">
+                            <div class="d-flex justify-content-center align-items-end w-100" style="height: 60%;">
 
-                                    <div class="image-container">
-                                        <img src="{{ url('multimedia'.$article->file_path.'/'.$article->slug. '/'.$article->file) }}" alt="{{ $article->name }}" class="img-fluid zoom" >
-                                    </div>
-
+                                <div class="image-container">
+                                    <img src="{{ url('multimedia'.$article->file_path.'/'.$article->slug. '/'.$article->file) }}" alt="{{ $article->name }}" >
                                 </div>
-                                <div style="height: 40%;">
-                                    <p class="m-0 text-center">{{ $article->name }}</p>
-                                    @foreach ($tecnicas as $tecnica)
-                                        @if ($tecnica->id == $article->subcategory_id)
-                                            <p class="m-0 text-center">{{ $tecnica->name }}</p>
-                                        @endif
-                                    @endforeach
-                                    @foreach ($artistas as $artista)
-                                        @if ($artista->id == $article->artist_id)
-                                            <p class="m-0 text-center">{{ $artista->name }} {{ $artista->lastname }}</p>
-                                        @endif
-                                    @endforeach
 
-                                    <!-- <p class="m-0 text-center">{{ $article->price_min }} - {{ $article->price_max }}</p> -->
-                                    <p class="m-0 text-center">{{ $article->year }}</p>
-                                    <p class="m-0 text-center">{{ $article->width }} x {{ $article->height }} cm</p>
+                            </div>
+                            <div style="height: 40%;">
+                                <p class="m-0 text-start">{{ $article->name }}</p>
+                                {{-- @foreach ($tecnicas as $tecnica)
+                                    @if ($tecnica->id == $article->subcategory_id)
+                                        <p class="m-0 text-start">{{ $tecnica->name }}</p>
+                                    @endif
+                                @endforeach --}}
+                                @foreach ($artistas as $artista)
+                                    @if ($artista->id == $article->artist_id)
+                                        <p class="m-0 text-start">{{ $artista->name }} {{ $artista->lastname }}</p>
+                                    @endif
+                                @endforeach
 
-                                </div>
-                            </a>
+                                <p class="m-0 text-start">{{ $article->year }}</p>
+                                <p class="m-0 text-start">{{ $article->width }} x {{ $article->height }} cm</p>
 
-                        </div>
+                            </div>
+                        </a>
+
+                    </div>
+
                     @endforeach
             </div>
         </div>
@@ -215,41 +340,45 @@
 
 @section('scripts')
     <script>
+        function showCurrency(currency) {
+            if (currency === 'mx') {
+                document.getElementById('mxTab').classList.add('active');
+                document.getElementById('usTab').classList.remove('active');
+                document.getElementById('mxPrices').style.display = 'block';
+                document.getElementById('usPrices').style.display = 'none';
+                document.getElementById('priceRange').value = "{{ $articles->min('price_min') }}";
+                document.getElementById('priceValue').textContent = "${{ number_format($articles->min('price_min'), 2, '.', ',') }}";
 
+                showall();
+            } else if (currency === 'us') {
+                document.getElementById('usTab').classList.add('active');
+                document.getElementById('mxTab').classList.remove('active');
+                document.getElementById('mxPrices').style.display = 'none';
+                document.getElementById('usPrices').style.display = 'block';
+                document.getElementById('priceRangeUS').value = "{{ $articles->min('price_min_us') }}";
+                document.getElementById('priceValueUS').textContent = "${{ number_format($articles->min('price_min_us'), 2, '.', ',') }}";
+                showall();
+            }
+
+        }
         const priceRange = document.getElementById('priceRange');
         const minPrice = document.getElementById('minPrice');
         const maxPrice = document.getElementById('maxPrice');
+
+        const priceRangeUS = document.getElementById('priceRangeUS');
+        const minPriceUS = document.getElementById('minPriceUS');
+        const maxPriceUS = document.getElementById('maxPriceUS');
+
         const contentArticles = document.getElementById('content-articles');
 
         $(document).ready(function(){
-            // $('.image-container').mousemove(function(e){
-            //     var x = e.pageX - $(this).offset().left;
-            //     var y = e.pageY - $(this).offset().top;
-            //     $(this).children('img').css({'transform-origin': x + 'px ' + y + 'px'});
-            //     $(this).children('img').css({'transform': 'scale(2)'});
-            // });
-            // $('.image-container').mouseleave(function(e){
-            //     $(this).children('img').css({'transform': 'scale(1)'});
-            // });
-
-
 
             var base = location.protocol + '//' + location.host;
             var route = document.title;
 
-            console.log(route);
-
-            // document.addEventListener('DOMContentLoaded', function() {
-            //     var title = route;
-            //     console.log(title);
-            //     $('#'+title+'_nav').addClass('active');
-            //     $('#main_').addClass('h-100');
-
-            // });
             $('.toggle-list-categoria').click(function() {
-                var filter = $(this).data('filter'); // Obtiene el valor de data-filter
-                var $ul = $('ul.' + filter); // Busca el elemento ul con la clase correspondiente
-                // $ul.toggleClass('medidas'); // Alterna la clase d-none del elemento ul}
+                var filter = $(this).data('filter');
+                var $ul = $('ul.' + filter);
                 var $arrow = $(this).find('.arrow');
                 if ($ul.hasClass('medidas')) {
                     $ul.removeClass('medidas');
@@ -258,12 +387,10 @@
                     $ul.addClass('medidas');
                     $arrow.removeClass('rotate');
                 }
-                console.log(filter);
             });
             $('.toggle-list-artista').click(function() {
-                var filter = $(this).data('filter'); // Obtiene el valor de data-filter
-                var $ul = $('ul.' + filter); // Busca el elemento ul con la clase correspondiente
-                // $ul.toggleClass('medidas'); // Alterna la clase d-none del elemento ul}
+                var filter = $(this).data('filter');
+                var $ul = $('ul.' + filter);
                 var $arrow = $(this).find('.arrow');
                 if ($ul.hasClass('medidas')) {
                     $ul.removeClass('medidas');
@@ -274,9 +401,8 @@
                 }
             });
             $('.toggle-list-tecnica').click(function() {
-                var filter = $(this).data('filter'); // Obtiene el valor de data-filter
-                var $ul = $('ul.' + filter); // Busca el elemento ul con la clase correspondiente
-                // $ul.toggleClass('medidas'); // Alterna la clase d-none del elemento ul}
+                var filter = $(this).data('filter');
+                var $ul = $('ul.' + filter);
                 var $arrow = $(this).find('.arrow');
                 if ($ul.hasClass('medidas')) {
                     $ul.removeClass('medidas');
@@ -338,7 +464,6 @@
             const selectedPrice = parseInt(priceRange.value);
             showall();
 
-            console.log(selectedPrice);
             for (let i = 0; i < articles.length; i++) {
                 const article = articles[i];
                 const articlePricemin = parseInt(article.getAttribute('data-pricemin'));
@@ -352,8 +477,29 @@
             }
         }
 
+        function filterArticlesByPriceUS() {
+
+            const articles = contentArticles.getElementsByClassName('content-articles');
+            const selectedPrice = parseInt(priceRangeUS.value);
+            showall();
+
+            for (let i = 0; i < articles.length; i++) {
+                const article = articles[i];
+                const articlePricemin = parseInt(article.getAttribute('data-priceminus'));
+                const articlePricemax = parseInt(article.getAttribute('data-pricemaxus'));
+
+                if ( articlePricemin >= selectedPrice || selectedPrice <= articlePricemax   )  {
+                    article.style.display = 'block';
+                } else {
+                    article.style.display = 'none';
+                }
+            }
+        }
+
         function darFormatoPrecio(precio) {
-            // Convertir el precio a número y aplicar formato
+            return '$' + parseFloat(precio).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+        function darFormatoPrecioUS(precio) {
             return '$' + parseFloat(precio).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
 
@@ -364,10 +510,17 @@
             filterArticlesByPrice();
         });
 
+        priceRangeUS.addEventListener('input', () => {
+
+            priceValueUS.textContent = darFormatoPrecioUS(priceRangeUS.value);
+            showall();
+            filterArticlesByPriceUS();
+        });
+
         function highlightSize(size) {
             showall();
             const articles = document.querySelectorAll('#content-articles .content-articles');
-            console.log(articles);
+
 
             articles.forEach(article => {
                 const width = parseInt(article.getAttribute('data-width'));
@@ -386,24 +539,20 @@
             });
         }
         if (screen.width < 800) {
-            console.log('oo');
             $('#main_').removeClass("row");
         }
 
         function showall(){
-            console.log('MuestraTodo');
             $('#content-articles .content-articles[data-show=0]').show();
 
         }
 
         function handleCheckboxChangeTecnic(checkbox, year) {
             if (checkbox.checked) {
-                // Checkbox marcado, mostrar solo los elementos asociados al año
                 $('#content-articles .content-articles').hide();
                 $('#content-articles .content-articles[data-technic="' + year + '"]').show();
                 var anyChecked = $('input[name="tecnica_checkbox[]"]:checked').length > 0;
                 if (anyChecked) {
-                    // Mostrar solo los elementos asociados a los checkboxes marcados
                     var checkedValues = $('input[name="tecnica_checkbox[]"]:checked').map(function(){
                         return this.value;
                     }).get();
@@ -412,18 +561,13 @@
                         $('#content-articles .content-articles[data-technic="' + value + '"]').show();
                     });
                 } else {
-                    // Si no hay otros checkboxes marcados, mostrar todos los elementos
                     $('#content-articles .content-articles').show();
                 }
             } else {
-                // Checkbox desmarcado
-                // Verificar si hay otros checkboxes marcados
                 var anyChecked = $('input[name="tecnica_checkbox[]"]:checked').length > 0;
                 if (!anyChecked) {
-                    // Si no hay otros checkboxes marcados, mostrar todos los elementos
                     $('#content-articles .content-articles').show();
                 } else {
-                    // Si hay otros checkboxes marcados, mantener solo los elementos asociados a los checkboxes marcados
                     var checkedValues = $('input[name="tecnica_checkbox[]"]:checked').map(function(){
                         return this.value;
                     }).get();
@@ -436,12 +580,10 @@
         }
         function handleCheckboxChangeArtist(checkbox, year) {
             if (checkbox.checked) {
-                // Checkbox marcado, mostrar solo los elementos asociados al año
                 $('#content-articles .content-articles').hide();
                 $('#content-articles .content-articles[data-artist="' + year + '"]').show();
                 var anyChecked = $('input[name="artista_checkbox[]"]:checked').length > 0;
                 if (anyChecked) {
-                    // Mostrar solo los elementos asociados a los checkboxes marcados
                     var checkedValues = $('input[name="artista_checkbox[]"]:checked').map(function(){
                         return this.value;
                     }).get();
@@ -450,18 +592,13 @@
                         $('#content-articles .content-articles[data-artist="' + value + '"]').show();
                     });
                 } else {
-                    // Si no hay otros checkboxes marcados, mostrar todos los elementos
                     $('#content-articles .content-articles').show();
                 }
             } else {
-                // Checkbox desmarcado
-                // Verificar si hay otros checkboxes marcados
                 var anyChecked = $('input[name="artista_checkbox[]"]:checked').length > 0;
                 if (!anyChecked) {
-                    // Si no hay otros checkboxes marcados, mostrar todos los elementos
                     $('#content-articles .content-articles').show();
                 } else {
-                    // Si hay otros checkboxes marcados, mantener solo los elementos asociados a los checkboxes marcados
                     var checkedValues = $('input[name="artista_checkbox[]"]:checked').map(function(){
                         return this.value;
                     }).get();
@@ -474,12 +611,10 @@
         }
         function handleCheckboxChangeCategory(checkbox, year) {
             if (checkbox.checked) {
-                // Checkbox marcado, mostrar solo los elementos asociados al año
                 $('#content-articles .content-articles').hide();
                 $('#content-articles .content-articles[data-category="' + year + '"]').show();
                 var anyChecked = $('input[name="categoria_checkbox[]"]:checked').length > 0;
                 if (anyChecked) {
-                    // Mostrar solo los elementos asociados a los checkboxes marcados
                     var checkedValues = $('input[name="categoria_checkbox[]"]:checked').map(function(){
                         return this.value;
                     }).get();
@@ -488,18 +623,13 @@
                         $('#content-articles .content-articles[data-category="' + value + '"]').show();
                     });
                 } else {
-                    // Si no hay otros checkboxes marcados, mostrar todos los elementos
                     $('#content-articles .content-articles').show();
                 }
             } else {
-                // Checkbox desmarcado
-                // Verificar si hay otros checkboxes marcados
                 var anyChecked = $('input[name="categoria_checkbox[]"]:checked').length > 0;
                 if (!anyChecked) {
-                    // Si no hay otros checkboxes marcados, mostrar todos los elementos
                     $('#content-articles .content-articles').show();
                 } else {
-                    // Si hay otros checkboxes marcados, mantener solo los elementos asociados a los checkboxes marcados
                     var checkedValues = $('input[name="categoria_checkbox[]"]:checked').map(function(){
                         return this.value;
                     }).get();
@@ -512,5 +642,4 @@
         }
     </script>
 
-    {{-- <script src="{{ asset('js/filter.js') }}"></script> --}}
 @endsection

@@ -22,7 +22,10 @@ class Article extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
-
+    public function getArtist()
+    {
+        return $this->hasOne(Artist::class, 'id', 'artist_id');
+    }
     public function getCategory()
     {
         return $this->hasOne(Category::class, 'id', 'category_id');

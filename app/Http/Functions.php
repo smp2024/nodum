@@ -229,3 +229,21 @@
         ];
         return $p;
     }
+
+    function getExchangeRate()
+    {
+        $url = "https://openexchangerates.org/api/latest.json?app_id=1aa521bde58f402080453d19dda32dfa";
+
+        $response = file_get_contents($url);
+        if (!$response) {
+            return null;
+        }
+
+        $data = json_decode($response, true);
+
+        if ($data) {
+            return $data['rates']['MXN'];
+        } else {
+            return null;
+        }
+    }

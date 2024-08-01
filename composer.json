@@ -19,6 +19,7 @@
         "laravelcollective/html": "^6.2",
         "maatwebsite/excel": "^3.1",
         "nesbot/carbon": "^2.72",
+        "phpoffice/phpspreadsheet": "^1.29",
         "spatie/laravel-cookie-consent": "^2.12"
     },
     "require-dev": {

@@ -119,8 +119,32 @@ class ArticleController extends Controller
                 $product->status = '0';
                 $product->user_id = Auth::id();
                 $product->category_id = $request->input('category_id');
-                $product->price_min = $request->input('price_min');
-                $product->price_max = $request->input('price_max');
+                $titleletter = strtoupper(substr($s, 0, 1));
+                $artist = Artist::findOrFail($artist_id);
+                $artisletter = strtoupper(substr($artist->slug, 0, 1));
+                $numbers = rand(10000, 99999);
+                $sku = $artisletter.$titleletter.$numbers;
+                $product->sku = $sku;
+                $exchangeRate = getExchangeRate();
+
+                if ($request->input('price_min') && $request->input('price_max')  != null && $request->input('price_min_us') && $request->input('price_max_us')  == null) {
+                    $product->price_min = $request->input('price_min');
+                    $product->price_max = $request->input('price_max');
+                    $product->price_min_us = ($request->input('price_min') / $exchangeRate);
+                    $product->price_max_us = ($request->input('price_max') / $exchangeRate);
+                } else if ($request->input('price_min_us') && $request->input('price_max_us')  != null && $request->input('price_min') && $request->input('price_max')  == null) {
+                    $product->price_min_us = $request->input('price_min_us');
+                    $product->price_max_us = $request->input('price_max_us');
+                    $product->price_min = ($request->input('price_min_us') * $exchangeRate);
+                    $product->price_max = ($request->input('price_max_us') * $exchangeRate);
+                } else {
+                    $product->price_min_us = $request->input('price_min_us');
+                    $product->price_max_us = $request->input('price_max_us');
+                    $product->price_min = $request->input('price_min');
+                    $product->price_max = $request->input('price_max') ;
+                }
+
+
                 $product->year = $request->input('year');
                 $product->artist_id = $request->input('artist_id');
 
@@ -248,7 +272,12 @@ class ArticleController extends Controller
             $path = 'Article/'.$artist_id.'/'.$s;
             $product = Article::findOrFail($id);
             $carpeta = $artist_id.'/'.$s;
-
+            $titleletter = strtoupper(substr($s, 0, 1));
+            $artist = Artist::findOrFail($artist_id);
+            $artisletter = strtoupper(substr($artist->slug, 0, 1));
+            $numbers = rand(10000, 99999);
+            $sku = $artisletter.$titleletter.$numbers;
+            $product->sku = $sku;
             if ($carpeta != $s) {
 
                 $upload_path = Config::get('filesystems.disks.uploads.root');
@@ -263,8 +292,26 @@ class ArticleController extends Controller
             }
             $product->status = $request->input('status');
             $product->category_id = $request->input('category_id');
-            $product->price_min = $request->input('price_min');
-            $product->price_max = $request->input('price_max');
+
+            $exchangeRate = getExchangeRate();
+
+            if ($request->input('price_min') && $request->input('price_max')  != null && $request->input('price_min_us') && $request->input('price_max_us')  == null) {
+                $product->price_min = $request->input('price_min');
+                $product->price_max = $request->input('price_max');
+                $product->price_min_us = ($request->input('price_min') / $exchangeRate);
+                $product->price_max_us = ($request->input('price_max') / $exchangeRate);
+            } else if ($request->input('price_min_us') && $request->input('price_max_us')  != null && $request->input('price_min') && $request->input('price_max')  == null) {
+                $product->price_min_us = $request->input('price_min_us');
+                $product->price_max_us = $request->input('price_max_us');
+                $product->price_min = ($request->input('price_min_us') * $exchangeRate);
+                $product->price_max = ($request->input('price_max_us') * $exchangeRate);
+            } else {
+                $product->price_min_us = $request->input('price_min_us');
+                $product->price_max_us = $request->input('price_max_us');
+                $product->price_min = $request->input('price_min');
+                $product->price_max = $request->input('price_max') ;
+            }
+
             $product->artist_id = $request->input('artist_id');
             $product->year = $request->input('year');
 

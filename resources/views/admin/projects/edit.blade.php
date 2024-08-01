@@ -88,7 +88,7 @@
                             </div>
 
 
-                            @for ($i=1 ; $i<=$product->sections; $i++)
+                            @for ($i = 1 ; $i<=$product->sections; $i++)
 
                                 <div name="" class="row mt16" style="padding: 16px;" >
                                     <div class="col-md-12">
@@ -113,11 +113,11 @@
 
                                             {{ Form::label('video','Video:') }}
                                             <div class="input-group-prepend">
-                                                {{-- @foreach ($videos as $video)
-                                                    @if ($video->section == $i-1 )
+                                                @foreach ($videos as $video)
+                                                    @if ($video->section == $i)
                                                         {!! Form::textarea('video[]', $video->content, ['class' => 'form-control ', 'id' => 'video_'.$i]) !!}
                                                     @endif
-                                                @endforeach --}}
+                                                @endforeach
 
                                             </div>
 
@@ -207,7 +207,7 @@
 
 @section('scripts')
 
-    <script src="{{ asset('/libs/ckeditor/ckeditor.js') }}"></script>
+    {{-- <script src="{{ asset('/libs/ckeditor/ckeditor.js') }}"></script> --}}
     @for ($i = 1; $i <= $product->sections; $i++)
         <script>
 

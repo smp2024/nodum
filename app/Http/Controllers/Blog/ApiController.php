@@ -7,6 +7,7 @@ use App\Artist;
 use App\Carousel;
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\SubCategory;
 use App\Tag;
 use App\User;
 use Illuminate\Http\Request;
@@ -124,5 +125,12 @@ class ApiController extends Controller
         // $response = $request;
         // echo json_encode($formData);
         // exit;
+    }
+    public function getTechniquesByCategory(Request $request)
+    {
+        $categoryId = $request->input('category_id');
+        $techniques = SubCategory::where('category_id', $categoryId)->get();
+
+        return response()->json($techniques);
     }
 }

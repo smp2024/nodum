@@ -11,17 +11,20 @@
     .image-container {
         height: 60%;
         overflow: hidden;
+        min-width: 100%;
     }
-
-    .zoom  {
+    .image-container img{
+        height: 100%;
+    }
+    /* .zoom  {
         transition: all .5s ease-in-out;
         transform-origin: center center;
-    }
+    } */
 
 
-    .zoom:hover {
-        transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-    }
+    /* .zoom:hover {
+        transform: scale(1.5);
+    } */
     .medidas {
         display: none;
     }
@@ -54,9 +57,9 @@
         </div>
     </div>
 
-    <!-- filtro  -->
+    <!-- filtro
     <div class="row justify-content-center align-items-start h-100 w-100" >
-        <!-- Sección de filtrado -->
+
         <div class="col-lg-3 col-sm-5 col-5 d-flex justify-content-center align-items-center p-0  w-100" style="padding-right: 2% !important; padding-left: 4% !important;">
             <div class="filtro w-100">
 
@@ -65,7 +68,7 @@
                 <h4 class="toggle-list-categoria" data-filter="cat"> Categorías <span class="arrow"><i class="far fa-chevron-down"></i></span></h4>
                 <ul class="cat medidas" >
                     @php
-                    $cate = ['Todos']; // Add 'Todos' option to the array
+                    $cate = ['Todos'];
                         foreach ($articles as $article) {
                             $cate[] = $article->category_id;
                         }
@@ -73,7 +76,6 @@
                         sort($cate);
                         $cate = array_reverse($cate);
                     @endphp
-                    <!-- Lista de categorías -->
                     @foreach ($cate as $tecnica)
                         @foreach($categories as $category)
                             @if ($category->id == $tecnica)
@@ -95,7 +97,7 @@
                 <h4 class="toggle-list-tecnica" data-filter="tec"> Técnicas <span class="arrow"><i class="far fa-chevron-down"></i></span></h4>
                 <ul  class="tec medidas" >
                     @php
-                        $technics = ['Todos']; // Add 'Todos' option to the array
+                        $technics = ['Todos'];
                         foreach ($articles as $article) {
                             $technics[] = $article->subcategory_id;
                         }
@@ -121,11 +123,10 @@
 
             <div class="content">
                 <h4>Precio</h4>
-                <!-- Rango de precios -->
-                <p id="minPrice" class="m-0">Desde ${{ number_format($articles->min('price_min'), 2, '.', ',') }}</p>
+                <p id="minPrice" class="m-0">Desde <span id="priceValue" style="width: 33%;" class="m-0 ml-2"> ${{ number_format($articles->min('price_min'), 2, '.', ',') }}</span></p>
                 <div style="display: inline-flex">
                     <input type="range" min="{{ $articles->min('price_min') }}" max="{{ $articles->max('price_max') }}" value="{{ $articles->min('price_min') }}" id="priceRange">
-                    <p id="priceValue" style="width: 33%;" class="m-0 ml-2"> ${{ number_format($articles->min('price_min'), 2, '.', ',') }}</p>
+
                 </div>
 
                 <p id="maxPrice" class="m-0">Hasta ${{ number_format($articles->max('price_max'), 2, '.', ',') }}</p>
@@ -136,7 +137,6 @@
 
             <div class="content">
                 <h4>Medidas</h4>
-                <!-- Rango de medidas -->
                 <ul>
                     <li><a href="#" onclick="highlightSize('pequeño')">Pequeño (menor a 40cm)</a></li>
                     <li><a href="#" onclick="highlightSize('mediano')">Mediano </a></li>
@@ -146,7 +146,6 @@
             </div>
 
 
-                <!-- Rango de años -->
                 {{-- <h4>Año</h4>
                 <ul>
                     @php
@@ -164,36 +163,35 @@
                 </ul> --}}
             </div>
         </div>
-        <!-- Listado de artículos -->
         <div id="content-articles" class="col-lg-9 col-sm-7 col-7 h-100 w-100 d-flex justify-content-start align-items-start p-0" >
             <div class="row w-100 h-100">
                     @foreach($articles as $article)
-                        <div class="col-lg-4 col-md-6 col-sm-12 content-articles mt-4" style="height: auto; max-heigth: 400px;" data-year="{{ $article->year }}" data-category="{{ $article->category_id }}" data-technic="{{ $article->subcategory_id }}" data-pricemin="{{ $article->price_min }}" data-pricemax="{{ $article->price_max }}" data-width="{{ $article->width }}"  data-height="{{ $article->height }}" data-artist="{{ $article->artist_id }}" data-show="0" >
+                        <div class=" content-articles mt-4 mr-5" style="height: 60%;" data-year="{{ $article->year }}" data-category="{{ $article->category_id }}" data-technic="{{ $article->subcategory_id }}" data-pricemin="{{ $article->price_min }}" data-pricemax="{{ $article->price_max }}" data-width="{{ $article->width }}"  data-height="{{ $article->height }}" data-artist="{{ $article->artist_id }}" data-show="0" >
 
                             <a href="{{ url('seccion/obras/'.$article->id) }}">
-                                <div class="card justify-content-center" style=" border: none;">
+                                <div class="d-flex justify-content-center align-items-end w-100" style="height: 60%;">
 
                                     <div class="image-container">
-                                        <img src="{{ url('multimedia'.$article->file_path.'/'.$article->slug. '/'.$article->file) }}" alt="{{ $article->name }}" class="img-fluid zoom" >
+                                        <img src="{{ url('multimedia'.$article->file_path.'/'.$article->slug. '/'.$article->file) }}" alt="{{ $article->name }}" >
                                     </div>
 
                                 </div>
                                 <div style="height: 40%;">
-                                    <p class="m-0 text-center">{{ $article->name }}</p>
+                                    <p class="m-0 text-start">{{ $article->name }}</p>
                                     @foreach ($tecnicas as $tecnica)
                                         @if ($tecnica->id == $article->subcategory_id)
-                                            <p class="m-0 text-center">{{ $tecnica->name }}</p>
+                                            <p class="m-0 text-start">{{ $tecnica->name }}</p>
                                         @endif
                                     @endforeach
                                     @foreach ($artistas as $artista)
                                         @if ($artista->id == $article->artist_id)
-                                            <p class="m-0 text-center">{{ $artista->name }} {{ $artista->lastname }}</p>
+                                            <p class="m-0 text-start">{{ $artista->name }} {{ $artista->lastname }}</p>
                                         @endif
                                     @endforeach
 
-                                    <!-- <p class="m-0 text-center">{{ $article->price_min }} - {{ $article->price_max }}</p> -->
-                                    <p class="m-0 text-center">{{ $article->year }}</p>
-                                    <p class="m-0 text-center">{{ $article->width }} x {{ $article->height }} cm</p>
+
+                                    <p class="m-0 text-start">{{ $article->year }}</p>
+                                    <p class="m-0 text-start">{{ $article->width }} x {{ $article->height }} cm</p>
 
                                 </div>
                             </a>
@@ -203,6 +201,7 @@
             </div>
         </div>
     </div>
+-->
 @endsection
 
 @section('scripts')

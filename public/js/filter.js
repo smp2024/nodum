@@ -1,13 +1,13 @@
 $(document).ready(function(){
-    $('.image-container').mousemove(function(e){
-        var x = e.pageX - $(this).offset().left;
-        var y = e.pageY - $(this).offset().top;
-        $(this).children('img').css({'transform-origin': x + 'px ' + y + 'px'});
-        $(this).children('img').css({'transform': 'scale(2)'});
-    });
-    $('.image-container').mouseleave(function(e){
-        $(this).children('img').css({'transform': 'scale(1)'});
-    });
+    // $('.image-container').mousemove(function(e){
+    //     var x = e.pageX - $(this).offset().left;
+    //     var y = e.pageY - $(this).offset().top;
+    //     $(this).children('img').css({'transform-origin': x + 'px ' + y + 'px'});
+    //     $(this).children('img').css({'transform': 'scale(2)'});
+    // });
+    // $('.image-container').mouseleave(function(e){
+    //     $(this).children('img').css({'transform': 'scale(1)'});
+    // });
 
 
     var base = location.protocol + '//' + location.host;

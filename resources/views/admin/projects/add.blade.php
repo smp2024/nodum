@@ -29,10 +29,10 @@
 
 @section('scripts')
 
-    <script src="{{ asset('/libs/ckeditor/ckeditor.js') }}"></script>
+    {{-- <script src="{{ asset('/libs/ckeditor/ckeditor.js') }}"></script>
     <script>
         CKEDITOR.replace( 'editor' );
-    </script>
+    </script> --}}
     <script src="{{ asset('js/admin.js') }}"></script>
 
 @endsection

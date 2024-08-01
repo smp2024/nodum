@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Article;
+use App\Artist;
+use App\Category;
 use App\Http\Controllers\Controller;
+use App\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -33,6 +36,21 @@ class MassiveController extends Controller
 
     public function uploadCsv(Request $request)
     {
+
+        // $exchangeRate = getExchangeRate();
+
+        // $articulos = Article::get();
+
+        // foreach ($articulos as  $articulo) {
+        //     $product = Article::findOrFail($articulo->id);
+        //     $product->price_min_us = ($articulo->price_min / $exchangeRate);
+        //     $product->price_max_us = ($articulo->price_max / $exchangeRate);
+        //     $product->save();
+        // }
+
+
+
+
         $request->validate([
             'file' => 'required|mimes:csv,txt,xls,xlsx|max:2048',
         ]);
@@ -66,28 +84,119 @@ class MassiveController extends Controller
             $articuloExistente = Article::where('slug', $slug)->first();
 
             if ($articuloExistente) {
+
                 // Si el artículo ya existe, actualizar sus datos
                 $product = Article::findOrFail($articuloExistente->id);
-                $product->status = '1';
+
                 $product->user_id = Auth::id();
-                $product->price_min = $datos[8];
-                $product->price_max = $datos[9];
-                $product->year = $datos[7];
+
+                $artista = Str::slug($datos[0]);
+                $user = Artist::where('slug',$artista)->first();
+                $product->artista_id = $user->id;
+
                 $product->name = $datos[1];
-                $product->sku = $datos[12];
                 $product->slug = Str::slug($datos[1]);
+
+                $categoria = Str::slug($datos[2]);
+                $cat = Category::where('slug',$categoria)->first();
+                $product->catrgory_id = $cat->id;
+
+                $tecnica = Str::slug($datos[3]);
+                $tec = SubCategory::where('slug',$tecnica)->first();
+                $product->subcatrgory_id = $tec->id;
+
+                $product->height = $datos[4];
+                $product->width = $datos[5];
+                $product->depth = $datos[6];
+
+                $product->year = $datos[7];
+
+                if ($datos[10] == 'MX') {
+
+                    $exchangeRate = getExchangeRate();
+                    $product->price_min = $datos[8];
+                    $product->price_max = $datos[9];
+
+                    $product->price_min_us = ($datos[8] / $exchangeRate);
+                    $product->price_max_us = ($datos[9] / $exchangeRate);
+
+                } else {
+
+                    $exchangeRate = getExchangeRate();
+                    $product->price_min_us = $datos[8];
+                    $product->price_max_us = $datos[9];
+
+                    $product->price_min = ($datos[8] * $exchangeRate);
+                    $product->price_max = ($datos[9] * $exchangeRate);
+
+                }
+
+                if ($datos[11] == 'Activo') {
+                    $product->status = '1';
+                } else {
+                    $product->status = '0';
+                }
+
+                $product->sku = $datos[12];
+
+
                 $product->save();
             } else {
                 // Si el artículo no existe, crear un nuevo artículo
                 $product = new Article();
-                $product->status = '0';
+
                 $product->user_id = Auth::id();
-                $product->price_min = $datos[8];
-                $product->price_max = $datos[9];
-                $product->year = $datos[7];
+
+                $artista = Str::slug($datos[0]);
+                $user = Artist::where('slug',$artista)->first();
+                $product->artista_id = $user->id;
+
                 $product->name = $datos[1];
-                $product->sku = $datos[12];
                 $product->slug = Str::slug($datos[1]);
+
+                $categoria = Str::slug($datos[2]);
+                $cat = Category::where('slug',$categoria)->first();
+                $product->catrgory_id = $cat->id;
+
+                $tecnica = Str::slug($datos[3]);
+                $tec = SubCategory::where('slug',$tecnica)->first();
+                $product->subcatrgory_id = $tec->id;
+
+                $product->height = $datos[4];
+                $product->width = $datos[5];
+                $product->depth = $datos[6];
+
+                $product->year = $datos[7];
+
+                if ($datos[10] == 'MX') {
+
+                    $exchangeRate = getExchangeRate();
+                    $product->price_min = $datos[8];
+                    $product->price_max = $datos[9];
+
+                    $product->price_min_us = ($datos[8] / $exchangeRate);
+                    $product->price_max_us = ($datos[9] / $exchangeRate);
+
+                } else {
+
+                    $exchangeRate = getExchangeRate();
+                    $product->price_min_us = $datos[8];
+                    $product->price_max_us = $datos[9];
+
+                    $product->price_min = ($datos[8] * $exchangeRate);
+                    $product->price_max = ($datos[9] * $exchangeRate);
+
+                }
+
+                if ($datos[11] == 'Activo') {
+                    $product->status = '1';
+                } else {
+                    $product->status = '0';
+                }
+
+                $product->sku = $datos[12];
+
+
                 $product->save();
             }
             ++$i;
@@ -147,4 +256,7 @@ class MassiveController extends Controller
             return back()->with('message', 'Error de actualización, intentar nuevamente.')->with('typealert', 'danger');
         }
     }
+
+
+
 }

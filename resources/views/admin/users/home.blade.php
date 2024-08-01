@@ -40,7 +40,7 @@
                     </div>
                 </div>
 
-                <div class="container">
+                <div class="container" style="overflow: auto;">
                     <table id="tabla_artistas" class="table">
                         <thead>
                             <tr>

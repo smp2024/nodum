@@ -56,3 +56,6 @@ Route::post('/descargar-contacto',                  'Blog\HomeController@pdf_con
 Route::get('/autocomplete', 'Blog\HomeController@findsubcategories');
 
 Route::get('/technic/change-status/{id}',              'Blog\HomeController@changeTechnicStatus');
+
+Route::get('/articles/exportar-excel', 'Blog\HomeController@exportarExcel')->name('articles.exportExcel');
+

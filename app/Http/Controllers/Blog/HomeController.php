@@ -8,10 +8,15 @@ use App\Mail\EFDmail;
 use App\NGallery;
 use App\PGallery;
 use App\SubCategory;
+use App\Article;
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 
 class HomeController extends Controller
 {
@@ -222,4 +227,59 @@ class HomeController extends Controller
             }
         }
     }
+
+    public function exportarExcel(){
+    $articles = Article::orderBy('artist_id', 'DESC')->get();
+    $spreadsheet = new Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
+
+    $sheet->setCellValue('A1', 'Artista');
+    $sheet->setCellValue('B1', 'Nombre');
+    $sheet->setCellValue('C1', 'Categoria');
+    $sheet->setCellValue('D1', 'Técnica');
+    $sheet->setCellValue('E1', 'Medidas Verticales (CM)');
+    $sheet->setCellValue('F1', 'Medidas Horizontales (CM)');
+    $sheet->setCellValue('G1', 'Medidas Profundidad (CM)');
+    $sheet->setCellValue('H1', 'Año');
+    $sheet->setCellValue('I1', 'Precio (rango bajo MX)');
+    $sheet->setCellValue('J1', 'Precio (rango alto MX)');
+    $sheet->setCellValue('K1', 'Precio (rango bajo USD)');
+    $sheet->setCellValue('L1', 'Precio (rango alto USD)');
+    $sheet->setCellValue('M1', 'Estado');
+    $sheet->setCellValue('N1', 'sku');
+
+    $row = 2;
+    foreach ($articles as $article) {
+        $sheet->setCellValue('A' . $row, $article->getArtist->name . $article->getArtist->lastname);
+        $sheet->setCellValue('B' . $row, $article->name);
+        $cat = Category::where('id',$article->category_id)->first();
+        $sheet->setCellValue('C' . $row, $article->getCategory->name);
+        $sub = SubCategory::where('id',$article->subcategory_id)->first();
+        $sheet->setCellValue('D' . $row, $article->getSubCategory->name);
+        $sheet->setCellValue('E' . $row, $article->height);
+        $sheet->setCellValue('F' . $row, $article->width);
+        $sheet->setCellValue('G' . $row, $article->depth);
+        $sheet->setCellValue('H' . $row, $article->year);
+        $sheet->setCellValue('I' . $row, $article->price_min);
+        $sheet->setCellValue('J' . $row, $article->price_max);
+        $sheet->setCellValue('K' . $row, $article->price_min_us);
+        $sheet->setCellValue('L' . $row, $article->price_max_us);
+        if ($article->status == 1) {
+            $sheet->setCellValue('M' . $row, 'Activo');
+        } else {
+            $sheet->setCellValue('M' . $row, 'Inactivo');
+        }
+        $sheet->setCellValue('N' . $row, $article->sku);
+
+        $row++;
+    }
+
+    $writer = new Xlsx($spreadsheet);
+
+    $fileName = 'articulos.xlsx';
+    $tempFilePath = storage_path('app/' . $fileName);
+    $writer->save($tempFilePath);
+
+    return response()->download($tempFilePath, $fileName)->deleteFileAfterSend(true);
+}
 }

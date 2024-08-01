@@ -25,7 +25,7 @@
                         <div  class="col-12 justify-content-center align-items-center text-justify " style="margin-bottom: 25px;  height: auto;  padding: 5px 10%; ">
 
                             @foreach ($descriptions as $description)
-                                @if ($description->section == $i-1)
+                                @if ($description->section == $i)
                                     {!! html_entity_decode($description->content, ENT_QUOTES | ENT_XML1, 'UTF-8') !!}
                                 @endif
                             @endforeach
@@ -34,7 +34,7 @@
                     <!-- IMAGENES   -->
 
                         <div  class="col-12 d-flex justify-content-center align-items-center " style="padding: 0; margin-bottom: 25px;  height: auto;">
-                            <div id="carouselExampleControls_{{ $i }}" class="carousel slide h-100 w-100" data-ride="carousel">
+                            <div id="carouselExampleControls_{{ $i }}" class="carousel slide h-100 w-50" data-ride="carousel">
                                 <div class="carousel-inner h-100">
                                     @foreach ($imagenes as $imagen)
                                         @if($i == $imagen->after)
@@ -58,7 +58,7 @@
                     <!--VIDEO -->
                     @foreach ($videos as $video)
                         @if ($video->content != null )
-                            @if ($video->section == $i-1)
+                            @if ($video->section == $i)
                                 <div  class="col-12 justify-content-center align-items-center vimeo" style="padding: 0; height:50%; min-height:300px; margin-bottom: 25px;">
                                     <div class="video-wrap text-center">
                                         <div class="video">
@@ -83,4 +83,4 @@
         });
     </script>
 @endsection
-        
+

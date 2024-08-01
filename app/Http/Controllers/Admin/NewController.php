@@ -110,7 +110,7 @@ class NewController extends Controller
                     $p = News::where('slug', $s)->first();
                     $s = e($request->input('sections'));
 
-                    for ($i=0; $i <= $s; $i++) {
+                    for ($i=1; $i <= $s; $i++) {
                         $content = new Description();
                         $content->new_id            = $p->id;
                         $content->type                  = 'description';
@@ -203,58 +203,36 @@ class NewController extends Controller
             $product->module                = 'new';
             $product ->name                 = e($request->input('name'));
             $product ->slug                 = Str::slug($request->input('name'));
-
             $product ->date                 = e($request->input('date'));
 
-            $contacto =  request([
+            $contacto_desc =  request([
 
                 'description'
 
             ]);
-
-            foreach($contacto as $clave=> $valor){
-                for($i=0;$i<count($contacto[$clave]);$i++){
-                    $descriptions = Description::where('new_id', $product->id)->where('type', 'description')->where('section', $i)->first();
-                    //dd($descriptions);
-                    if ($descriptions == null) {
-                        $content = new Description();
-                        $content->new_id                = $product->id;
-                        $content->type                  = 'description';
-                        $content ->section                 = $i;
-                        $content ->content                 =$contacto[$clave][$i];
-                        $content->save();
-                    }else {
-                        $descriptions ->content                 =$contacto[$clave][$i];
-                        $descriptions->save();
-                    }
+            foreach($contacto_desc as $clave=> $valor){
+                $sections = count($contacto_desc[$clave]);
+                for($i=1;$i<=$sections;$i++){
+                    $descriptions = Description::where('new_id', $id)->where('type', 'description')->where('section', $i)->first();
+                    $descriptions ->content                 =$contacto_desc[$clave][$i-1];
+                    $descriptions->save();
                 }
             }
-
-
-
-            $contacto =  request([
+            $contacto_vid =  request([
 
                 'video'
 
             ]);
+            foreach($contacto_vid as $clave=> $valor){
 
-            foreach($contacto as $clave=> $valor){
-                for($i=0;$i<count($contacto[$clave]);$i++){
-                    $descriptions = Description::where('new_id', $product->id)->where('type', 'video')->where('section', $i)->first();
-                    //dd($descriptions);
-                    if ($descriptions == null) {
-                        $content = new Description();
-                        $content->new_id                = $product->id;
-                        $content->type                  = 'video';
-                        $content ->section                 = $i;
-                        $content ->content                 =$contacto[$clave][$i];
-                        $content->save();
-                    }else {
-                        $descriptions ->content                 =$contacto[$clave][$i];
-                        $descriptions->save();
-                    }
+                $sections = count($contacto_vid[$clave]);
+                for($i=1;$i<= $sections;$i++){
+                    $videos = Description::where('new_id', $id)->where('type', 'video')->where('section', $i)->first();
+                    $videos ->content                 =$contacto_vid[$clave][$i-1];
+                    $videos->save();
                 }
             }
+
 
 
             if($request->hasFile('file')):

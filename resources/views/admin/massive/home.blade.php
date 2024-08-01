@@ -58,12 +58,12 @@
                 <div class="container-fluid corporteArea">
                     <div class="row justify-content-center align-items-center">
 
-                        <div class="col-md-6 col-sm-12 content-btn m-0">
+                        <div class="col-md-6 col-sm-12 content-btn m-2">
                             <div id="btnCSV" class="cardBox" style="cursor: pointer;">
                                 <div class="container-fluid card shadow">
                                     <div class="row">
                                         <div class="col-9 d-flex align-items-center">
-                                            Carga de CSV
+                                            Carga de Excel
                                         </div>
                                         <div class="iconBx col-3">
                                             <i class="fal fa-file-csv"></i>
@@ -73,7 +73,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-sm-12 content-btn m-0">
+                        <div class="col-md-6 col-sm-12 content-btn m-2">
                             <div  id="btnGALLERY"   class="cardBox" style="cursor: pointer;">
                                 <div class="container-fluid card shadow">
                                     <div class="row">
@@ -104,7 +104,7 @@
             <div class="header">
                 <h2 class="title">
                     <i class="fal fa-file-csv"></i>
-                    Carga de CSV
+                    Carga de Excel
                 </h2>
             </div>
 
@@ -112,10 +112,10 @@
                 <form action="{{ url('admin/upload-csv') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="file">Seleccionar archivo CSV</label>
+                        <label for="file">Seleccionar archivo Excel</label>
                         <input type="file" name="file" id="file" class="form-control" accept=".xls,.xlsx" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Leer CSV</button>
+                    <button type="submit" class="btn btn-primary">Leer Excel</button>
                 </form>
 
             </div>
@@ -123,7 +123,7 @@
                 <div class="header">
                     <h2 class="title">
                         <i class="fal fa-file-csv"></i>
-                        Datos del CSV
+                        Datos del Excel
                     </h2>
                 </div>
                 {!! Form::open(['url' => '/admin/upload-massive', 'files' => true, 'id' => 'uploadMassiveData']) !!}
@@ -146,8 +146,8 @@
                                 </tr>
                             @endforeach
                         </tbody>
+                        {!! Form::submit('Actualizar información', ['class' => 'btn btn-success float-right']) !!}
                     </table>
-                    {!! Form::submit('Actualizar información', ['class' => 'btn btn-success float-right']) !!}
 
                 {!! Form::close() !!}
             </div>

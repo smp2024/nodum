@@ -17,7 +17,13 @@
     </li>
 
 @endsection
-
+@section('css')
+<style>
+    .active {
+        font-weight: 700;
+    }
+</style>
+@endsection
 @section('content')
 
 
@@ -41,7 +47,7 @@
 
                                 <div class="row" style="padding: 16px;">
 
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-7 col-12">
 
                                         {!! Form::label('name','Nombre:') !!}
                                         <div class="input-group">
@@ -55,7 +61,20 @@
 
                                     </div>
 
-                                   
+                                    <div class="col-md-5 col-12">
+
+                                        {!! Form::label('artist_id','Artista:') !!}
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-school"></i>
+                                                </span>
+                                            </div>
+                                            {{ Form::select('artist_id', $artists, $product->artist_id, ['class'=>'form-control']) }}
+                                        </div>
+
+                                    </div>
+
 
                                     <div class="col-md-4 col-12">
 
@@ -70,21 +89,8 @@
                                         </div>
 
                                     </div>
-                                    
-                                    <div class="col-md-4 col-12">
 
-                                        {!! Form::label('artist_id','Artista:') !!}
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="fas fa-school"></i>
-                                                </span>
-                                            </div>
-                                            {{ Form::select('artist_id', $artists, $product->artist_id, ['class'=>'form-control']) }}
-                                        </div>
 
-                                    </div>
-                                    
                                     <div class="col-md-4 col-12">
 
                                         {!! Form::label('technic','Técnica:') !!}
@@ -127,33 +133,6 @@
 
                                     </div>
 
-                                    <div class="col-md-3 col-12">
-
-                                        {!! Form::label('price_min','Precio min:') !!}
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="fas fa-dollar-sign"></i>
-                                                </span>
-                                            </div>
-                                            {!! Form::text('price_min', $product->price_min, [ 'class' => 'form-control']) !!}
-                                        </div>
-
-                                    </div>
-
-                                    <div class="col-md-3 col-12">
-
-                                        {!! Form::label('price_max','Precio Max:') !!}
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="fas fa-dollar-sign"></i>
-                                                </span>
-                                            </div>
-                                            {!! Form::text('price_max', $product->price_max, [ 'class' => 'form-control']) !!}
-                                        </div>
-
-                                    </div>
 
                                     <div class="col-md-2 col-12">
 
@@ -168,7 +147,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-9">
+                                    <div class="col-7">
 
                                         {!! Form::label('file','Imagen:') !!}
                                         <div class="input-group">
@@ -195,43 +174,79 @@
 
                                 </div>
 
-                                {{-- <div class="row" style="padding: 16px;">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
+                                <div class="currency-selector" style="padding-left: 16px;">
+                                    <span id="mxTab" class="currency-tab active" onclick="showCurrency('mx')">MX</span>
+                                    <span id="usTab" class="currency-tab" onclick="showCurrency('us')">USA</span>
+                                </div>
 
-                                            {{ Form::label('tags','Etiquetas:') }}
-                                            <div>
-                                                <tr>
+                                <div id="mxPrices" class="row"  style="padding: 16px;">
 
-                                                    @foreach($tags as  $brand)
-                                                        <label class="container col-sm-3">{!! $brand->name !!}
-                                                            <input type="checkbox" class="brand_id" id="{{$brand->id}}" name="tags[]"
-                                                            value="{{@(!empty($brand->id) ? $brand->id : "")}}"
-                                                                @foreach($foods0 as $_sel0)
-                                                                    {{($brand->id == $_sel0->tag_id ? "checked='checked'": '')}}
-                                                                @endforeach
-                                                            />
-                                                            <span class="checkmark"></span>
-                                                        </label>
-                                                    @endforeach
+                                    <div class="col-md-3 col-12">
 
-                                                </tr>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="row" style="padding: 16px;">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-
-                                            {{ Form::label('description','Descripción:') }}
+                                        {!! Form::label('price_min','Precio min:') !!}
+                                        <div class="input-group">
                                             <div class="input-group-prepend">
-                                                {!! Form::textarea('description', $product->description, ['class' => 'form-control Ckeditor', 'id' => 'ckeditor']) !!}
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-dollar-sign"></i>
+                                                </span>
                                             </div>
-
+                                            {!! Form::text('price_min', number_format($product->price_min, 2, '.', ','), [ 'class' => 'form-control']) !!}
                                         </div>
+
                                     </div>
-                                </div> --}}
+
+                                    <div class="col-md-3 col-12">
+
+                                        {!! Form::label('price_max','Precio Max:') !!}
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-dollar-sign"></i>
+                                                </span>
+                                            </div>
+                                            {!! Form::text('price_max', number_format($product->price_max, 2, '.', ','), [ 'class' => 'form-control']) !!}
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div id="usPrices" class="row"  style="padding: 16px; display: none;">
+
+                                    <div class="col-md-3 col-12">
+
+                                        {!! Form::label('price_min_us','Price Min:') !!}
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-dollar-sign"></i>
+                                                </span>
+                                            </div>
+                                            {!! Form::text('price_min_us', number_format($product->price_min_us, 2, '.', ','), [ 'class' => 'form-control']) !!}
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-3 col-12">
+
+                                        {!! Form::label('price_max_us','Price Max:') !!}
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-dollar-sign"></i>
+                                                </span>
+                                            </div>
+                                            {!! Form::text('price_max_us', number_format($product->price_max_us, 2, '.', ',') , [ 'class' => 'form-control']) !!}
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+
+
+
 
                                 {!! Form::submit('Guardar', ['class' => 'btn btn-success mt16']) !!}
 
@@ -274,13 +289,13 @@
 
 
 <script type="text/javascript">
-    function check() {
+    // function check() {
 
-      var testing = document.getElementsByClassName('check_box');
-      for (int i=0; i< testing.length; i++) {
-         console.log(testing[i].value);
-      }
-    }
+    //   var testing = document.getElementsByClassName('check_box');
+    //   for (int i=0; i< testing.length; i++) {
+    //      console.log(testing[i].value);
+    //   }
+    // }
 
  //Funcion Autocomplete
  $(document).ready(function () {
@@ -312,6 +327,21 @@
             });
         }
     });
-    //
+
+    function showCurrency(currency) {
+        if (currency === 'mx') {
+            document.getElementById('mxTab').classList.add('active');
+            document.getElementById('usTab').classList.remove('active');
+            document.getElementById('mxPrices').style.display = 'flex';
+            document.getElementById('usPrices').style.display = 'none';
+
+        } else if (currency === 'us') {
+            document.getElementById('usTab').classList.add('active');
+            document.getElementById('mxTab').classList.remove('active');
+            document.getElementById('mxPrices').style.display = 'none';
+            document.getElementById('usPrices').style.display = 'flex';
+        }
+
+    }
   </script>
 @endsection

@@ -98,19 +98,12 @@
                                     Categorias
                                 </h2>
                                 </div>
-
-                                <div class="col-md-5">
-                                    {!! Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Ingrese su busqueda', 'required', 'id' => 'buscador_categories']) !!}
-                                </div>
                         </div>
 
                     </div>
-                    <div class="inside" style="max-height: 400px; overflow: auto;">
-                        <div id="preview_categories" class="row d-none" style="padding: 16px;">
+                    <div class="inside"  style="overflow: auto;">
 
-                        </div>
-                        <div id="table_categories" class="row" style="padding: 16px;">
-                            <table class="table">
+                            <table class="table w-100" id="table_categories">
                                 <thead>
                                     <tr>
                                         {{-- <td width="70">Icono</td> --}}
@@ -152,7 +145,6 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -167,91 +159,35 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
-        $('#icon').on('input', function() {
-            // Obtener el valor del input
-            var iconHtml = $(this).val();
-
-            // Crear un elemento jQuery a partir del HTML del icono
-            var iconElement = $(iconHtml);
-
-            // Limpiar el contenido actual del span
-            $('#preview_icon').empty();
-
-            // Agregar el nuevo icono al span
-            $('#preview_icon').append(iconElement);
-        });
-    });
-
-    window.addEventListener('load',function(){
-        document.getElementById("buscador_categories").addEventListener("keyup", () => {
-            if((document.getElementById("buscador_categories").value.length)>1)
-                fetch(`/categories/search?texto=${document.getElementById("buscador_categories").value}`,{ method:'get' })
-                .then(response  =>  response.text() )
-                .then(html      =>  {   document.getElementById("preview_categories").innerHTML = html  })
-            else
-                document.getElementById("preview_categories").innerHTML = ""
-        })
-    });
-    $(document).ready(function() {
-        $('#buscador_categories').on('input', function() {
-            // Obtener el valor del input
-            var inputValor = document.getElementById('buscador_categories').value;
-
-            // Contar el número de caracteres
-            var numeroCaracteres = inputValor.length;
-
-
-            // Convertir el valor a un número
-            // var searchNumber = parseFloat(searchValue);
-            console.log(numeroCaracteres);
-            // Verificar si el valor es igual o mayor a 0
-            if (numeroCaracteres <= 0) {
-            // Si es igual o mayor a 0, remover la clase d-none del div con id 'tabla'
-            $('#table_categories').removeClass('d-none');
-            // Agregar la clase d-none al div con id 'preview'
-            $('#preview_categories').addClass('d-none');
-            } else {
-            // Si es menor a 0, remover la clase d-none del div con id 'preview'
-            $('#preview_categories').removeClass('d-none');
-            // Agregar la clase d-none al div con id 'tabla'
-            $('#table_categories').addClass('d-none');
-            }
-        });
+        $('#table_categories').DataTable();
 
         $('.status-icon').on('click', function() {
-            // Obtener el ID del elemento
             var id = $(this).data('id');
-            console.log(id);
-
-            // Mostrar la animación de carga
             $('#loading-animation').removeClass('d-none');
-
-            // Llamar a la API con AJAX
             $.ajax({
                 type: 'POST',
-                url: '/api/category/change-status/', // Ruta de la API
+                url: '/api/category/change-status/',
                 data: {
                     id: id
                 },
                 success: function(response) {
-                    // Ocultar la animación de carga
-                    // Recargar la página
                     location.reload();
-                    console.log(response);
-
-                    // Mostrar la respuesta en un alert
-                    // $('#response-container').html('<div class="alert alert-success">' + response.message + '</div>');
                 },
                 error: function(xhr, status, error, response) {
-                    // Ocultar la animación de carga
                     $('#loading-animation').removeClass('d-none');
-
-                    // Manejar errores aquí si es necesario
                     console.log(response);
                 }
             });
         });
+        $('#icon').on('input', function() {
+            var iconHtml = $(this).val();
+            var iconElement = $(iconHtml);
+            $('#preview_icon').empty();
+            $('#preview_icon').append(iconElement);
+        });
     });
+
+
 
 </script>
 @endsection

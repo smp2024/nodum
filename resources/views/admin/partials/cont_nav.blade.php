@@ -34,6 +34,15 @@
         </li>
         @endif
 
+        @if (kvfj(Auth::user()->permissions, 'company'))
+        <li>
+            <a href="{{ url('/admin/company') }}" class="lk-company lk-company_add lk-company_edit">
+                <i class="fal fa-building"></i>
+                Área Corporativa
+            </a>
+        </li>
+        @endif
+
         @if (kvfj(Auth::user()->permissions, 'users_list'))
         <li>
             <a href="{{ url('/admin/users/all') }}" class="lk-users_list lk-user_edit lk-user_permissions">
@@ -43,14 +52,6 @@
         </li>
         @endif
 
-        @if (kvfj(Auth::user()->permissions, 'company'))
-        <li>
-            <a href="{{ url('/admin/company') }}" class="lk-company lk-company_add lk-company_edit">
-                <i class="fal fa-building"></i>
-                Área Corporativa
-            </a>
-        </li>
-        @endif
 
         @if (kvfj(Auth::user()->permissions, 'carousels'))
         <li>

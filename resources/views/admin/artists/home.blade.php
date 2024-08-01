@@ -53,10 +53,9 @@
                 </ul>
             </div>
 
-            <div class="inside" style=" overflow: auto;">
+            <div class="inside w-100"  style="overflow: auto;">
 
-                <div class="container">
-                    <table id="tabla_artistas" class="table">
+                    <table id="tabla_artistas" class="table w-100">
                         <thead>
                             <tr>
                                 <th>Imagen</th>
@@ -111,7 +110,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
 
             </div>
 
