@@ -95,4 +95,9 @@ Route::prefix('/admin')->group(function () {
     Route::post('/upload-csv', 'Admin\MassiveController@uploadCsv')->name('massive_add');
     Route::post('/upload-avatars', 'Admin\MassiveController@uploadAvatars')->name('massive_add');
     Route::post('/upload-massive', 'Admin\MassiveController@uploadMassiveArticle')->name('massive_add');
+
+    // Module User perfil
+    Route::get('/user-profile', 'Admin\UserController@getUserProfile')->name('user_profile');
+    Route::get('/user-profile/edit', 'Admin\UserController@getUserProfileEdit')->name('user_profile_edit');
+    Route::post('/user-profile/edit', 'Admin\UserController@postUserProfileEdit')->name('user_profile_edit');
 });

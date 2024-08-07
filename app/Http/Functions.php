@@ -29,7 +29,7 @@
     function getRoleUserArray($mode, $id)
     {
 
-        $roles = ['0' => 'Usuario normal', '1' => 'Administrador'];
+        $roles = ['0' => 'Usuario normal', '1' => 'Administrador', '2' => 'Artista'];
         if(!is_null($mode)):
 
             return $roles;

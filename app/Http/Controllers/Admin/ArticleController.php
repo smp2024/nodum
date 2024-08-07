@@ -9,6 +9,7 @@ use App\Description;
 use App\Http\Controllers\Controller;
 use App\SubCategory;
 use App\Tag;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -31,21 +32,31 @@ class ArticleController extends Controller
     public function getHome($status)
     {
         $id = Auth::id();
-        switch ($status) {
-            case 'all':
-                $products = Article::orderBy('id', 'DESC')->get();
-                break;
-            case 'borrador':
-                $products = Article::where('status', '0')->where('module', 'articulos')->orderBy('id', 'DESC')->paginate(20);
-                break;
-            case 'trash':
-                $products = Article::onlyTrashed()->where('module', 'articulos')->orderBy('id', 'DESC')->paginate(20);
-                break;
+        $user           = User::where('id',$id)->first();
 
-            default:
-                $products = Article::where('category_id', $status)->orderBy('id', 'DESC')->get();
-                break;
+        // dd($user->role);
+        if ($user->role == 2) {
+
+            $artist           = Artist::where('user_id',$id)->first();
+            $products = Article::where('artist_id',  $artist->id)->orderBy('id', 'DESC')->get();
+        } else {
+            switch ($status) {
+                case 'all':
+                    $products = Article::orderBy('id', 'DESC')->get();
+                    break;
+                case 'borrador':
+                    $products = Article::where('status', '0')->where('module', 'articulos')->orderBy('id', 'DESC')->get();
+                    break;
+                case 'trash':
+                    $products = Article::onlyTrashed()->where('module', 'articulos')->orderBy('id', 'DESC')->get();
+                    break;
+
+                default:
+                    // $products = Article::where('category_id', $status)->orderBy('id', 'DESC')->get();
+                    break;
+            }
         }
+
 
         $categories = DB::table('categories')->where('status', 1)->get();
         $data = [

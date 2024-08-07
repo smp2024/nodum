@@ -52,6 +52,13 @@
         </li>
         @endif
 
+        <li>
+            <a href="{{ url('/admin/user-profile') }}" class="lk-user_profile lk-user_profile_edit">
+                <i class="fal fa-id-badge"></i>
+                Perfil
+            </a>
+        </li>
+
 
         @if (kvfj(Auth::user()->permissions, 'carousels'))
         <li>

@@ -324,27 +324,27 @@
         });
 
         $('#customFile').change(function() {
-        var fileName = $(this).val().split('\\').pop();
-        console.log(fileName);
+            var fileName = $(this).val().split('\\').pop();
+            console.log(fileName);
 
-        if (fileName) {
-            $('#confirm_img').html('<i class="fas fa-check text-success"></i>');
-        } else {
-            $('#confirm_img').html('<i class="fas fa-times text-danger"></i>');
-        }
-
-        let file = this.files[0];
-        if (file) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                $('#previewImg').attr('src', e.target.result);
-                $('#previewImg').show();
+            if (fileName) {
+                $('#confirm_img').html('<i class="fas fa-check text-success"></i>');
+            } else {
+                $('#confirm_img').html('<i class="fas fa-times text-danger"></i>');
             }
-            reader.readAsDataURL(file);
-        } else {
-            $('#previewImg').hide();
-        }
-    });
+
+            let file = this.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#previewImg').attr('src', e.target.result);
+                    $('#previewImg').show();
+                }
+                reader.readAsDataURL(file);
+            } else {
+                $('#previewImg').hide();
+            }
+        });
     });
 
     function showCurrency(currency) {

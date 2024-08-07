@@ -8,12 +8,24 @@
                 </span>
             </button>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{{ url('/admin') }}">
-                        <i class="fal fa-tachometer-alt-fast"></i>
-                        Dashboard
-                    </a>
-                </li>
+                @if ( Auth::user()->role == "1" )
+
+                    <li class="breadcrumb-item">
+                        <a href="{{ url('/admin') }}">
+                            <i class="fal fa-tachometer-alt-fast"></i>
+                            Dashboard
+                        </a>
+                    </li>
+
+                @elseif ( Auth::user()->role == "2")
+
+                    <li class="breadcrumb-item">
+                        <a href="{{ url('admin/user-profile') }}">
+                            <i class="fal fa-id-badge"></i>
+                            Perfil
+                        </a>
+                    </li>
+                @endif
                 @section('breadcrumb')
                 @show
             </ol>

@@ -36,9 +36,18 @@
                 <li class="nav-item  link-user dropdow ">
                     <a href="#" class="nav-link   dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">Hola: {{ Auth::user()->name }} </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        @if ( Auth::user()->role == "1" || Auth::user()->role == "2" )
+
+                        @if ( Auth::user()->role == "1" )
+
                             <li>
                                 <a href="{{ url('/admin') }}" data-toggle="tooltip" class="nav-link  us" data-placement="top" title="Administración">
+                                    <i class="fas fa-chalkboard-teacher"></i> Administración
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                        @elseif ( Auth::user()->role == "2")
+                            <li>
+                                <a href="{{ url('/admin/user-profile') }}" data-toggle="tooltip" class="nav-link  us" data-placement="top" title="Administración">
                                     <i class="fas fa-chalkboard-teacher"></i> Administración
                                 </a>
                             </li>

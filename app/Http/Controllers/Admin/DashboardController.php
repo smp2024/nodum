@@ -11,6 +11,7 @@ use App\News;
 use App\Project;
 use App\SubCategory;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -25,6 +26,7 @@ class DashboardController extends Controller
 
     public function getDashboard()
     {
+
         $users = User::count();
         $categories = Category::count();
         $tecnic = SubCategory::count();
