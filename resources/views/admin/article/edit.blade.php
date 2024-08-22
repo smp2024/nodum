@@ -49,7 +49,7 @@
 
                                     <div class="col-md-7 col-12">
 
-                                        {!! Form::label('name','Nombre:') !!}
+                                        {!! Form::label('name','Título:') !!}
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
@@ -76,7 +76,7 @@
                                     </div>
 
 
-                                    <div class="col-md-4 col-12">
+                                    <div class="col-md-6 col-12">
 
                                         {!! Form::label('category_id','Categoria:') !!}
                                         <div class="input-group">
@@ -91,8 +91,8 @@
                                     </div>
 
 
-                                    <div class="col-md-4 col-12">
-
+                                    <div class="col-md-6 col-12">
+                                        <input id="sub_id" type="number" name="sub_id" value="{{$product->subcategory_id}}" hidden>
                                         {!! Form::label('technic','Técnica:') !!}
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -100,12 +100,13 @@
                                                     <i class="fas fa-signature"></i>
                                                 </span>
                                             </div>
-                                            {!! Form::text('technic', $product->getSubCategory->name, [ 'class' => 'form-control', 'id' => 'autocompleteInput']) !!}
+                                            {!! Form::select('technic',$tecnicas, $product->subcategory_id, ['class' => 'form-control']) !!}
+
                                         </div>
                                         <ul id="suggestionsList"></ul>
                                     </div>
 
-                                    <div class="col-md-2 col-12">
+                                    <div class="col-md-4 col-12">
 
                                         {!! Form::label('height','Alto:') !!}
                                         <div class="input-group">
@@ -119,7 +120,7 @@
 
                                     </div>
 
-                                    <div class="col-md-2 col-12">
+                                    <div class="col-md-4 col-12">
 
                                         {!! Form::label('width','Ancho:') !!}
                                         <div class="input-group">
@@ -133,8 +134,20 @@
 
                                     </div>
 
+                                    <div class="col-md-4 col-12">
 
-                                    <div class="col-md-2 col-12">
+                                        {!! Form::label('depth','Profundidad:') !!}
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-percent"></i>
+                                                </span>
+                                            </div>
+                                            {!! Form::number('depth', $product->depth, [ 'class' => 'form-control']) !!}
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4 col-12">
 
                                         {!! Form::label('year','Año:') !!}
                                         <div class="input-group">
@@ -243,11 +256,6 @@
 
                                 </div>
 
-
-
-
-
-
                                 {!! Form::submit('Guardar', ['class' => 'btn btn-success mt16']) !!}
 
                             {!! Form::close() !!}
@@ -289,43 +297,35 @@
 
 
 <script type="text/javascript">
-    // function check() {
 
-    //   var testing = document.getElementsByClassName('check_box');
-    //   for (int i=0; i< testing.length; i++) {
-    //      console.log(testing[i].value);
-    //   }
-    // }
+    $(document).ready(function () {
 
- //Funcion Autocomplete
- $(document).ready(function () {
-        $('#autocompleteInput').on('input', function () {
-            var query = $(this).val();
+        $('#category_id').on('change', function () {
+            let categoryId = $(this).val();
+            let currentSelectedTechnic = $('#technic').val();
+            let technic_user = $('#sub_id').val();
 
             $.ajax({
-                url: '/autocomplete',
-                type: 'GET',
-                data: {query: query},
+                url: '/api/get-techniques-by-category',
+                type: 'POST',
+                data: { category_id: categoryId },
                 success: function (data) {
-                    displaySuggestions(data);
+                    let techniqueSelect = $('#technic');
+                    techniqueSelect.empty();
+
+                    data.forEach(function (technique) {
+                        techniqueSelect.append(
+                            $('<option></option>')
+                                .attr('value', technique.id)
+                                .text(technique.name)
+                        );
+                        techniqueSelect.val(technic_user);
+                    });
+
+
                 }
             });
         });
-
-        function displaySuggestions(suggestions) {
-            var list = $('#suggestionsList');
-            list.empty();
-
-            suggestions.forEach(function (suggestion) {
-                var listItem = $('<li>').text(suggestion.name );
-                listItem.click(function () {
-                    $('#autocompleteInput').val(suggestion.name );
-                    list.empty();
-                });
-
-                list.append(listItem);
-            });
-        }
     });
 
     function showCurrency(currency) {
@@ -343,5 +343,5 @@
         }
 
     }
-  </script>
+    </script>
 @endsection

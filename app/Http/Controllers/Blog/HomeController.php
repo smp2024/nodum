@@ -72,11 +72,11 @@ class HomeController extends Controller
         }
         if ($category == 'obras') {
             $artistas = DB::table('artists')->where('status', '1')->orderBy('id', 'DESC')->get();
-            $artistas->prepend((object) ['id' => 'Todos', 'name' => 'Todos']); // Agregar "Todos" al principio del array
+            // $artistas->prepend((object) ['id' => 'Todos', 'name' => 'Todos']); // Agregar "Todos" al principio del array
             $categories = DB::table('categories')->where('status', '1')->get();
-            $categories->prepend((object) ['id' => 'Todos', 'name' => 'Todos']); // Agregar "Todos" al principio del array
+            // $categories->prepend((object) ['id' => 'Todos', 'name' => 'Todos']); // Agregar "Todos" al principio del array
             $tecnicas = DB::table('sub_categories')->where('status', '1')->get();
-            $tecnicas->prepend((object) ['id' => 'Todos', 'name' => 'Todos']); // Agregar "Todos" al principio del array
+            // $tecnicas->prepend((object) ['id' => 'Todos', 'name' => 'Todos']); // Agregar "Todos" al principio del array
             $articles = DB::table('articles')->where('status', 1)->where('deleted_at',NULL)->get();
         }
 
@@ -125,12 +125,12 @@ class HomeController extends Controller
     {
         $users = DB::table('artists')->where('id', $id)->first();
         $categories = DB::table('categories')->where('status', '1')->get();
-        $categories->prepend((object) ['id' => 'Todos', 'name' => 'Todos']); // Agregar "Todos" al principio del array
+        // $categories->prepend((object) ['id' => 'Todos', 'name' => 'Todos']);
         $articles = DB::table('articles')->where('artist_id', $id)->where('status', 1)->get();
         $tecnicas = DB::table('sub_categories')->where('status', '1')->get();
-        $tecnicas->prepend((object) ['id' => 'Todos', 'name' => 'Todos']); // Agregar "Todos" al principio del array
+        // $tecnicas->prepend((object) ['id' => 'Todos', 'name' => 'Todos']);
         $artistas = DB::table('artists')->where('status', '1')->orderBy('id', 'DESC')->get();
-        $artistas->prepend((object) ['id' => 'Todos', 'name' => 'Todos']); // Agregar "Todos" al principio del array
+        // $artistas->prepend((object) ['id' => 'Todos', 'name' => 'Todos']);
 
         if ($category == 'new') {
             $vpn = DB::table('news')->where('slug', $id)->where('status', 1)->first();
@@ -293,4 +293,10 @@ class HomeController extends Controller
 
         return response()->download($tempFilePath, $fileName)->deleteFileAfterSend(true);
     }
+
+
+    public function filterSearch(Request $request){
+        return response()->json($request);
+    }
+
 }

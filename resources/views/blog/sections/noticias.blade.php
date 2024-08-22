@@ -8,7 +8,7 @@
         <!--Buscador de noticias-->
         <div class="form_search mt-3 w-100" id="form_search" style="width: 100%; padding: 0 5% 0 4%;">
 
-            <ul>
+            {{-- <ul>
                 {!! Form::open(['url' => '/news/search']) !!}
                     <div class="row justify-content-center">
                         <div class="col-7 col-md-6 p-0 pl-1">
@@ -23,7 +23,7 @@
 
 
                 {!! Form::close() !!}
-            </ul>
+            </ul> --}}
 
         </div>
         <div class="col-12" id="web-news">

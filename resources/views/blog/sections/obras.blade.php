@@ -3,18 +3,30 @@
 @section('css')
 <style>
     .highlight {
-    display: none;
+        display: block !important;
+    }
+    .no-highlight {
+        display: none;
     }
     .image-container {
-        height: 60%;
-        overflow: hidden;
-        min-width: 100%;
-        text-align: center;
+        height: 85%;
+        justify-content: start;
+        display: flex;
+        align-items: end;
     }
     .image-container img{
-        height: 100%;
+        width: 100%;
+        background-size: auto 100%;
+        height: auto;
+        max-height: 100%;
     }
-
+    img:hover{
+        box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    }
+    .title {
+        font-style: italic;
+        text-transform: inherit;
+    }
     .image-container  {
         transition: all .05s ease-in-out;
         transform-origin: center center;
@@ -22,7 +34,7 @@
 
     .image-container:hover {
         padding: 1px;
-        border: 1px solid #000 !important;
+        /* border: 1px solid #000 !important; */
     }
     .medidas {
         display: none;
@@ -168,167 +180,188 @@
         <div class="col-lg-3 col-sm-5 col-5 d-flex justify-content-center align-items-center p-0 w-100" style="padding-left: 20px !important;">
             <!-- Sección de filtrado -->
             <div class="filtro w-100">
-                <div class="content ">
-                    <h4 class="toggle-list-categoria" data-filter="cat"> Categorías <span class="arrow"></span></h4>
-                    <ul class="cat medidas" >
+                {!! Form::open(['url' => '/filter-search', 'id' => 'filterForm', 'files' => true, 'method' => 'post']) !!}
 
-                        <!-- Lista de categorías -->
+                    <div class="content ">
+                        <h4 class="toggle-list-categoria" data-filter="cat"> Categorías <span class="arrow"></span></h4>
+                        <ul class="cat medidas" >
 
-                        @foreach($categories as $category)
+                            <!-- Lista de categorías -->
 
-                            <li>
-                                <label class="container c1" >
-                                    <input  onchange="handleCheckboxChangeCategory(this, {{ $category->id }})" type="checkbox" name="categoria_checkbox[]" value="{{ $category->id }}" id="category_{{ $category->id }}"  >
-                                    <span class="checkmark"></span>
-                                    <a href="#" onclick="filterByCategory('{{ $category->id }}')">{{ $category->name }}</a>
-                                </label>
-                            </li>
+                            @foreach($categories as $category)
 
-                        @endforeach
+                                <li>
+                                    <label class="container c1" >
+                                        <input  onchange="handleCheckboxChangeCategory(this, {{ $category->id }})" type="checkbox" name="categoria_checkbox[]" value="{{ $category->id }}" id="category_{{ $category->id }}"  >
+                                        <span class="checkmark"></span>
+                                        <a href="#" onclick="filterByCategory('{{ $category->id }}')">{{ $category->name }}</a>
+                                    </label>
+                                </li>
 
-                    </ul>
-                    <hr>
-                </div>
+                            @endforeach
 
-                <div class="content">
-                    <h4 class="toggle-list-artista" data-filter="artist"> Artistas <span class="arrow"></span></h4>
-                    <ul class="artist medidas" >
+                        </ul>
+                        <hr>
+                    </div>
 
-                        @php
-                            $artists = ['Todos'];
-                            foreach ($articles as $article) {
-                                $artists[] = $article->artist_id;
-                            }
-                            $artists = array_unique($artists);
-                            sort($artists);
-                        @endphp
-                        @foreach ($artists as $artist)
-                            @foreach ($artistas as $artista)
-                                @if ($artista->id == $artist)
+                    <div class="content">
+                        <h4 class="toggle-list-artista" data-filter="artist"> Artistas <span class="arrow"></span></h4>
+                        <ul class="artist medidas" >
+
+                            @php
+                                foreach ($articles as $article) {
+                                    $artists[] = $article->artist_id;
+                                }
+                                $artists = array_unique($artists);
+                                sort($artists);
+                            @endphp
+                            @foreach ($artists as $artist)
+                                @foreach ($artistas as $artista)
+                                    @if ($artista->id == $artist)
+                                        <li>
+
+                                        <label class="container c1" >
+                                            <input onchange="handleCheckboxChangeArtist(this, {{ $artista->id }})" type="checkbox" name="artista_checkbox[]" value="{{ $artista->id }}" id="artista_{{ $tecnica->id }}"  >
+                                            <span class="checkmark"></span>
+                                            <a href="#" onclick="filterByArtist('{{ $artista->id }}')">{{ $artista->name }} {{ $artista->lastname }} </a>
+                                        </label>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            @endforeach
+                        </ul>
+                        <hr>
+                    </div>
+
+                    <div class="content">
+                        <h4 class="toggle-list-tecnica" data-filter="tec"> Técnicas <span class="arrow"></span></h4>
+                        <ul class="tec medidas" >
+
+                            @php
+                                foreach ($articles as $article) {
+                                    $technics[] = $article->subcategory_id;
+                                }
+                                $technics = array_unique($technics);
+                                sort($technics);
+                            @endphp
+                            @foreach ($technics as $technic)
+                                @foreach ($tecnicas as $tecnica)
+                                    @if ($tecnica->id == $technic)
                                     <li>
 
                                     <label class="container c1" >
-                                        <input onchange="handleCheckboxChangeArtist(this, {{ $artista->id }})" type="checkbox" name="artista_checkbox[]" value="{{ $artista->id }}" id="artista_{{ $tecnica->id }}"  >
+                                        <input onchange="handleCheckboxChangeTecnic(this, {{ $tecnica->id }})" type="checkbox" name="tecnica_checkbox[]" value="{{ $tecnica->id }}" id="tecnica_{{ $tecnica->id }}"  >
                                         <span class="checkmark"></span>
-                                        <a href="#" onclick="filterByArtist('{{ $artista->id }}')">{{ $artista->name }} {{ $artista->lastname }} </a>
+                                        <a href="#" onclick="filterByTechnic('{{ $tecnica->id }}')">{{ $tecnica->name }}</a>
                                     </label>
                                     </li>
-                                @endif
+                                    @endif
+                                @endforeach
                             @endforeach
-                        @endforeach
-                    </ul>
-                    <hr>
-                </div>
-
-                <div class="content">
-                    <h4 class="toggle-list-tecnica" data-filter="tec"> Técnicas <span class="arrow"></span></h4>
-                    <ul class="tec medidas" >
-
-                        @php
-                        $technics = ['Todos'];
-                            foreach ($articles as $article) {
-                                $technics[] = $article->subcategory_id;
-                            }
-                            $technics = array_unique($technics);
-                            sort($technics);
-                        @endphp
-                        @foreach ($technics as $technic)
-                            @foreach ($tecnicas as $tecnica)
-                                @if ($tecnica->id == $technic)
-                                <li>
-
-                                <label class="container c1" >
-                                    <input onchange="handleCheckboxChangeTecnic(this, {{ $tecnica->id }})" type="checkbox" name="tecnica_checkbox[]" value="{{ $tecnica->id }}" id="tecnica_{{ $tecnica->id }}"  >
-                                    <span class="checkmark"></span>
-                                    <a href="#" onclick="filterByTechnic('{{ $tecnica->id }}')">{{ $tecnica->name }}</a>
-                                </label>
-                                </li>
-                                @endif
-                            @endforeach
-                        @endforeach
-                    </ul>
-                    <hr>
-                </div>
-
-                <div class="content">
-                    <h4>Precio</h4>
-                    <div class="currency-selector">
-                        <span id="mxTab" class="currency-tab active" onclick="showCurrency('mx')">MX</span>
-                        <span id="usTab" class="currency-tab" onclick="showCurrency('us')">USA</span>
+                        </ul>
+                        <hr>
                     </div>
 
-                    <!-- Rango de precios para MX -->
-                    <div id="mxPrices">
+                    <div class="content">
+                        <h4>Precio</h4>
+                        <div class="currency-selector">
+                            <span id="mxTab" class="currency-tab active" onclick="showCurrency('mx')">MX</span>
+                            <span id="usTab" class="currency-tab" onclick="showCurrency('us')">USA</span>
+                        </div>
 
-                        <p id="minPrice" class="m-0">Desde <span id="priceValue" style="width: 33%;" class="m-0 ml-2"> ${{ number_format($articles->min('price_min'), 2, '.', ',') }}</span></p>
-                        <div style="display: inline-flex">
-                            <input type="range" min="{{ $articles->min('price_min') }}" max="{{ $articles->max('price_max') }}" value="{{ $articles->min('price_min') }}" id="priceRange">
+                        <!-- Rango de precios para MX -->
+                        <div id="mxPrices">
+
+                            <p id="minPrice" class="m-0">Desde <span id="priceValue" style="width: 33%;" class="m-0 ml-2"> ${{ number_format($articles->min('price_min'), 2, '.', ',') }}</span></p>
+                            {{-- <input type="number" name="price_min" value="" id="pMin" hidden> --}}
+                            <div style="display: inline-flex">
+                                <input name="price_min"  type="range" min="{{ $articles->min('price_min') }}" max="{{ $articles->max('price_max') }}" value="{{ $articles->min('price_min') }}" id="priceRange">
+
+                            </div>
+                            <p id="maxPrice" class="m-0">Hasta ${{ number_format($articles->max('price_max'), 2, '.', ',') }}</p>
+                            <input name="price_max" hidden type="range" min="{{ $articles->min('price_min') }}" max="{{ $articles->max('price_max') }}" value="{{ $articles->max('price_max') }}" id="">
 
                         </div>
-                        <p id="maxPrice" class="m-0">Hasta ${{ number_format($articles->max('price_max'), 2, '.', ',') }}</p>
-                    </div>
 
-                    <!-- Rango de precios para USA (inicialmente oculto) -->
-                    <div id="usPrices" style="display: none;">
-                        <p id="minPriceUS" class="m-0">From <span id="priceValueUS" style="width: 33%;" class="m-0 ml-2"> ${{ number_format($articles->min('price_min_us'), 2, '.', ',') }}</span></p>
-                        <div style="display: inline-flex">
-                            <input type="range" min="{{ $articles->min('price_min_us') }}" max="{{ $articles->max('price_max_us') }}" value="{{ $articles->min('price_min_us') }}" id="priceRangeUS">
+                        <!-- Rango de precios para USA (inicialmente oculto) -->
+                        <div id="usPrices" style="display: none;">
+                            <p id="minPriceUS" class="m-0">From <span id="priceValueUS" style="width: 33%;" class="m-0 ml-2"> ${{ number_format($articles->min('price_min_us'), 2, '.', ',') }}</span></p>
+                            <div style="display: inline-flex">
+                                <input name="price_min_us"  type="range" min="{{ $articles->min('price_min_us') }}" max="{{ $articles->max('price_max_us') }}" value="{{ $articles->min('price_min_us') }}" id="priceRangeUS">
+                            </div>
+                            <p id="maxPriceUS" class="m-0">To ${{ number_format($articles->max('price_max_us'), 2, '.', ',') }}</p>
+                            <input name="price_max_us" hidden type="range" min="{{ $articles->min('price_max_us') }}" max="{{ $articles->max('price_max_us') }}" value="{{ $articles->max('price_max_us') }}" id="">
+
                         </div>
-                        <p id="maxPriceUS" class="m-0">To ${{ number_format($articles->max('price_max_us'), 2, '.', ',') }}</p>
+
+                        <hr>
                     </div>
 
-                    <hr>
-                </div>
+                    <div class="content">
+                        <h4>Medidas</h4>
+                        <!-- Rango de medidas -->
+                        <ul>
+                            <li>
+                                {!! Form::checkbox('measures[]', 1, [ 'class' => 'form-control ml-2']) !!}
+                                {!! Form::label('catSma','Pequeño') !!}
 
-                <div class="content">
-                    <h4>Medidas</h4>
-                    <!-- Rango de medidas -->
-                    <ul>
-                        <li><a href="#" onclick="highlightSize('pequeño')">Pequeño (menor a 40cm)</a></li>
-                        <li><a href="#" onclick="highlightSize('mediano')">Mediano </a></li>
-                        <li><a href="#" onclick="highlightSize('grande')">Grande(mayor a 100cm)</a></li>
-                    </ul>
-                </div>
+                            <li>
 
+                                {!! Form::checkbox('measures[]', 2, [ 'class' => 'form-control ml-2']) !!}
+                                {!! Form::label('catMed','Mediano') !!}
+                            </li>
+                            <li>
+                                {!! Form::checkbox('measures[]', 3, [ 'class' => 'form-control ml-2']) !!}
+                                {!! Form::label('catLar','Grande') !!}
+                            </li>
+                        </ul>
+                    </div>
+
+                    {!! Form::submit('Guardar', ['class' => 'btn btn-success mt16']) !!}
+
+                {!! Form::close() !!}
             </div>
 
         </div>
-        <!-- info Artsta -->
+        <!-- info Obras erg-->
         <div id="content-articles" class="col-lg-9 col-sm-7 col-7 h-100 w-100 d-flex justify-content-center align-items-center p-0" >
             <div class="row w-100 h-100">
                <!-- Listado de artículos -->
                     @foreach($articles as $article)
+                    {{-- <div class=" mt-3"> --}}
+                        <div class="col-lg-4 col-md-6 col-sm-12 content-articles mt-2"  alt="{{ $article->name }}');"  data-year="{{ $article->year }}" data-category="{{ $article->category_id }}" data-technic="{{ $article->subcategory_id }}" data-pricemin="{{ $article->price_min }}" data-pricemax="{{ $article->price_max }}" data-priceminus="{{ $article->price_min_us }}" data-pricemaxus="{{ $article->price_max_us }}" data-width="{{ $article->width }}"  data-height="{{ $article->height }}" data-artist="{{ $article->artist_id }}" data-show="0" >
 
-                    <div class=" content-articles ml-3 mr-3" style="height: 60%;" data-year="{{ $article->year }}" data-category="{{ $article->category_id }}" data-technic="{{ $article->subcategory_id }}" data-pricemin="{{ $article->price_min }}" data-pricemax="{{ $article->price_max }}" data-priceminus="{{ $article->price_min_us }}" data-pricemaxus="{{ $article->price_max_us }}" data-width="{{ $article->width }}"  data-height="{{ $article->height }}" data-artist="{{ $article->artist_id }}" data-show="0" >
 
-                        <a href="{{ url('seccion/obras/'.$article->id) }}">
-                            <div class="d-flex justify-content-center align-items-end w-100" style="height: 60%;">
+                            <a href="{{ url('seccion/obras/'.$article->id) }}">
+                                <div class="d-flex justify-content-start align-items-end w-100" style="height: 60%;">
 
-                                <div class="image-container">
-                                    <img src="{{ url('multimedia'.$article->file_path.'/'.$article->slug. '/'.$article->file) }}" alt="{{ $article->name }}" >
+                                    <div class="image-container">
+                                        <img src="{{ url('multimedia'.$article->file_path.'/'.$article->slug. '/'.$article->file) }}" alt="{{ $article->name }}" >
+                                    </div>
+
                                 </div>
+                                <div style="height: 40%;">
+                                    <p class="m-0 text-start" style="font-size: calc(0.5rem + 0.4vw);">{{ $article->name }}</p>
+                                    @foreach ($tecnicas as $tecnica)
+                                        @if ($tecnica->id == $article->subcategory_id)
+                                            <p class="m-0 text-start" style="font-size: 13px;">{{ $tecnica->name }}</p>
+                                        @endif
+                                    @endforeach
+                                     @foreach ($artistas as $artista)
+                                        @if ($artista->id == $article->artist_id)
+                                            <p class="m-0 text-start" style="font-size: 13px;">{{ $artista->name }} {{ $artista->lastname }}</p>
+                                        @endif
+                                    @endforeach
 
-                            </div>
-                            <div style="height: 40%;">
-                                <p class="m-0 text-start">{{ $article->name }}</p>
-                                {{-- @foreach ($tecnicas as $tecnica)
-                                    @if ($tecnica->id == $article->subcategory_id)
-                                        <p class="m-0 text-start">{{ $tecnica->name }}</p>
-                                    @endif
-                                @endforeach --}}
-                                @foreach ($artistas as $artista)
-                                    @if ($artista->id == $article->artist_id)
-                                        <p class="m-0 text-start">{{ $artista->name }} {{ $artista->lastname }}</p>
-                                    @endif
-                                @endforeach
+                                    <p class="m-0 text-start" style="font-size: 13px;">{{ $article->year }}</p>
+                                    <p class="m-0 text-start" style="font-size: 13px;">{{ $article->width }} x {{ $article->height }} cm</p>
 
-                                <p class="m-0 text-start">{{ $article->year }}</p>
-                                <p class="m-0 text-start">{{ $article->width }} x {{ $article->height }} cm</p>
+                                </div>
+                            </a>
 
-                            </div>
-                        </a>
+                        </div>
+                    {{-- </div> --}}
 
-                    </div>
 
                     @endforeach
             </div>
@@ -346,7 +379,11 @@
                 document.getElementById('usTab').classList.remove('active');
                 document.getElementById('mxPrices').style.display = 'block';
                 document.getElementById('usPrices').style.display = 'none';
+                $('.mxPrices_').show();
+                $('.usPrices_').hide();
                 document.getElementById('priceRange').value = "{{ $articles->min('price_min') }}";
+
+                document.getElementById('pMin').value = "{{ $articles->min('price_min') }}";
                 document.getElementById('priceValue').textContent = "${{ number_format($articles->min('price_min'), 2, '.', ',') }}";
 
                 showall();
@@ -355,6 +392,8 @@
                 document.getElementById('mxTab').classList.remove('active');
                 document.getElementById('mxPrices').style.display = 'none';
                 document.getElementById('usPrices').style.display = 'block';
+                $('.mxPrices_').hide();
+                $('.usPrices_').show();
                 document.getElementById('priceRangeUS').value = "{{ $articles->min('price_min_us') }}";
                 document.getElementById('priceValueUS').textContent = "${{ number_format($articles->min('price_min_us'), 2, '.', ',') }}";
                 showall();
@@ -518,24 +557,47 @@
         });
 
         function highlightSize(size) {
+
+            // $('#content-articles .content-articles[data-show=0]').hide();
             showall();
             const articles = document.querySelectorAll('#content-articles .content-articles');
-
-
             articles.forEach(article => {
+                //
                 const width = parseInt(article.getAttribute('data-width'));
                 const height = parseInt(article.getAttribute('data-height'));
 
-                if (size === 'pequeño' && (width < 40 || height < 40)) {
-                    article.classList.add('highlight');
+                if (size === 'pequeño' && (width <= 40)) {
+                    // article.classList.remove('no-highlight');
+                    // article.classList.add('highlight');
+                    if (height <= 40) {
 
-                } else if (size === 'mediano' && (width < 40 && width > 100) && (height < 40 && height > 100)) {
-                    article.classList.add('highlight');
-                } else if (size === 'grande' && (width > 100 || height > 100)) {
-                    article.classList.add('highlight');
-                } else {
-                    article.classList.remove('highlight');
+                        console.log(article);
+                    } else {
+                        article.classList.add('no-highlight');
+                    }
+
                 }
+                //  else {
+                //     article.classList.add('no-highlight');
+
+                // }
+
+                // if (size === 'mediano' && (width >= 40 && width <= 100) && (height >= 40 && height <= 100)) {
+                //     article.classList.remove('no-highlight');
+                //     article.classList.add('highlight');
+                //     console.log('mediano');
+                // } else {
+                //     article.classList.add('no-highlight');
+
+                // }
+
+                // if (size === 'grande' && (width >= 100 || height >= 100)) {
+                //     article.classList.remove('no-highlight');
+                //     article.classList.add('highlight');
+                //     console.log('grande');
+                // } else {
+                //     article.classList.add('no-highlight');
+                // }
             });
         }
         if (screen.width < 800) {
@@ -641,5 +703,36 @@
             }
         }
     </script>
+<script>
+    $(document).ready(function() {
+        $('#filterForm').on('submit', function(event) {
+            event.preventDefault(); // Previene el envío del formulario de manera tradicional
 
+            // Obtén los datos del formulario
+            var formData = new FormData(this);
+            console.log(formData);
+            console.log('Entro');
+            // Realiza la solicitud AJAX usando jQuery
+            $.ajax({
+                url: '/api/get-articles',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                before: function(response) {
+                    console.log(response);
+                },
+                success: function(response) {
+                    // Maneja la respuesta del servidor
+                    console.log(response); // Muestra la respuesta en la consola
+                    // Puedes actualizar la página o mostrar los resultados de la búsqueda aquí
+                },
+                error: function(xhr, status, error) {
+                    // Maneja cualquier error
+                    console.error('Error al enviar el formulario:', error);
+                }
+            });
+        });
+    });
+    </script>
 @endsection

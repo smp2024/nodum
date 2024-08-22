@@ -161,22 +161,23 @@ class ArticleController extends Controller
 
                 $product->name = e($request->input('name'));
                 $product->slug = Str::slug($request->input('name'));
-                $techname = Str::slug($request->input('technic'));
-                $category_id = $request->input('category_id');
-                $sc = SubCategory::where('slug', $techname)->where('category_id', $category_id)->first();
-                if ($sc == null) {
-                    $c = new SubCategory();
-                    $c->name = e($request->input('technic'));
-                    $c->slug = Str::slug($request->input('technic'));
-                    $c->category_id = $request->input('category_id');
-                    $c->status = 1;
+                $product->category_id = $request->input('category_id');
+                $product->subcategory_id = $request->input('subcategory_id');
+                // $sc = SubCategory::where('slug', $techname)->where('category_id', $category_id)->first();
+                // if ($sc == null) {
+                //     $c = new SubCategory();
+                //     $c->name = e($request->input('technic'));
+                //     $c->slug = Str::slug($request->input('technic'));
+                //     $c->category_id = $request->input('category_id');
+                //     $c->status = 1;
 
-                    if ($c->save()) {
-                        $product->subcategory_id = $c->id;
-                    }
-                } else {
-                    $product->subcategory_id = $sc->id;
-                }
+                //     if ($c->save()) {
+                //         $product->subcategory_id = $c->id;
+                //     }
+                // } else {
+                //     $product->subcategory_id = $sc->id;
+                // }
+
 
                 if ($request->hasFile('file')) {
                     $fileExt = trim($request->file('file')->getClientOriginalExtension());
@@ -191,6 +192,7 @@ class ArticleController extends Controller
 
                 $product->height = e($request->input('height'));
                 $product->width = e($request->input('width'));
+                $product->depth = e($request->input('depth'));
 
                 if ($product->save()) {
                     $articleId = $product->id;
@@ -230,7 +232,10 @@ class ArticleController extends Controller
         $product = Article::findOrFail($id);
         $categories = Category::where('status', 1)->orderBy('name', 'ASC')->get();
         $clasi = [] + $categories->pluck('name', 'id')->toArray();
+        $tecnics = SubCategory::where('category_id', $product->category_id)->where('status', 1)->orderBy('name', 'ASC')->get();
+        $tecnics_ = [] + $tecnics->pluck('name', 'id')->toArray();
 
+        // dd($tecnics_);
         $cats = Article::where('module', 'articulos')->pluck('name', 'id');
         $categories = Category::where('status', 1)->get();
         $tags = Tag::where('status', 1)->get();
@@ -245,6 +250,7 @@ class ArticleController extends Controller
             'cats' => $cats,
             'product' => $product,
             'subclasi' => $clasi,
+            'tecnicas' => $tecnics_,
             'categories' => $categories,
             'tags' => $tags,
             'articleTags' => $ArticleTags,
@@ -259,6 +265,7 @@ class ArticleController extends Controller
 
     public function postArticleEdit(Request $request, $id)
     {
+        // dd($request);
         if ($request->hasFile('file')) {
             $rules = [
      //           'file' => 'required|image|mimes:jpg,png,jpeg|max:6144|dimensions:min_width=1920,min_height=1080,max_width=1920,max_height=1080',
@@ -302,25 +309,36 @@ class ArticleController extends Controller
                 }
             }
             $product->status = $request->input('status');
-            $product->category_id = $request->input('category_id');
 
             $exchangeRate = getExchangeRate();
+            // Eliminar las comas
+            $price_min_ = str_replace(',', '', $request->input('price_min'));
+            $price_max_ = str_replace(',', '', $request->input('price_max'));
+            $price_min_us_ = str_replace(',', '', $request->input('price_min_us'));
+            $price_max_us_ = str_replace(',', '', $request->input('price_max_us'));
+
+            $price_min = number_format((float)$price_min_, 2, '.', '');
+            $price_max = number_format((float)$price_max_, 2, '.', '');
+            $price_min_us = number_format((float)$price_min_us_, 2, '.', '');
+            $price_max_us = number_format((float)$price_max_us_, 2, '.', '');
+
+            // dd($price_min);
 
             if ($request->input('price_min') && $request->input('price_max')  != null && $request->input('price_min_us') && $request->input('price_max_us')  == null) {
-                $product->price_min = $request->input('price_min');
-                $product->price_max = $request->input('price_max');
-                $product->price_min_us = ($request->input('price_min') / $exchangeRate);
-                $product->price_max_us = ($request->input('price_max') / $exchangeRate);
+                $product->price_min = $price_min;
+                $product->price_max = $price_max;
+                $product->price_min_us = ($price_min / $exchangeRate);
+                $product->price_max_us = ($price_max / $exchangeRate);
             } else if ($request->input('price_min_us') && $request->input('price_max_us')  != null && $request->input('price_min') && $request->input('price_max')  == null) {
-                $product->price_min_us = $request->input('price_min_us');
-                $product->price_max_us = $request->input('price_max_us');
-                $product->price_min = ($request->input('price_min_us') * $exchangeRate);
-                $product->price_max = ($request->input('price_max_us') * $exchangeRate);
+                $product->price_min_us = $price_min_us;
+                $product->price_max_us = $price_max_us;
+                $product->price_min = ($price_min_us * $exchangeRate);
+                $product->price_max = ($price_max_us * $exchangeRate);
             } else {
-                $product->price_min_us = $request->input('price_min_us');
-                $product->price_max_us = $request->input('price_max_us');
-                $product->price_min = $request->input('price_min');
-                $product->price_max = $request->input('price_max') ;
+                $product->price_min_us = $price_min_us;
+                $product->price_max_us = $price_max_us;
+                $product->price_min = $price_min;
+                $product->price_max = $price_max ;
             }
 
             $product->artist_id = $request->input('artist_id');
@@ -328,27 +346,14 @@ class ArticleController extends Controller
 
             $product->height = e($request->input('height'));
             $product->width = e($request->input('width'));
+            $product->depth = e($request->input('depth'));
             $product->tags()->sync($request->get('tags'));
 
             $product->name = e($request->input('name'));
             $product->slug = Str::slug($request->input('name'));
-            $techname = Str::slug($request->input('technic'));
-            $category_id = $request->input('category_id');
+            $product->category_id = $request->input('category_id');
+            $product->subcategory_id = $request->input('technic');
 
-            $sc = SubCategory::where('slug', $techname)->where('category_id', $category_id)->first();
-            if ($sc == null) {
-                $c = new SubCategory();
-                $c->name = e($request->input('technic'));
-                $c->slug = Str::slug($request->input('technic'));
-                $c->category_id = $request->input('category_id');
-                $c->status = 1;
-
-                if ($c->save()) {
-                    $product->subcategory_id = $c->id;
-                }
-            } else {
-                $product->subcategory_id = $sc->id;
-            }
 
             if ($request->hasFile('file')) {
                 $fileExt = trim($request->file('file')->getClientOriginalExtension());

@@ -37,16 +37,16 @@ class MassiveController extends Controller
     public function uploadCsv(Request $request)
     {
 
-        // $exchangeRate = getExchangeRate();
+        $exchangeRate = getExchangeRate();
 
-        // $articulos = Article::get();
+        $articulos = Article::get();
 
-        // foreach ($articulos as  $articulo) {
-        //     $product = Article::findOrFail($articulo->id);
-        //     $product->price_min_us = ($articulo->price_min / $exchangeRate);
-        //     $product->price_max_us = ($articulo->price_max / $exchangeRate);
-        //     $product->save();
-        // }
+        foreach ($articulos as  $articulo) {
+            $product = Article::findOrFail($articulo->id);
+            $product->price_min_us = ($articulo->price_min / $exchangeRate);
+            $product->price_max_us = ($articulo->price_max / $exchangeRate);
+            $product->save();
+        }
 
 
 

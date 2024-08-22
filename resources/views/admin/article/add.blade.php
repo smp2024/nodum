@@ -48,7 +48,7 @@
 
                         <div class="col-md-7 col-12">
 
-                            {!! Form::label('name','Nombre:') !!}
+                            {!! Form::label('name','Título:') !!}
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
@@ -77,7 +77,7 @@
 
                         </div>
 
-                        <div class="col-md-4 col-12">
+                        <div class="col-md-6 col-12">
 
                             {!! Form::label('category_id','Categoría:') !!}
                             <div class="input-group">
@@ -95,7 +95,7 @@
                             </div>
 
                         </div>
-                        <div class="col-md-4 col-12">
+                        <div class="col-md-6 col-12">
 
                             {!! Form::label('technic','Técnica:') !!}
                             <div class="input-group">
@@ -110,7 +110,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-2 col-12">
+                        <div class="col-md-4 col-12">
 
                             {!! Form::label('height','Alto:') !!}
                             <div class="input-group">
@@ -124,7 +124,7 @@
 
                         </div>
 
-                        <div class="col-md-2 col-12">
+                        <div class="col-md-4 col-12">
 
                             {!! Form::label('width','Ancho:') !!}
                             <div class="input-group">
@@ -138,7 +138,20 @@
 
                         </div>
 
-                        <div class="col-md-2 col-12">
+                        <div class="col-md-4 col-12">
+
+                            {!! Form::label('depth','Profundidad:') !!}
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-percent"></i>
+                                    </span>
+                                </div>
+                                {!! Form::number('depth', null, [ 'class' => 'form-control']) !!}
+                            </div>
+
+                        </div>
+                        <div class="col-md-4 col-12">
 
                             {!! Form::label('year','Año:') !!}
                             <div class="input-group">
@@ -153,7 +166,7 @@
                         </div>
 
                         <div class="row" style="padding: 16px; padding-top: 1px;">
-                            <div class="col-md-10 col-12">
+                            <div class="col-8    ">
                                 {!! Form::label('file', 'Imagen:') !!}
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -325,7 +338,7 @@
 
         $('#customFile').change(function() {
             var fileName = $(this).val().split('\\').pop();
-            console.log(fileName);
+            // console.log(fileName);
 
             if (fileName) {
                 $('#confirm_img').html('<i class="fas fa-check text-success"></i>');
@@ -366,7 +379,7 @@
     $(document).ready(function () {
         $('#customFile').change(function () {
             var fileName = $(this).val().split('\\').pop();
-            console.log(fileName);
+            // console.log(fileName);
             if (fileName) {
                 $('#confirm_img').html('<i class="fas fa-check text-success"></i>');
             } else {

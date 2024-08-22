@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\SubCategory;
 use App\Tag;
 use App\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -132,5 +133,187 @@ class ApiController extends Controller
         $techniques = SubCategory::where('category_id', $categoryId)->get();
 
         return response()->json($techniques);
+    }
+    public function getTechniquesByExtent(Request $request)
+    {
+        $categoryId = $request->input('category_id');
+        $techniques = SubCategory::where('category_id', $categoryId)->get();
+
+        return response()->json($techniques);
+    }
+
+
+    public function articleSearch(Request $request)
+    {
+        $query = Article::where('status', 1);
+        if ($request->has('user_id')) {
+            $query->where('user_id',  $request->input('user_id'));
+        }
+        if ($request->categoria_checkbox) {
+            $categories = $request->categoria_checkbox;
+            if (is_array($categories)) {
+                $query->whereIn('category_id', $categories);
+            }
+        }
+        if ($request->artista_checkbox) {
+            $artists = $request->artista_checkbox;
+            if (is_array($artists)) {
+                $query->whereIn('artist_id', $artists);
+            }
+        }
+
+        if ($request->tecnica_checkbox) {
+            $technics = $request->tecnica_checkbox;
+            if (is_array($technics)) {
+                $query->whereIn('subcategory_id', $technics);
+            }
+        }
+
+        if ($request->price_min) {
+            $query->where('price_min', '>=', $request->input('price_min'));
+        }
+        if ($request->price_max) {
+            $query->where('price_max', '<=', $request->input('price_max'));
+        }
+        // if ($request->has('price_min_us')) {
+        //     $query->where('price_min_us', '>=', $request->input('price_min_us'));
+        // }
+        // if ($request->has('price_max_us')) {
+        //     $query->where('price_max_us', '<=', $request->input('price_max_us'));
+        // }
+
+        $measures = $request->input('measures', []);
+        $has1 = in_array(1, $measures);
+        $has2 = in_array(2, $measures);
+        $has3 = in_array(3, $measures);
+        if ($measures) {
+
+            if ($has1 || $has2 || $has3) {
+            $query->where(function (Builder $query) use ($has1, $has2, $has3) {
+                if ($has1 && !$has2 && !$has3) {
+                    // Solo 1: Menor a 40
+                    $query->where(function ($query) {
+                        $query->whereNull('height')->orWhere('height', '<=', 40);
+                    })
+                    ->where(function ($query) {
+                        $query->whereNull('width')->orWhere('width', '<=', 40);
+                    })
+                    ->where(function ($query) {
+                        $query->whereNull('depth')->orWhere('depth', '<=', 40);
+                    });
+                } elseif ($has2 && !$has1 && !$has3) {
+                    // Solo 2: Entre 40 y 100
+                    $query->orWhereBetween('height', [40, 100])
+                              ->orWhereNull('height');
+                              $query->orWhereBetween('width', [40, 100])
+                              ->orWhereNull('width');
+                              $query->orWhereBetween('depth', [40, 100])
+                              ->orWhereNull('depth');
+                } elseif ($has3 && !$has1 && !$has2) {
+                    // Solo 3: Mayor a 100
+                    $query->where('height', '>=', 100)
+                              ->orWhereNull('height');
+                              $query->where('width', '>=', 100)
+                              ->orWhereNull('width');
+                              $query->where('depth', '>=', 100)
+                              ->orWhereNull('depth');
+                } elseif ($has1 && $has2 && !$has3) {
+                    // 1 y 2: Menor a 40 y Entre 40 y 100
+                    $query->whereBetween('height', [0, 100])
+                    ->orWhereNull('height');
+                    $query->whereBetween('width', [0, 100])
+                                  ->orWhereNull('width');
+                                  $query->whereBetween('depth', [0, 100])
+                                  ->orWhereNull('depth');
+
+                } elseif ($has1 && $has3 && !$has2) {
+                    // 1 y 3: Menor a 40 y Mayor a 100
+                    $query->where(function ($query) {
+                        $query->whereNull('height')
+                              ->orWhere('height', '<=', 40)
+                              ->orWhere('height', '>=', 100);
+                    })
+                    ->where(function ($query) {
+                        $query->whereNull('width')
+                              ->orWhere('width', '<=', 40)
+                              ->orWhere('width', '>=', 100);
+                    })
+                    ->where(function ($query) {
+                        $query->whereNull('depth')
+                              ->orWhere('depth', '<=', 40)
+                              ->orWhere('depth', '>=', 100);
+                    });
+                } elseif ($has2 && $has3 && !$has1) {
+                    // 2 y 3: Entre 40 y 100 y Mayor a 100
+                    $query->whereBetween('height', [40, 100])
+                              ->orWhere('height', '>=', 100)
+                              ->orWhereNull('height');
+                              $query->whereBetween('width', [40, 100])
+                              ->orWhere('width', '>=', 100)
+                              ->orWhereNull('width');
+                              $query->whereBetween('depth', [40, 100])
+                              ->orWhere('depth', '>=', 100)
+                              ->orWhereNull('depth');
+                    // $query->where(function ($query) {
+
+                    // })
+                    // ->where(function ($query) {
+
+                    // })
+                    // ->where(function ($query) {
+
+                    // });
+                } elseif ($has1 && $has2 && $has3) {
+                    // 1, 2 y 3: Menor a 40, Entre 40 y 100, y Mayor a 100
+                    $query->where(function ($query) {
+                        $query->where(function ($query) {
+                            $query->whereNull('height')
+                                  ->orWhere('height', '<=', 40);
+                        })
+                        ->orWhere(function ($query) {
+                            $query->whereBetween('height', [40, 100])
+                                  ->orWhereNull('height');
+                        })
+                        ->orWhere(function ($query) {
+                            $query->where('height', '>=', 100)
+                                  ->orWhereNull('height');
+                        });
+                    })
+                    ->where(function ($query) {
+                        $query->where(function ($query) {
+                            $query->whereNull('width')
+                                  ->orWhere('width', '<=', 40);
+                        })
+                        ->orWhere(function ($query) {
+                            $query->whereBetween('width', [40, 100])
+                                  ->orWhereNull('width');
+                        })
+                        ->orWhere(function ($query) {
+                            $query->where('width', '>=', 100)
+                                  ->orWhereNull('width');
+                        });
+                    })
+                    ->where(function ($query) {
+                        $query->where(function ($query) {
+                            $query->whereNull('depth')
+                                  ->orWhere('depth', '<=', 40);
+                        })
+                        ->orWhere(function ($query) {
+                            $query->whereBetween('depth', [40, 100])
+                                  ->orWhereNull('depth');
+                        })
+                        ->orWhere(function ($query) {
+                            $query->where('depth', '>=', 100)
+                                  ->orWhereNull('depth');
+                        });
+                    });
+                }
+            });
+
+            }
+        }
+        $foods = $query->get();
+        return response()->json($foods);
+
     }
 }

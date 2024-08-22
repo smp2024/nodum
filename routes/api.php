@@ -24,4 +24,6 @@ Route::post('/category/change-status/', 'Blog\ApiController@changeCategoryStatus
 Route::get('/categories/search', 'Blog\ApiController@getCategorySearch')->name('getCategorySearch');
 Route::post('/upload-massive', 'Blog\ApiController@uploadMassiveArticle')->name('massive_add');
 Route::post('/get-techniques-by-category', 'Blog\ApiController@getTechniquesByCategory')->name('tecnics');
+Route::post('/get-techniques-by-extent', 'Blog\ApiController@getTechniquesByExtent')->name('extents');
+Route::post('/get-articles', 'Blog\ApiController@articleSearch')->name('extents');
 

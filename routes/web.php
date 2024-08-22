@@ -64,3 +64,4 @@ Route::get('/technic/change-status/{id}',              'Blog\HomeController@chan
 
 Route::get('/articles/exportar-excel', 'Blog\HomeController@exportarExcel')->name('articles.exportExcel');
 
+Route::post('/filter-search',                  'Blog\HomeController@filterSearch')             ->name('filter.search');
