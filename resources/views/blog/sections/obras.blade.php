@@ -317,7 +317,7 @@
                         </ul>
                     </div>
 
-                    {!! Form::submit('Guardar', ['class' => 'btn btn-success mt16']) !!}
+                    {!! Form::submit('Buscar', ['class' => 'btn btn-outline-dark mt16']) !!}
 
                 {!! Form::close() !!}
             </div>
