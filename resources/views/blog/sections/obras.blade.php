@@ -325,45 +325,9 @@
         </div>
         <!-- info Obras erg-->
         <div id="content-articles" class="col-lg-9 col-sm-7 col-7 h-100 w-100 d-flex justify-content-center align-items-center p-0" >
-            <div class="row w-100 h-100">
-               <!-- Listado de artículos -->
-                    @foreach($articles as $article)
-                    {{-- <div class=" mt-3"> --}}
-                        <div class="col-lg-4 col-md-6 col-sm-12 content-articles mt-2"  alt="{{ $article->name }}');"  data-year="{{ $article->year }}" data-category="{{ $article->category_id }}" data-technic="{{ $article->subcategory_id }}" data-pricemin="{{ $article->price_min }}" data-pricemax="{{ $article->price_max }}" data-priceminus="{{ $article->price_min_us }}" data-pricemaxus="{{ $article->price_max_us }}" data-width="{{ $article->width }}"  data-height="{{ $article->height }}" data-artist="{{ $article->artist_id }}" data-show="0" >
+            <!-- Listado de artículos -->
+            <div class="row w-100 h-100" id="articles-list">
 
-
-                            <a href="{{ url('seccion/obras/'.$article->id) }}">
-                                <div class="d-flex justify-content-start align-items-end w-100" style="height: 60%;">
-
-                                    <div class="image-container">
-                                        <img src="{{ url('multimedia'.$article->file_path.'/'.$article->slug. '/'.$article->file) }}" alt="{{ $article->name }}" >
-                                    </div>
-
-                                </div>
-                                <div style="height: 40%;">
-                                    <p class="m-0 text-start" style="font-size: calc(0.5rem + 0.4vw);">{{ $article->name }}</p>
-                                    @foreach ($tecnicas as $tecnica)
-                                        @if ($tecnica->id == $article->subcategory_id)
-                                            <p class="m-0 text-start" style="font-size: 13px;">{{ $tecnica->name }}</p>
-                                        @endif
-                                    @endforeach
-                                     @foreach ($artistas as $artista)
-                                        @if ($artista->id == $article->artist_id)
-                                            <p class="m-0 text-start" style="font-size: 13px;">{{ $artista->name }} {{ $artista->lastname }}</p>
-                                        @endif
-                                    @endforeach
-
-                                    <p class="m-0 text-start" style="font-size: 13px;">{{ $article->year }}</p>
-                                    <p class="m-0 text-start" style="font-size: 13px;">{{ $article->width }} x {{ $article->height }} cm</p>
-
-                                </div>
-                            </a>
-
-                        </div>
-                    {{-- </div> --}}
-
-
-                    @endforeach
             </div>
         </div>
         @endif
@@ -453,87 +417,87 @@
             });
         });
 
-        function filterByYear(year) {
-            showall();
-            if (year === 'Todos') {
-                $('#content-articles .content-articles').show();
-            } else {
-                $('#content-articles .content-articles').hide();
-                $('#content-articles .content-articles[data-year="' + year + '"]').show();
-            }
-            $('#content-articles .content-articles[data-year="' + year + '"]').show();
-        }
+        // function filterByYear(year) {
+        //     showall();
+        //     if (year === 'Todos') {
+        //         $('#content-articles .content-articles').show();
+        //     } else {
+        //         $('#content-articles .content-articles').hide();
+        //         $('#content-articles .content-articles[data-year="' + year + '"]').show();
+        //     }
+        //     $('#content-articles .content-articles[data-year="' + year + '"]').show();
+        // }
 
-        function filterByCategory(year) {
-            showall();
-            if (year === 'Todos') {
-                $('#content-articles .content-articles').show();
-            } else {
-                $('#content-articles .content-articles').hide();
-                $('#content-articles .content-articles[data-category="' + year + '"]').show();
-            }
-            $('#content-articles .content-articles[data-category="' + year + '"]').show();
-        }
+        // function filterByCategory(year) {
+        //     showall();
+        //     if (year === 'Todos') {
+        //         $('#content-articles .content-articles').show();
+        //     } else {
+        //         $('#content-articles .content-articles').hide();
+        //         $('#content-articles .content-articles[data-category="' + year + '"]').show();
+        //     }
+        //     $('#content-articles .content-articles[data-category="' + year + '"]').show();
+        // }
 
-        function filterByTechnic(year) {
-            showall();
-            if (year === 'Todos') {
-                $('#content-articles .content-articles').show();
-            } else {
-                $('#content-articles .content-articles').hide();
-                $('#content-articles .content-articles[data-technic="' + year + '"]').show();
-            }
-            $('#content-articles .content-articles[data-technic="' + year + '"]').show();
-        }
+        // function filterByTechnic(year) {
+        //     showall();
+        //     if (year === 'Todos') {
+        //         $('#content-articles .content-articles').show();
+        //     } else {
+        //         $('#content-articles .content-articles').hide();
+        //         $('#content-articles .content-articles[data-technic="' + year + '"]').show();
+        //     }
+        //     $('#content-articles .content-articles[data-technic="' + year + '"]').show();
+        // }
 
-        function filterByArtist(year) {
-            showall();
-            if (year === 'Todos') {
-                $('#content-articles .content-articles').show();
-            } else {
-                $('#content-articles .content-articles').hide();
-                $('#content-articles .content-articles[data-artist="' + year + '"]').show();
-            }
-            $('#content-articles .content-articles[data-artist="' + year + '"]').show();
-        }
+        // function filterByArtist(year) {
+        //     showall();
+        //     if (year === 'Todos') {
+        //         $('#content-articles .content-articles').show();
+        //     } else {
+        //         $('#content-articles .content-articles').hide();
+        //         $('#content-articles .content-articles[data-artist="' + year + '"]').show();
+        //     }
+        //     $('#content-articles .content-articles[data-artist="' + year + '"]').show();
+        // }
 
-        function filterArticlesByPrice() {
+        // function filterArticlesByPrice() {
 
-            const articles = contentArticles.getElementsByClassName('content-articles');
-            const selectedPrice = parseInt(priceRange.value);
-            showall();
+        //     const articles = contentArticles.getElementsByClassName('content-articles');
+        //     const selectedPrice = parseInt(priceRange.value);
+        //     showall();
 
-            for (let i = 0; i < articles.length; i++) {
-                const article = articles[i];
-                const articlePricemin = parseInt(article.getAttribute('data-pricemin'));
-                const articlePricemax = parseInt(article.getAttribute('data-pricemax'));
+        //     for (let i = 0; i < articles.length; i++) {
+        //         const article = articles[i];
+        //         const articlePricemin = parseInt(article.getAttribute('data-pricemin'));
+        //         const articlePricemax = parseInt(article.getAttribute('data-pricemax'));
 
-                if ( articlePricemin >= selectedPrice || selectedPrice <= articlePricemax   )  {
-                    article.style.display = 'block';
-                } else {
-                    article.style.display = 'none';
-                }
-            }
-        }
+        //         if ( articlePricemin >= selectedPrice || selectedPrice <= articlePricemax   )  {
+        //             article.style.display = 'block';
+        //         } else {
+        //             article.style.display = 'none';
+        //         }
+        //     }
+        // }
 
-        function filterArticlesByPriceUS() {
+        // function filterArticlesByPriceUS() {
 
-            const articles = contentArticles.getElementsByClassName('content-articles');
-            const selectedPrice = parseInt(priceRangeUS.value);
-            showall();
+        //     const articles = contentArticles.getElementsByClassName('content-articles');
+        //     const selectedPrice = parseInt(priceRangeUS.value);
+        //     showall();
 
-            for (let i = 0; i < articles.length; i++) {
-                const article = articles[i];
-                const articlePricemin = parseInt(article.getAttribute('data-priceminus'));
-                const articlePricemax = parseInt(article.getAttribute('data-pricemaxus'));
+        //     for (let i = 0; i < articles.length; i++) {
+        //         const article = articles[i];
+        //         const articlePricemin = parseInt(article.getAttribute('data-priceminus'));
+        //         const articlePricemax = parseInt(article.getAttribute('data-pricemaxus'));
 
-                if ( articlePricemin >= selectedPrice || selectedPrice <= articlePricemax   )  {
-                    article.style.display = 'block';
-                } else {
-                    article.style.display = 'none';
-                }
-            }
-        }
+        //         if ( articlePricemin >= selectedPrice || selectedPrice <= articlePricemax   )  {
+        //             article.style.display = 'block';
+        //         } else {
+        //             article.style.display = 'none';
+        //         }
+        //     }
+        // }
 
         function darFormatoPrecio(precio) {
             return '$' + parseFloat(precio).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
@@ -545,166 +509,186 @@
         priceRange.addEventListener('input', () => {
 
             priceValue.textContent = darFormatoPrecio(priceRange.value);
-            showall();
-            filterArticlesByPrice();
+            // showall();
+            // filterArticlesByPrice();
         });
 
         priceRangeUS.addEventListener('input', () => {
 
             priceValueUS.textContent = darFormatoPrecioUS(priceRangeUS.value);
-            showall();
-            filterArticlesByPriceUS();
+            // showall();
+            // filterArticlesByPriceUS();
         });
 
-        function highlightSize(size) {
+        // function highlightSize(size) {
 
-            // $('#content-articles .content-articles[data-show=0]').hide();
-            showall();
-            const articles = document.querySelectorAll('#content-articles .content-articles');
-            articles.forEach(article => {
-                //
-                const width = parseInt(article.getAttribute('data-width'));
-                const height = parseInt(article.getAttribute('data-height'));
+        //     // $('#content-articles .content-articles[data-show=0]').hide();
+        //     showall();
+        //     const articles = document.querySelectorAll('#content-articles .content-articles');
+        //     articles.forEach(article => {
+        //         //
+        //         const width = parseInt(article.getAttribute('data-width'));
+        //         const height = parseInt(article.getAttribute('data-height'));
 
-                if (size === 'pequeño' && (width <= 40)) {
-                    // article.classList.remove('no-highlight');
-                    // article.classList.add('highlight');
-                    if (height <= 40) {
+        //         if (size === 'pequeño' && (width <= 40)) {
+        //             // article.classList.remove('no-highlight');
+        //             // article.classList.add('highlight');
+        //             if (height <= 40) {
 
-                        console.log(article);
-                    } else {
-                        article.classList.add('no-highlight');
-                    }
+        //                 console.log(article);
+        //             } else {
+        //                 article.classList.add('no-highlight');
+        //             }
 
-                }
-                //  else {
-                //     article.classList.add('no-highlight');
+        //         }
+        //         //  else {
+        //         //     article.classList.add('no-highlight');
 
-                // }
+        //         // }
 
-                // if (size === 'mediano' && (width >= 40 && width <= 100) && (height >= 40 && height <= 100)) {
-                //     article.classList.remove('no-highlight');
-                //     article.classList.add('highlight');
-                //     console.log('mediano');
-                // } else {
-                //     article.classList.add('no-highlight');
+        //         // if (size === 'mediano' && (width >= 40 && width <= 100) && (height >= 40 && height <= 100)) {
+        //         //     article.classList.remove('no-highlight');
+        //         //     article.classList.add('highlight');
+        //         //     console.log('mediano');
+        //         // } else {
+        //         //     article.classList.add('no-highlight');
 
-                // }
+        //         // }
 
-                // if (size === 'grande' && (width >= 100 || height >= 100)) {
-                //     article.classList.remove('no-highlight');
-                //     article.classList.add('highlight');
-                //     console.log('grande');
-                // } else {
-                //     article.classList.add('no-highlight');
-                // }
-            });
-        }
+        //         // if (size === 'grande' && (width >= 100 || height >= 100)) {
+        //         //     article.classList.remove('no-highlight');
+        //         //     article.classList.add('highlight');
+        //         //     console.log('grande');
+        //         // } else {
+        //         //     article.classList.add('no-highlight');
+        //         // }
+        //     });
+        // }
         if (screen.width < 800) {
             $('#main_').removeClass("row");
         }
 
-        function showall(){
-            $('#content-articles .content-articles[data-show=0]').show();
+        // function showall(){
+        //     $('#content-articles .content-articles[data-show=0]').show();
 
-        }
+        // }
 
-        function handleCheckboxChangeTecnic(checkbox, year) {
-            if (checkbox.checked) {
-                $('#content-articles .content-articles').hide();
-                $('#content-articles .content-articles[data-technic="' + year + '"]').show();
-                var anyChecked = $('input[name="tecnica_checkbox[]"]:checked').length > 0;
-                if (anyChecked) {
-                    var checkedValues = $('input[name="tecnica_checkbox[]"]:checked').map(function(){
-                        return this.value;
-                    }).get();
-                    $('#content-articles .content-articles').hide();
-                    checkedValues.forEach(function(value) {
-                        $('#content-articles .content-articles[data-technic="' + value + '"]').show();
-                    });
-                } else {
-                    $('#content-articles .content-articles').show();
-                }
-            } else {
-                var anyChecked = $('input[name="tecnica_checkbox[]"]:checked').length > 0;
-                if (!anyChecked) {
-                    $('#content-articles .content-articles').show();
-                } else {
-                    var checkedValues = $('input[name="tecnica_checkbox[]"]:checked').map(function(){
-                        return this.value;
-                    }).get();
-                    $('#content-articles .content-articles').hide();
-                    checkedValues.forEach(function(value) {
-                        $('#content-articles .content-articles[data-technic="' + value + '"]').show();
-                    });
-                }
-            }
-        }
-        function handleCheckboxChangeArtist(checkbox, year) {
-            if (checkbox.checked) {
-                $('#content-articles .content-articles').hide();
-                $('#content-articles .content-articles[data-artist="' + year + '"]').show();
-                var anyChecked = $('input[name="artista_checkbox[]"]:checked').length > 0;
-                if (anyChecked) {
-                    var checkedValues = $('input[name="artista_checkbox[]"]:checked').map(function(){
-                        return this.value;
-                    }).get();
-                    $('#content-articles .content-articles').hide();
-                    checkedValues.forEach(function(value) {
-                        $('#content-articles .content-articles[data-artist="' + value + '"]').show();
-                    });
-                } else {
-                    $('#content-articles .content-articles').show();
-                }
-            } else {
-                var anyChecked = $('input[name="artista_checkbox[]"]:checked').length > 0;
-                if (!anyChecked) {
-                    $('#content-articles .content-articles').show();
-                } else {
-                    var checkedValues = $('input[name="artista_checkbox[]"]:checked').map(function(){
-                        return this.value;
-                    }).get();
-                    $('#content-articles .content-articles').hide();
-                    checkedValues.forEach(function(value) {
-                        $('#content-articles .content-articles[data-artist="' + value + '"]').show();
-                    });
-                }
-            }
-        }
-        function handleCheckboxChangeCategory(checkbox, year) {
-            if (checkbox.checked) {
-                $('#content-articles .content-articles').hide();
-                $('#content-articles .content-articles[data-category="' + year + '"]').show();
-                var anyChecked = $('input[name="categoria_checkbox[]"]:checked').length > 0;
-                if (anyChecked) {
-                    var checkedValues = $('input[name="categoria_checkbox[]"]:checked').map(function(){
-                        return this.value;
-                    }).get();
-                    $('#content-articles .content-articles').hide();
-                    checkedValues.forEach(function(value) {
-                        $('#content-articles .content-articles[data-category="' + value + '"]').show();
-                    });
-                } else {
-                    $('#content-articles .content-articles').show();
-                }
-            } else {
-                var anyChecked = $('input[name="categoria_checkbox[]"]:checked').length > 0;
-                if (!anyChecked) {
-                    $('#content-articles .content-articles').show();
-                } else {
-                    var checkedValues = $('input[name="categoria_checkbox[]"]:checked').map(function(){
-                        return this.value;
-                    }).get();
-                    $('#content-articles .content-articles').hide();
-                    checkedValues.forEach(function(value) {
-                        $('#content-articles .content-articles[data-category="' + value + '"]').show();
-                    });
-                }
-            }
-        }
+        // function handleCheckboxChangeTecnic(checkbox, year) {
+        //     if (checkbox.checked) {
+        //         $('#content-articles .content-articles').hide();
+        //         $('#content-articles .content-articles[data-technic="' + year + '"]').show();
+        //         var anyChecked = $('input[name="tecnica_checkbox[]"]:checked').length > 0;
+        //         if (anyChecked) {
+        //             var checkedValues = $('input[name="tecnica_checkbox[]"]:checked').map(function(){
+        //                 return this.value;
+        //             }).get();
+        //             $('#content-articles .content-articles').hide();
+        //             checkedValues.forEach(function(value) {
+        //                 $('#content-articles .content-articles[data-technic="' + value + '"]').show();
+        //             });
+        //         } else {
+        //             $('#content-articles .content-articles').show();
+        //         }
+        //     } else {
+        //         var anyChecked = $('input[name="tecnica_checkbox[]"]:checked').length > 0;
+        //         if (!anyChecked) {
+        //             $('#content-articles .content-articles').show();
+        //         } else {
+        //             var checkedValues = $('input[name="tecnica_checkbox[]"]:checked').map(function(){
+        //                 return this.value;
+        //             }).get();
+        //             $('#content-articles .content-articles').hide();
+        //             checkedValues.forEach(function(value) {
+        //                 $('#content-articles .content-articles[data-technic="' + value + '"]').show();
+        //             });
+        //         }
+        //     }
+        // }
+        // function handleCheckboxChangeArtist(checkbox, year) {
+        //     if (checkbox.checked) {
+        //         $('#content-articles .content-articles').hide();
+        //         $('#content-articles .content-articles[data-artist="' + year + '"]').show();
+        //         var anyChecked = $('input[name="artista_checkbox[]"]:checked').length > 0;
+        //         if (anyChecked) {
+        //             var checkedValues = $('input[name="artista_checkbox[]"]:checked').map(function(){
+        //                 return this.value;
+        //             }).get();
+        //             $('#content-articles .content-articles').hide();
+        //             checkedValues.forEach(function(value) {
+        //                 $('#content-articles .content-articles[data-artist="' + value + '"]').show();
+        //             });
+        //         } else {
+        //             $('#content-articles .content-articles').show();
+        //         }
+        //     } else {
+        //         var anyChecked = $('input[name="artista_checkbox[]"]:checked').length > 0;
+        //         if (!anyChecked) {
+        //             $('#content-articles .content-articles').show();
+        //         } else {
+        //             var checkedValues = $('input[name="artista_checkbox[]"]:checked').map(function(){
+        //                 return this.value;
+        //             }).get();
+        //             $('#content-articles .content-articles').hide();
+        //             checkedValues.forEach(function(value) {
+        //                 $('#content-articles .content-articles[data-artist="' + value + '"]').show();
+        //             });
+        //         }
+        //     }
+        // }
+        // function handleCheckboxChangeCategory(checkbox, year) {
+        //     if (checkbox.checked) {
+        //         $('#content-articles .content-articles').hide();
+        //         $('#content-articles .content-articles[data-category="' + year + '"]').show();
+        //         var anyChecked = $('input[name="categoria_checkbox[]"]:checked').length > 0;
+        //         if (anyChecked) {
+        //             var checkedValues = $('input[name="categoria_checkbox[]"]:checked').map(function(){
+        //                 return this.value;
+        //             }).get();
+        //             $('#content-articles .content-articles').hide();
+        //             checkedValues.forEach(function(value) {
+        //                 $('#content-articles .content-articles[data-category="' + value + '"]').show();
+        //             });
+        //         } else {
+        //             $('#content-articles .content-articles').show();
+        //         }
+        //     } else {
+        //         var anyChecked = $('input[name="categoria_checkbox[]"]:checked').length > 0;
+        //         if (!anyChecked) {
+        //             $('#content-articles .content-articles').show();
+        //         } else {
+        //             var checkedValues = $('input[name="categoria_checkbox[]"]:checked').map(function(){
+        //                 return this.value;
+        //             }).get();
+        //             $('#content-articles .content-articles').hide();
+        //             checkedValues.forEach(function(value) {
+        //                 $('#content-articles .content-articles[data-category="' + value + '"]').show();
+        //             });
+        //         }
+        //     }
+        // }
     </script>
 <script>
     $(document).ready(function() {
+        $.ajax({
+                url: '/api/get-articles',
+                type: 'POST',
+                data: [],
+                contentType: false,
+                processData: false,
+                before: function(response) {
+                    console.log(response);
+                },
+                success: function(response) {
+                    // Maneja la respuesta del servidor
+                    console.log(response); // Muestra la respuesta en la consola
+                    updateArticles(response);
+                    // Puedes actualizar la página o mostrar los resultados de la búsqueda aquí
+                },
+                error: function(xhr, status, error) {
+                    // Maneja cualquier error
+                    console.error('Error al enviar el formulario:', error);
+                }
+            });
         $('#filterForm').on('submit', function(event) {
             event.preventDefault(); // Previene el envío del formulario de manera tradicional
 
@@ -725,7 +709,7 @@
                 success: function(response) {
                     // Maneja la respuesta del servidor
                     console.log(response); // Muestra la respuesta en la consola
-                    // Puedes actualizar la página o mostrar los resultados de la búsqueda aquí
+                    updateArticles(response);
                 },
                 error: function(xhr, status, error) {
                     // Maneja cualquier error
@@ -733,6 +717,45 @@
                 }
             });
         });
+        function updateArticles(articles) {
+        var $container = $('#articles-list');
+        $container.empty(); // Limpiar el contenedor antes de agregar nuevos artículos
+
+        articles.forEach(function(article) {
+            // Construir el HTML para cada artículo
+            var articleHtml = `
+                <div class="col-lg-4 col-md-6 col-sm-12 content-articles mt-2"
+                      alt="${article.name}"
+                      data-year="${article.year}"
+                     data-category="${article.category_id}"
+                     data-technic="${article.subcategory_id}"
+                     data-pricemin="${article.price_min}"
+                     data-pricemax="${article.price_max}"
+                     data-priceminus="${article.price_min_us}"
+                     data-pricemaxus="${article.price_max_us}"
+                     data-width="${article.width}"
+                     data-height="${article.height}"
+                     data-artist="${article.artist_id}"
+                     data-show="0">
+                      <a href="/seccion/obras/${article.id}">
+                        <div class="d-flex justify-content-start align-items-end w-100" style="height: 60%;">
+                            <div class="image-container">
+                                <img src="/multimedia/${article.file_path}/${article.slug}/${article.file}" alt="${article.name}">
+                            </div>
+                        </div>
+                        <div style="height: 40%;">
+                            <p class="m-0 text-start" style="font-size: calc(0.5rem + 0.4vw);">${article.name}</p>
+
+                            <p class="m-0 text-start" style="font-size: 13px;">${article.year}</p>
+                            <p class="m-0 text-start" style="font-size: 13px;">${article.width} x ${article.height} cm</p>
+                        </div>
+                    </a>
+                </div>
+            `;
+
+            $container.append(articleHtml);
+        });
+    }
     });
     </script>
 @endsection
