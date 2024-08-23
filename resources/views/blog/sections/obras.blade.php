@@ -9,7 +9,10 @@
         display: none;
     }
     .image-container {
-        height: 85%;
+        height: 100%;
+    background-size: contain;
+    width: 100%;
+    background-repeat: no-repeat;
         justify-content: start;
         display: flex;
         align-items: end;
@@ -20,7 +23,7 @@
         height: auto;
         max-height: 100%;
     }
-    img:hover{
+    .image-container:hover img{
         box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
     }
     .title {
@@ -28,8 +31,8 @@
         text-transform: inherit;
     }
     .image-container  {
-        transition: all .05s ease-in-out;
-        transform-origin: center center;
+            transition: all .05s ease-in-out;
+            transform-origin: center center;
     }
 
     .image-container:hover {
@@ -192,9 +195,9 @@
 
                                 <li>
                                     <label class="container c1" >
-                                        <input  onchange="handleCheckboxChangeCategory(this, {{ $category->id }})" type="checkbox" name="categoria_checkbox[]" value="{{ $category->id }}" id="category_{{ $category->id }}"  >
+                                        <input  onclick="filterByCategory()" type="checkbox" name="categoria_checkbox[]" value="{{ $category->id }}" id="category_{{ $category->id }}"  >
                                         <span class="checkmark"></span>
-                                        <a href="#" onclick="filterByCategory('{{ $category->id }}')">{{ $category->name }}</a>
+                                        <a href="#" >{{ $category->name }}</a>
                                     </label>
                                 </li>
 
@@ -221,9 +224,9 @@
                                         <li>
 
                                         <label class="container c1" >
-                                            <input onchange="handleCheckboxChangeArtist(this, {{ $artista->id }})" type="checkbox" name="artista_checkbox[]" value="{{ $artista->id }}" id="artista_{{ $tecnica->id }}"  >
+                                            <input onclick="filterByArtist()" type="checkbox" name="artista_checkbox[]" value="{{ $artista->id }}" id="artista_{{ $tecnica->id }}"  >
                                             <span class="checkmark"></span>
-                                            <a href="#" onclick="filterByArtist('{{ $artista->id }}')">{{ $artista->name }} {{ $artista->lastname }} </a>
+                                            <a href="#" >{{ $artista->name }} {{ $artista->lastname }} </a>
                                         </label>
                                         </li>
                                     @endif
@@ -250,9 +253,9 @@
                                     <li>
 
                                     <label class="container c1" >
-                                        <input onchange="handleCheckboxChangeTecnic(this, {{ $tecnica->id }})" type="checkbox" name="tecnica_checkbox[]" value="{{ $tecnica->id }}" id="tecnica_{{ $tecnica->id }}"  >
+                                        <input onclick="filterByTechnic()" type="checkbox" name="tecnica_checkbox[]" value="{{ $tecnica->id }}" id="tecnica_{{ $tecnica->id }}"  >
                                         <span class="checkmark"></span>
-                                        <a href="#" onclick="filterByTechnic('{{ $tecnica->id }}')">{{ $tecnica->name }}</a>
+                                        <a href="#" >{{ $tecnica->name }}</a>
                                     </label>
                                     </li>
                                     @endif
@@ -302,22 +305,29 @@
                         <!-- Rango de medidas -->
                         <ul>
                             <li>
-                                {!! Form::checkbox('measures[]', 1, [ 'class' => 'form-control ml-2']) !!}
-                                {!! Form::label('catSma','Pequeño') !!}
-
+                                <label class="container c1" >
+                                    <input type="checkbox" name="measures[]" value="1"  onclick="filterByMeasure()" >
+                                    <span class="checkmark"></span>
+                                    <a href="#" >Pequeño</a>
+                                </label>
                             <li>
-
-                                {!! Form::checkbox('measures[]', 2, [ 'class' => 'form-control ml-2']) !!}
-                                {!! Form::label('catMed','Mediano') !!}
+                                <label class="container c1" >
+                                    <input type="checkbox" name="measures[]" value="2"   onclick="filterByMeasure()">
+                                    <span class="checkmark"></span>
+                                    <a href="#" >Mediano</a>
+                                </label>
                             </li>
                             <li>
-                                {!! Form::checkbox('measures[]', 3, [ 'class' => 'form-control ml-2']) !!}
-                                {!! Form::label('catLar','Grande') !!}
+                                <label class="container c1" >
+                                    <input type="checkbox" name="measures[]" value="3"   onclick="filterByMeasure()">
+                                    <span class="checkmark"></span>
+                                    <a href="#" >Grande</a>
+                                </label>
                             </li>
                         </ul>
                     </div>
 
-                    {!! Form::submit('Buscar', ['class' => 'btn btn-outline-dark mt16']) !!}
+                    {{-- {!! Form::submit('Buscar', ['class' => 'btn btn-outline-dark mt16']) !!} --}}
 
                 {!! Form::close() !!}
             </div>
@@ -415,6 +425,7 @@
                     $arrow.removeClass('rotate');
                 }
             });
+            sendForm();
         });
 
         // function filterByYear(year) {
@@ -428,57 +439,26 @@
         //     $('#content-articles .content-articles[data-year="' + year + '"]').show();
         // }
 
-        // function filterByCategory(year) {
-        //     showall();
-        //     if (year === 'Todos') {
-        //         $('#content-articles .content-articles').show();
-        //     } else {
-        //         $('#content-articles .content-articles').hide();
-        //         $('#content-articles .content-articles[data-category="' + year + '"]').show();
-        //     }
-        //     $('#content-articles .content-articles[data-category="' + year + '"]').show();
-        // }
+        function filterByCategory() {
+            sendForm();
+        }
 
-        // function filterByTechnic(year) {
-        //     showall();
-        //     if (year === 'Todos') {
-        //         $('#content-articles .content-articles').show();
-        //     } else {
-        //         $('#content-articles .content-articles').hide();
-        //         $('#content-articles .content-articles[data-technic="' + year + '"]').show();
-        //     }
-        //     $('#content-articles .content-articles[data-technic="' + year + '"]').show();
-        // }
+        function filterByTechnic(year) {
+            sendForm();
+        }
 
-        // function filterByArtist(year) {
-        //     showall();
-        //     if (year === 'Todos') {
-        //         $('#content-articles .content-articles').show();
-        //     } else {
-        //         $('#content-articles .content-articles').hide();
-        //         $('#content-articles .content-articles[data-artist="' + year + '"]').show();
-        //     }
-        //     $('#content-articles .content-articles[data-artist="' + year + '"]').show();
-        // }
+        function filterByMeasure(year) {
+            sendForm();
+        }
 
-        // function filterArticlesByPrice() {
+        function filterByArtist(year) {
+            sendForm();
+        }
 
-        //     const articles = contentArticles.getElementsByClassName('content-articles');
-        //     const selectedPrice = parseInt(priceRange.value);
-        //     showall();
+        function filterArticlesByPrice() {
+            sendForm();
 
-        //     for (let i = 0; i < articles.length; i++) {
-        //         const article = articles[i];
-        //         const articlePricemin = parseInt(article.getAttribute('data-pricemin'));
-        //         const articlePricemax = parseInt(article.getAttribute('data-pricemax'));
-
-        //         if ( articlePricemin >= selectedPrice || selectedPrice <= articlePricemax   )  {
-        //             article.style.display = 'block';
-        //         } else {
-        //             article.style.display = 'none';
-        //         }
-        //     }
-        // }
+        }
 
         // function filterArticlesByPriceUS() {
 
@@ -509,6 +489,7 @@
         priceRange.addEventListener('input', () => {
 
             priceValue.textContent = darFormatoPrecio(priceRange.value);
+            sendForm();
             // showall();
             // filterArticlesByPrice();
         });
@@ -516,6 +497,7 @@
         priceRangeUS.addEventListener('input', () => {
 
             priceValueUS.textContent = darFormatoPrecioUS(priceRangeUS.value);
+            sendForm();
             // showall();
             // filterArticlesByPriceUS();
         });
@@ -666,37 +648,9 @@
         //         }
         //     }
         // }
-    </script>
-<script>
-    $(document).ready(function() {
-        $.ajax({
-                url: '/api/get-articles',
-                type: 'POST',
-                data: [],
-                contentType: false,
-                processData: false,
-                before: function(response) {
-                    console.log(response);
-                },
-                success: function(response) {
-                    // Maneja la respuesta del servidor
-                    console.log(response); // Muestra la respuesta en la consola
-                    updateArticles(response);
-                    // Puedes actualizar la página o mostrar los resultados de la búsqueda aquí
-                },
-                error: function(xhr, status, error) {
-                    // Maneja cualquier error
-                    console.error('Error al enviar el formulario:', error);
-                }
-            });
-        $('#filterForm').on('submit', function(event) {
-            event.preventDefault(); // Previene el envío del formulario de manera tradicional
-
-            // Obtén los datos del formulario
-            var formData = new FormData(this);
-            console.log(formData);
-            console.log('Entro');
-            // Realiza la solicitud AJAX usando jQuery
+        function sendForm(){
+            const formulario = document.getElementById('filterForm');
+            const formData = new FormData(formulario);
             $.ajax({
                 url: '/api/get-articles',
                 type: 'POST',
@@ -716,46 +670,48 @@
                     console.error('Error al enviar el formulario:', error);
                 }
             });
-        });
+        }
+
         function updateArticles(articles) {
-        var $container = $('#articles-list');
-        $container.empty(); // Limpiar el contenedor antes de agregar nuevos artículos
+            var $container = $('#articles-list');
+            $container.empty(); // Limpiar el contenedor antes de agregar nuevos artículos
 
-        articles.forEach(function(article) {
-            // Construir el HTML para cada artículo
-            var articleHtml = `
-                <div class="col-lg-4 col-md-6 col-sm-12 content-articles mt-2"
-                      alt="${article.name}"
-                      data-year="${article.year}"
-                     data-category="${article.category_id}"
-                     data-technic="${article.subcategory_id}"
-                     data-pricemin="${article.price_min}"
-                     data-pricemax="${article.price_max}"
-                     data-priceminus="${article.price_min_us}"
-                     data-pricemaxus="${article.price_max_us}"
-                     data-width="${article.width}"
-                     data-height="${article.height}"
-                     data-artist="${article.artist_id}"
-                     data-show="0">
-                      <a href="/seccion/obras/${article.id}">
-                        <div class="d-flex justify-content-start align-items-end w-100" style="height: 60%;">
-                            <div class="image-container">
-                                <img src="/multimedia/${article.file_path}/${article.slug}/${article.file}" alt="${article.name}">
+            articles.forEach(function(article) {
+                // Construir el HTML para cada artículo
+                var articleHtml = `
+                    <div class="col-lg-3 col-md-6 col-sm-12 content-articles mt-2"
+                        alt="${article.name}"
+                        data-year="${article.year}"
+                        data-category="${article.category_id}"
+                        data-technic="${article.subcategory_id}"
+                        data-pricemin="${article.price_min}"
+                        data-pricemax="${article.price_max}"
+                        data-priceminus="${article.price_min_us}"
+                        data-pricemaxus="${article.price_max_us}"
+                        data-width="${article.width}"
+                        data-height="${article.height}"
+                        data-artist="${article.artist_id}"
+                        data-show="0" style="min-height: 200px;     height: 430px;">
+                        <a href="/seccion/obras/${article.id}">
+                            <div class="d-flex justify-content-start align-items-end w-100" style="height: 60%;">
+                                <div class="image-container" style="background-image: url(../multimedia/${article.file_path}/${article.slug}/t_${article.file})" alt="${article.name})">
+
+                                </div>
                             </div>
-                        </div>
-                        <div style="height: 40%;">
-                            <p class="m-0 text-start" style="font-size: calc(0.5rem + 0.4vw);">${article.name}</p>
+                            <div style="height: 40%;">
+                                <p class="m-0 text-start" style="font-size: calc(0.6rem + 0.4vw); font-weight: 700;">${article.name}</p>
+                                <p class="m-0 text-start" style="font-size: calc(0.5rem + 0.4vw);">${article.artist_name}</p>
+                                <p class="m-0 text-start" style="font-size: calc(0.5rem + 0.4vw);">${article.subcategory_name}</p>
 
-                            <p class="m-0 text-start" style="font-size: 13px;">${article.year}</p>
-                            <p class="m-0 text-start" style="font-size: 13px;">${article.width} x ${article.height} cm</p>
-                        </div>
-                    </a>
-                </div>
-            `;
+                                <p class="m-0 text-start" style="font-size: 13px;">${article.year}</p>
+                                <p class="m-0 text-start" style="font-size: 13px;">${article.width} x ${article.height} cm</p>
+                            </div>
+                        </a>
+                    </div>
+                `;
 
-            $container.append(articleHtml);
-        });
-    }
-    });
+                $container.append(articleHtml);
+            });
+        }
     </script>
 @endsection

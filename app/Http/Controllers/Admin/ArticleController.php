@@ -125,7 +125,7 @@ class ArticleController extends Controller
                 $s = Str::slug($request->input('name'));
                 $artist_id = $request->input('artist_id');
                 $path_ = 'Article';
-                $path = 'Article/'.$artist_id.'/'.$s;
+                $path = 'Article/'.$s;
                 $product = new Article();
                 $product->status = '0';
                 $product->user_id = Auth::id();
@@ -287,7 +287,7 @@ class ArticleController extends Controller
             $s = Str::slug($request->input('name'));
             $artist_id = $request->input('artist_id');
             $path_ = 'Article';
-            $path = 'Article/'.$artist_id.'/'.$s;
+            $path = 'Article/'.$s;
             $product = Article::findOrFail($id);
             $carpeta = $artist_id.'/'.$s;
             $titleletter = strtoupper(substr($s, 0, 1));
@@ -299,10 +299,10 @@ class ArticleController extends Controller
             if ($carpeta != $s) {
 
                 $upload_path = Config::get('filesystems.disks.uploads.root');
-                $file_absolute = $upload_path.'Article/'.$carpeta;
+                $file_absolute = $upload_path.'Article/'.$s;
 
                 if (File::exists($file_absolute)) {
-                    $nuevaRutaCarpeta = $upload_path.'Article/'.$carpeta;
+                    $nuevaRutaCarpeta = $upload_path.'Article/'.$s;
 
                     File::move($file_absolute, $nuevaRutaCarpeta);
 

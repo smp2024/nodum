@@ -9,7 +9,7 @@
             <div id="img-obra" class="col-lg-7 col-md-12 col-12 d-flex justify-content-center align-items-center p-0 w-100" >
                 <div class="content-obra-img" style="background-size: 100% auto !important; background-color: #fff !important; ');" >
                     {{-- <img class="w-100 h-100 grayscale " src="{{ url('multimedia'.$vpn->file_path.'/'.$vpn->slug.'/'.$vpn->file) }}" alt="{{ $article->name }}" class="" style="filter: grayscale(100%);" > --}}
-                    <img id="fullscreen-img" class="w-100  grayscale clickable" src="{{ url('multimedia'.$vpn->file_path.'/'.$vpn->slug.'/'.$vpn->file) }}" alt="{{ $article->name }}" style="    margin-bottom: 10%;" >
+                    <img id="fullscreen-img" class="w-100  grayscale clickable" src="{{ url('multimedia/'.$vpn->file_path.'/'.$vpn->slug.'/'.$vpn->file) }}" alt="{{ $article->name }}" style="    margin-bottom: 10%;" >
 
                 </div>
             </div>

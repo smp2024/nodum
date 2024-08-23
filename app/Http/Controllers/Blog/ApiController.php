@@ -313,7 +313,36 @@ class ApiController extends Controller
             }
         }
         $foods = $query->get();
-        return response()->json($foods);
+        $i = 0;
+        foreach ($foods as  $food) {
+            $response[$i]['id'] = $food->id;
+            $response[$i]['user_id'] = $food->user_id;
+            $response[$i]['category_id'] = $food->category_id;
+            $response[$i]['subcategory_id'] = $food->subcategory_id;
+            $response[$i]['subcategory_name'] = $food->getSubCategory->name;
+            $response[$i]['artist_id'] = $food->artist_id;
+            $response[$i]['artist_name'] = $food->getArtist->name.' '.$food->getArtist->lastname;
+            $response[$i]['status'] = $food->status;
+            $response[$i]['module'] = $food->module;
+            $response[$i]['name'] =  ucwords($food->name);
+            $response[$i]['slug'] = $food->slug;
+            $response[$i]['file_path'] = $food->file_path;
+            $response[$i]['file'] = $food->file;
+            $response[$i]['description'] = $food->description;
+            $response[$i]['sku'] = $food->sku;
+            $response[$i]['height'] = $food->height;
+            $response[$i]['width'] = $food->width;
+            $response[$i]['depth'] = $food->depth;
+            $response[$i]['price_min'] = $food->price_min;
+            $response[$i]['price_min_us'] = $food->price_min_us;
+            $response[$i]['price_max'] = $food->price_max;
+            $response[$i]['price_max_us'] = $food->price_max_us;
+            $response[$i]['year'] = $food->year;
+
+            ++$i;
+        }
+
+        return response()->json($response);
 
     }
 }
