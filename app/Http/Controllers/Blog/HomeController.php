@@ -78,6 +78,8 @@ class HomeController extends Controller
             $tecnicas = DB::table('sub_categories')->where('status', '1')->get();
             // $tecnicas->prepend((object) ['id' => 'Todos', 'name' => 'Todos']); // Agregar "Todos" al principio del array
             $articles = DB::table('articles')->where('status', 1)->where('deleted_at',NULL)->get();
+            $artistId = $request->input('artist_id');
+            // dd($artistId);
         }
 
         // dd($articles);
@@ -116,14 +118,18 @@ class HomeController extends Controller
             'artistas' => $artistas,
             'tecnicas' => $tecnicas,
             'contacto' => $contacto,
+            'artist_id' =>$artistId
         ];
 
         return view('blog.sections.articles', $data);
     }
 
-    public function getModule($category, $id)
+    public function getModule( $category, $id)
     {
+
+
         $users = DB::table('artists')->where('id', $id)->first();
+
         $categories = DB::table('categories')->where('status', '1')->get();
         // $categories->prepend((object) ['id' => 'Todos', 'name' => 'Todos']);
         $articles = DB::table('articles')->where('artist_id', $id)->where('status', 1)->get();

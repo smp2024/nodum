@@ -102,7 +102,7 @@
                         </div>
 
                         <div class="col-12 mt-2 justify-content-center align-items-center">
-                        {!! Form::submit('Enviar', ['class' => 'btn btn-success mt16  float-right']) !!}
+                        {!! Form::submit('Enviar', ['class' => 'btn btn-dark mt16  float-right']) !!}
                         </div>
                     </div>
                 {!! Form::close() !!}

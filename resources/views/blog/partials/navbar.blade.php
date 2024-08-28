@@ -17,7 +17,7 @@
                 <a  style="text-align: center;" href="{{url('/seccion/artistas')}}" class="nav-link"><p id="artistas_nav" class="m-0 pnav">Artistas</p></a>
             </li>
             <li class="nav-item ml-4">
-                <a  style="text-align: center;" href="{{url('/seccion/obras')}}" class="nav-link"><p id="obras_nav" class="m-0 pnav">Obras</p></a>
+                <a  style="text-align: center;" href="{{url('/seccion/obras')}}" class="nav-link"><p id="obras_nav" class="m-0 pnav">Obra</p></a>
             </li>
             <li class="nav-item ml-4">
                 <a  style="text-align: center;" href="{{url('/seccion/proyectos')}}" class="nav-link"><p id="proyectos_nav" class="m-0 pnav">Proyectos</p></a>

@@ -282,7 +282,7 @@
 
                             </div>
                             <p id="maxPrice" class="m-0">Hasta ${{ number_format($articles->max('price_max'), 2, '.', ',') }}</p>
-                            <input name="price_max" hidden type="range" min="{{ $articles->min('price_min') }}" max="{{ $articles->max('price_max') }}" value="{{ $articles->max('price_max') }}" id="">
+                            <input name="price_max" hidden type="range" min="{{ $articles->min('price_min') }}" max="{{ $articles->max('price_max') }}" value="{{ $articles->max('price_max') }}" id="rangePrice">
 
                         </div>
 
@@ -347,6 +347,17 @@
 
 @section('scripts')
     <script>
+
+        const priceRange = document.getElementById('priceRange');
+        const minPrice = document.getElementById('minPrice');
+        const maxPrice = document.getElementById('maxPrice');
+
+        const priceRangeUS = document.getElementById('priceRangeUS');
+        const minPriceUS = document.getElementById('minPriceUS');
+        const maxPriceUS = document.getElementById('maxPriceUS');
+
+        // const contentArticles = document.getElementById('content-articles');
+
         function showCurrency(currency) {
             if (currency === 'mx') {
                 document.getElementById('mxTab').classList.add('active');
@@ -360,7 +371,7 @@
                 document.getElementById('pMin').value = "{{ $articles->min('price_min') }}";
                 document.getElementById('priceValue').textContent = "${{ number_format($articles->min('price_min'), 2, '.', ',') }}";
 
-                showall();
+                // showall();
             } else if (currency === 'us') {
                 document.getElementById('usTab').classList.add('active');
                 document.getElementById('mxTab').classList.remove('active');
@@ -370,21 +381,24 @@
                 $('.usPrices_').show();
                 document.getElementById('priceRangeUS').value = "{{ $articles->min('price_min_us') }}";
                 document.getElementById('priceValueUS').textContent = "${{ number_format($articles->min('price_min_us'), 2, '.', ',') }}";
-                showall();
+                // showall();
             }
 
         }
-        const priceRange = document.getElementById('priceRange');
-        const minPrice = document.getElementById('minPrice');
-        const maxPrice = document.getElementById('maxPrice');
-
-        const priceRangeUS = document.getElementById('priceRangeUS');
-        const minPriceUS = document.getElementById('minPriceUS');
-        const maxPriceUS = document.getElementById('maxPriceUS');
-
-        const contentArticles = document.getElementById('content-articles');
 
         $(document).ready(function(){
+
+            sendForm();
+            var artist_id = {{ $artist_id ?? 'null' }};
+
+
+            // console.log('artista id: '+artist_id);
+
+            if (artist_id !== 'null') {
+                $('input[type="checkbox"][value="' + artist_id + '"]').prop('checked', true);
+
+                sendForm();
+            }
 
             var base = location.protocol + '//' + location.host;
             var route = document.title;
@@ -425,19 +439,7 @@
                     $arrow.removeClass('rotate');
                 }
             });
-            sendForm();
         });
-
-        // function filterByYear(year) {
-        //     showall();
-        //     if (year === 'Todos') {
-        //         $('#content-articles .content-articles').show();
-        //     } else {
-        //         $('#content-articles .content-articles').hide();
-        //         $('#content-articles .content-articles[data-year="' + year + '"]').show();
-        //     }
-        //     $('#content-articles .content-articles[data-year="' + year + '"]').show();
-        // }
 
         function filterByCategory() {
             sendForm();
@@ -455,199 +457,41 @@
             sendForm();
         }
 
-        function filterArticlesByPrice() {
-            sendForm();
-
-        }
-
-        // function filterArticlesByPriceUS() {
-
-        //     const articles = contentArticles.getElementsByClassName('content-articles');
-        //     const selectedPrice = parseInt(priceRangeUS.value);
-        //     showall();
-
-        //     for (let i = 0; i < articles.length; i++) {
-        //         const article = articles[i];
-        //         const articlePricemin = parseInt(article.getAttribute('data-priceminus'));
-        //         const articlePricemax = parseInt(article.getAttribute('data-pricemaxus'));
-
-        //         if ( articlePricemin >= selectedPrice || selectedPrice <= articlePricemax   )  {
-        //             article.style.display = 'block';
-        //         } else {
-        //             article.style.display = 'none';
-        //         }
-        //     }
-        // }
-
         function darFormatoPrecio(precio) {
             return '$' + parseFloat(precio).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
         function darFormatoPrecioUS(precio) {
             return '$' + parseFloat(precio).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
-
+        let timeoutId;
         priceRange.addEventListener('input', () => {
 
             priceValue.textContent = darFormatoPrecio(priceRange.value);
-            sendForm();
-            // showall();
-            // filterArticlesByPrice();
-        });
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
 
+            timeoutId = setTimeout(() => {
+                sendForm();
+            }, 500);
+        });
+        let timeoutId_;
         priceRangeUS.addEventListener('input', () => {
 
             priceValueUS.textContent = darFormatoPrecioUS(priceRangeUS.value);
-            sendForm();
-            // showall();
-            // filterArticlesByPriceUS();
+            if (timeoutId_) {
+                clearTimeout(timeoutId_);
+            }
+            timeoutId_ = setTimeout(() => {
+                sendForm();
+
+            }, 500);
         });
 
-        // function highlightSize(size) {
-
-        //     // $('#content-articles .content-articles[data-show=0]').hide();
-        //     showall();
-        //     const articles = document.querySelectorAll('#content-articles .content-articles');
-        //     articles.forEach(article => {
-        //         //
-        //         const width = parseInt(article.getAttribute('data-width'));
-        //         const height = parseInt(article.getAttribute('data-height'));
-
-        //         if (size === 'pequeño' && (width <= 40)) {
-        //             // article.classList.remove('no-highlight');
-        //             // article.classList.add('highlight');
-        //             if (height <= 40) {
-
-        //                 console.log(article);
-        //             } else {
-        //                 article.classList.add('no-highlight');
-        //             }
-
-        //         }
-        //         //  else {
-        //         //     article.classList.add('no-highlight');
-
-        //         // }
-
-        //         // if (size === 'mediano' && (width >= 40 && width <= 100) && (height >= 40 && height <= 100)) {
-        //         //     article.classList.remove('no-highlight');
-        //         //     article.classList.add('highlight');
-        //         //     console.log('mediano');
-        //         // } else {
-        //         //     article.classList.add('no-highlight');
-
-        //         // }
-
-        //         // if (size === 'grande' && (width >= 100 || height >= 100)) {
-        //         //     article.classList.remove('no-highlight');
-        //         //     article.classList.add('highlight');
-        //         //     console.log('grande');
-        //         // } else {
-        //         //     article.classList.add('no-highlight');
-        //         // }
-        //     });
-        // }
         if (screen.width < 800) {
             $('#main_').removeClass("row");
         }
 
-        // function showall(){
-        //     $('#content-articles .content-articles[data-show=0]').show();
-
-        // }
-
-        // function handleCheckboxChangeTecnic(checkbox, year) {
-        //     if (checkbox.checked) {
-        //         $('#content-articles .content-articles').hide();
-        //         $('#content-articles .content-articles[data-technic="' + year + '"]').show();
-        //         var anyChecked = $('input[name="tecnica_checkbox[]"]:checked').length > 0;
-        //         if (anyChecked) {
-        //             var checkedValues = $('input[name="tecnica_checkbox[]"]:checked').map(function(){
-        //                 return this.value;
-        //             }).get();
-        //             $('#content-articles .content-articles').hide();
-        //             checkedValues.forEach(function(value) {
-        //                 $('#content-articles .content-articles[data-technic="' + value + '"]').show();
-        //             });
-        //         } else {
-        //             $('#content-articles .content-articles').show();
-        //         }
-        //     } else {
-        //         var anyChecked = $('input[name="tecnica_checkbox[]"]:checked').length > 0;
-        //         if (!anyChecked) {
-        //             $('#content-articles .content-articles').show();
-        //         } else {
-        //             var checkedValues = $('input[name="tecnica_checkbox[]"]:checked').map(function(){
-        //                 return this.value;
-        //             }).get();
-        //             $('#content-articles .content-articles').hide();
-        //             checkedValues.forEach(function(value) {
-        //                 $('#content-articles .content-articles[data-technic="' + value + '"]').show();
-        //             });
-        //         }
-        //     }
-        // }
-        // function handleCheckboxChangeArtist(checkbox, year) {
-        //     if (checkbox.checked) {
-        //         $('#content-articles .content-articles').hide();
-        //         $('#content-articles .content-articles[data-artist="' + year + '"]').show();
-        //         var anyChecked = $('input[name="artista_checkbox[]"]:checked').length > 0;
-        //         if (anyChecked) {
-        //             var checkedValues = $('input[name="artista_checkbox[]"]:checked').map(function(){
-        //                 return this.value;
-        //             }).get();
-        //             $('#content-articles .content-articles').hide();
-        //             checkedValues.forEach(function(value) {
-        //                 $('#content-articles .content-articles[data-artist="' + value + '"]').show();
-        //             });
-        //         } else {
-        //             $('#content-articles .content-articles').show();
-        //         }
-        //     } else {
-        //         var anyChecked = $('input[name="artista_checkbox[]"]:checked').length > 0;
-        //         if (!anyChecked) {
-        //             $('#content-articles .content-articles').show();
-        //         } else {
-        //             var checkedValues = $('input[name="artista_checkbox[]"]:checked').map(function(){
-        //                 return this.value;
-        //             }).get();
-        //             $('#content-articles .content-articles').hide();
-        //             checkedValues.forEach(function(value) {
-        //                 $('#content-articles .content-articles[data-artist="' + value + '"]').show();
-        //             });
-        //         }
-        //     }
-        // }
-        // function handleCheckboxChangeCategory(checkbox, year) {
-        //     if (checkbox.checked) {
-        //         $('#content-articles .content-articles').hide();
-        //         $('#content-articles .content-articles[data-category="' + year + '"]').show();
-        //         var anyChecked = $('input[name="categoria_checkbox[]"]:checked').length > 0;
-        //         if (anyChecked) {
-        //             var checkedValues = $('input[name="categoria_checkbox[]"]:checked').map(function(){
-        //                 return this.value;
-        //             }).get();
-        //             $('#content-articles .content-articles').hide();
-        //             checkedValues.forEach(function(value) {
-        //                 $('#content-articles .content-articles[data-category="' + value + '"]').show();
-        //             });
-        //         } else {
-        //             $('#content-articles .content-articles').show();
-        //         }
-        //     } else {
-        //         var anyChecked = $('input[name="categoria_checkbox[]"]:checked').length > 0;
-        //         if (!anyChecked) {
-        //             $('#content-articles .content-articles').show();
-        //         } else {
-        //             var checkedValues = $('input[name="categoria_checkbox[]"]:checked').map(function(){
-        //                 return this.value;
-        //             }).get();
-        //             $('#content-articles .content-articles').hide();
-        //             checkedValues.forEach(function(value) {
-        //                 $('#content-articles .content-articles[data-category="' + value + '"]').show();
-        //             });
-        //         }
-        //     }
-        // }
         function sendForm(){
             const formulario = document.getElementById('filterForm');
             const formData = new FormData(formulario);
@@ -661,12 +505,9 @@
                     console.log(response);
                 },
                 success: function(response) {
-                    // Maneja la respuesta del servidor
-                    console.log(response); // Muestra la respuesta en la consola
                     updateArticles(response);
                 },
                 error: function(xhr, status, error) {
-                    // Maneja cualquier error
                     console.error('Error al enviar el formulario:', error);
                 }
             });
@@ -679,7 +520,7 @@
             articles.forEach(function(article) {
                 // Construir el HTML para cada artículo
                 var articleHtml = `
-                    <div class="col-lg-3 col-md-6 col-sm-12 content-articles mt-2"
+                    <div class="col-lg-4 col-md-6 col-sm-12 content-articles mt-2"
                         alt="${article.name}"
                         data-year="${article.year}"
                         data-category="${article.category_id}"
@@ -694,17 +535,16 @@
                         data-show="0" style="min-height: 200px;     height: 430px;">
                         <a href="/seccion/obras/${article.id}">
                             <div class="d-flex justify-content-start align-items-end w-100" style="height: 60%;">
-                                <div class="image-container" style="background-image: url(../multimedia/${article.file_path}/${article.slug}/t_${article.file})" alt="${article.name})">
-
+                                <div class="image-container" alt="${article.name})">
+                                    <img src="/multimedia/${article.file_path}/${article.slug}/${article.file}" alt="${article.name}">
                                 </div>
                             </div>
                             <div style="height: 40%;">
-                                <p class="m-0 text-start" style="font-size: calc(0.6rem + 0.4vw); font-weight: 700;">${article.name}</p>
-                                <p class="m-0 text-start" style="font-size: calc(0.5rem + 0.4vw);">${article.artist_name}</p>
+                                <p class="m-0 text-start" style="font-size: calc(0.5rem + 0.4vw); font-weight: 700;">${article.artist_name}</p>
+                                <p class="m-0 text-start" style="font-size: calc(0.6rem + 0.4vw); ">${article.name}</p>
                                 <p class="m-0 text-start" style="font-size: calc(0.5rem + 0.4vw);">${article.subcategory_name}</p>
-
-                                <p class="m-0 text-start" style="font-size: 13px;">${article.year}</p>
                                 <p class="m-0 text-start" style="font-size: 13px;">${article.width} x ${article.height} cm</p>
+                                <p class="m-0 text-start" style="font-size: 13px;">${article.year}</p>
                             </div>
                         </a>
                     </div>
