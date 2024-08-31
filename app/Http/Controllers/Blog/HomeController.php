@@ -25,8 +25,12 @@ class HomeController extends Controller
 {
     public function getHome()
     {
-        /** Primera sección **/
-        $carrousels = DB::table('carousels')->orderBy('id', 'DESC')->where('status', 1)->where('type', 0)->get();
+        $carrousels = DB::table('carousels')
+                    ->where('status', 1)
+                    ->where('type', 0)
+                    ->inRandomOrder()
+                    ->limit(10)
+                    ->get();
 
         $data = [
             'carrousels' => $carrousels,
@@ -151,7 +155,7 @@ class HomeController extends Controller
             $imagenes = PGallery::where('project_id', $vpn->id)->whereNull('deleted_at')->get();
         }
         if ($category == 'obras') {
-            $vpn = DB::table('articles')->where('id', $id)->where('status', 1)->first();
+            $vpn = Article::where('id', $id)->where('status', 1)->first();
 
             $artistas_ = DB::table('artists')->where('status', '1')->orderBy('id', 'DESC')->get();
         }

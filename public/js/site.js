@@ -5,7 +5,7 @@ $(document).ready(function() {
 $('.alert').slideDown();
 setTimeout(function() {
     $('.alert').slideUp();
-}, 3000);
+}, 5000);
 
 
 

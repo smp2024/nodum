@@ -83,4 +83,11 @@ $(document).ready(function() {
 $('.alert').slideDown();
 setTimeout(function() {
     $('.alert').slideUp();
-}, 3000);
+}, 5000);
+
+$(document).ready(function() {
+    $('form').on('submit', function(e) {
+        // Quitar la clase d-none para mostrar la animación de carga
+        $('#loading-animation').removeClass('d-none');
+    });
+});

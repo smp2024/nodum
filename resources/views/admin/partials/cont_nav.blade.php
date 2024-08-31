@@ -64,7 +64,7 @@
         <li>
             <a href="{{ url('/admin/carousels') }}" class="lk-carousels lk-carousel_add lk-carousel_edit">
                 <i class="fal fa-object-ungroup"></i>
-                Imagen de inicio
+                Carousel de inicio
             </a>
         </li>
         @endif

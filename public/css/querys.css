@@ -1,0 +1,62 @@
+/*Escritorio*/
+@media (min-width: 990px)  {
+    #Slider-mobile{
+        display: none !important;
+    }
+    .cont-artist {
+        display: flex;
+    }
+}
+/*Fin Escritorio*/
+
+/*Tablet*/
+/*Portrait*/
+@media (min-width: 576px) and (max-width: 990px) and (orientation:portrait) {
+    #main_{
+        display: none !important;
+    }
+    #img-asesor {
+        justify-content: center !important;
+    }
+}
+
+/*landscape*/
+@media (min-width: 800px) and (max-width: 990px)and (orientation:landscape) {
+    #main_{
+        display: none !important;
+    }
+    body{background: blue;}
+
+    #img-asesor {
+        justify-content: center !important;
+    }
+}
+/*fin tablet*/
+
+/*movil*/
+/*Portrait*/
+/*Default*/
+@media (max-width: 575px)and (orientation:portrait) {
+    #main_{
+        display: none !important;
+    }
+    #Slider-mobile{
+        display: block !important;
+    }
+    #cont-artist {
+        max-height: auto !important;
+    }
+    #img-asesor {
+        justify-content: center !important;
+    }
+}
+/*landscape*/
+@media (min-width: 576px) and (max-width: 800px) and (orientation:landscape) {
+    #main_{
+        display: none !important;
+    }
+    #carouselExampleIndicator{
+        display: none !important;
+    }
+}
+/*fin movil*/

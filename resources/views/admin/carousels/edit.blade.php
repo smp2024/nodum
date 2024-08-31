@@ -6,7 +6,7 @@
     <li class="breadcrumb-item">
         <a href="{{ url('/admin/carousels') }}">
             <i class="far fa-folder-open"></i>
-            Imagen de inicio
+            Carousel de inicio
         </a>
     </li>
 
@@ -24,7 +24,7 @@
                             <div class="header">
                                 <h2 class="title">
                                     <i class="fas fa-plus"></i>
-                                    Editar Imagen de inicio
+                                    Editar Carousel de inicio
                                 </h2>
                             </div>
                         <div class="inside">
@@ -35,7 +35,7 @@
                                     @csrf
                                     <div class="row" style="padding: 16px;">
 
-                                        <div class="col-md-7">
+                                        {{-- <div class="col-md-7">
 
                                             {!! Form::label('name','Nombre:') !!}
                                             <div class="input-group">
@@ -47,9 +47,9 @@
                                                 {!! Form::text('name', $cat->name, [ 'class' => 'form-control']) !!}
                                             </div>
 
-                                        </div>
+                                        </div> --}}
 
-                                        <div class="col-md-5">
+                                        <div class="col-md-6">
 
                                             {!! Form::label('file','Imagen de PC:') !!}
                                             <div class="input-group">
@@ -60,7 +60,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-md-5 col-12 mt16">
+                                        <div class="col-md-6 col-12 ">
 
                                             {!! Form::label('file_mobile','Imagen de móvil:') !!}
                                             <div class="input-group">

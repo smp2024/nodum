@@ -1,12 +1,12 @@
 @extends('admin.master')
-@section('title', 'Imagen de inicio')
+@section('title', 'Carousel de inicio')
 
 @section('breadcrumb')
 
     <li class="breadcrumb-item">
         <a href="{{ url('/admin/kits') }}">
             <i class="far fa-object-group"></i>
-            Imagen de inicio
+            Carousel de inicio
         </a>
     </li>
 
@@ -17,15 +17,13 @@
     <div class="container-fluid">
 
         <div class="row">
-            @if ($active == 0)
-
                 <div class="col-md-5">
                     <div class="container-fluid p-0">
                         <div class="panel shadow">
                                 <div class="header">
                                     <h2 class="title">
                                         <i class="fas fa-plus"></i>
-                                        Agregar Imagen de inicio
+                                        Agregar Carousel de inicio
                                     </h2>
                                 </div>
                             <div class="inside">
@@ -36,7 +34,7 @@
                                         @csrf
                                         <div class="row" style="padding: 16px;">
 
-                                            <div class="col-12">
+                                            {{-- <div class="col-12">
 
                                                 {!! Form::label('name','Nombre:') !!}
                                                 <div class="input-group">
@@ -48,11 +46,11 @@
                                                     {!! Form::text('name', null, [ 'class' => 'form-control']) !!}
                                                 </div>
 
-                                            </div>
+                                            </div> --}}
 
                                             <div class="col-12 mt16">
 
-                                                {!! Form::label('file','Imagen:') !!}
+                                                {!! Form::label('file','Imagen para PC:') !!}
                                                 <div class="input-group">
                                                     <div class="custom-file">
                                                         {!! Form::file('file', ['class' => 'custom-file-input', 'id' => 'customFile']) !!}
@@ -61,6 +59,32 @@
                                                 </div>
 
                                             </div>
+
+{{--
+                                            <div class="col-12 mt16">
+
+                                                {!! Form::label('file2','Imagen para Tablet:') !!}
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        {!! Form::file('file2', ['class' => 'custom-file-input', 'id' => 'customFile2']) !!}
+                                                        <label class="custom-file-label" for="customFile">Choose File</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="col-12 mt16">
+
+                                                {!! Form::label('file3','Imagen para Celular:') !!}
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        {!! Form::file('file3', ['class' => 'custom-file-input', 'id' => 'customFile3']) !!}
+                                                        <label class="custom-file-label" for="customFile">Choose File</label>
+                                                    </div>
+                                                </div>
+
+                                            </div> --}}
 
                                         </div>
 
@@ -76,25 +100,20 @@
                     </div>
                 </div>
 
-            @endif
 
-            <div @if ($active != 0)
-                    class="col-md-12 mt-4 mt-md-0"
-                @else
-                    class="col-md-7 mt-4 mt-md-0"
-                @endif
-                >
+            <div class="col-md-7 mt-4 mt-md-0">
+
                 <div class="panel shadow">
 
                     <div class="header">
                         <h2 class="title">
                             <i class="far fa-object-group"></i>
-                            Imagen de inicio
+                            Carousel de inicio
                         </h2>
                     </div>
-                    <div class="inside" style="max-height: 400px; overflow: auto;">
+                    <div class="inside">
                         <div class="row" style="padding: 16px;">
-                            <table class="table">
+                            <table class="table" id="table_carousel">
                                 <thead>
                                     <tr>
                                         <td width="70">Imagen</td>
@@ -139,6 +158,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
@@ -147,4 +167,39 @@
 
 @stop
 
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        $('#table_carousel').DataTable();
+
+        // $('.status-icon').on('click', function() {
+        //     var id = $(this).data('id');
+        //     $('#loading-animation').removeClass('d-none');
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: '/api/category/change-status/',
+        //         data: {
+        //             id: id
+        //         },
+        //         success: function(response) {
+        //             location.reload();
+        //         },
+        //         error: function(xhr, status, error, response) {
+        //             $('#loading-animation').removeClass('d-none');
+        //             console.log(response);
+        //         }
+        //     });
+        // });
+        $('#icon').on('input', function() {
+            var iconHtml = $(this).val();
+            var iconElement = $(iconHtml);
+            $('#preview_icon').empty();
+            $('#preview_icon').append(iconElement);
+        });
+    });
+
+
+
+</script>
+@endsection
 

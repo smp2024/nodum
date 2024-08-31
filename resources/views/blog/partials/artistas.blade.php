@@ -44,18 +44,20 @@
 @endsection
 @section('content')
     <!-- info Artsta -->
-    <div class="row justify-content-center pl-1 w-100" >
-        <div id="img-asesor" class="col-lg-5 col-md-12 col-12 d-flex justify-content-center align-items-center p-0 w-100" >
+    <div class=" justify-content-center align-items-end pl-1 w-100 cont-artist">
+        <div id="img-asesor" class="col-lg-3 col-md-12 col-12 d-flex justify-content-end align-items-center p-0 w-100" >
             <div class="content-artist-img grayscale "  >
                 <img class="w-100 h-100 grayscale" src="{{ url('multimedia'.$post->file_path.'/'.$post->file) }}" alt="{{ $article->name }}" class="" style="filter: grayscale(100%);" >
             </div>
         </div>
-        <div class="col-lg-7  col-md-12 col-12 pt-5" >
-            <p class="w-100 artist-name">{!!  html_entity_decode($post->name, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!} {!!  html_entity_decode($post->lastname, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!}</p>
-            <p class="w-100 artist-year">{{substr($post->birthday, 0, 4)}} - {!!  html_entity_decode($post->country, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!} </p>
-            <p class="w-100 artist-description mt-3" >{!!  html_entity_decode($post->description_large, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!}</p>
+        <div class="col-lg-7  col-md-12 col-12  text-justify" >
+            <div class=" h-100 w-100  info-artist">
+                <p class="w-100 artist-name">{!!  html_entity_decode($post->name, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!} {!!  html_entity_decode($post->lastname, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!}</p>
+                <p class="w-100 artist-year">{{substr($post->birthday, 0, 4)}} - {!!  html_entity_decode($post->country, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!} </p>
+                {!!  html_entity_decode($post->description_large, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!}
+            </div>
         </div>
-        <button type="button" class="btn btn-outline-dark view-works mb-5" data-artist-id="{{ $post->id }}">Ver obras</button>
+        {{-- <button type="button" class="btn btn-outline-dark view-works mb-5" data-artist-id="{{ $post->id }}">Ver obras</button> --}}
     </div>
 
 @endsection

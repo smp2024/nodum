@@ -134,7 +134,7 @@
                                             </span>
                                         </div>
                                         <div class="custom-file">
-                                            {!! Form::file('file', ['class' => 'custom-file-input', 'id' => 'customFile', 'required' => true]) !!}
+                                            {!! Form::file('file', ['class' => 'custom-file-input', 'id' => 'customFile']) !!}
                                             <label class="custom-file-label h-100 m-0" for="customFile">Choose File</label>
                                         </div>
                                     </div>
@@ -149,7 +149,7 @@
                                                 <i class="fal fa-phone"></i>
                                             </span>
                                         </div>
-                                        {!! Form::select('status', [ '0' => 'Borrador', '1' => 'Publicado'], $product->status, ['class' => 'custom-select']) !!}
+                                        {!! Form::select('status', [ '0' => 'Borrador', '1' => 'Publicado'], $artist->status, ['class' => 'custom-select']) !!}
                                     </div>
 
                                 </div>

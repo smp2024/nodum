@@ -29,7 +29,6 @@
                     <link rel="stylesheet" href="{{ url('/css/font.css?v='.time()) }}">
                     <link rel="stylesheet" href="{{ url('/css/querys.css?v='.time()) }}">
                     <link rel="stylesheet" href="{{ url('/css/review.css?v='.time()) }}">
-                    <script src="{{ asset('js/contador.js?v='.time()) }}"></script>
                     @yield('css')
 
             </head>
@@ -76,6 +75,7 @@
                     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
                     <script src="{{ asset('js/site.js') }}"></script>
                     <script src="{{ asset('js/bold.js') }}"></script>
+                    {{-- <script src="{{ asset('js/contador.js?v='.time()) }}"></script> --}}
 
                 <!--individual-Script-page-->
                     @yield('scripts')

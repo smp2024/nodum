@@ -1,29 +1,42 @@
 @extends('master')
 
 @section('title',  $vpn->name )
+@section('css')
+<style>
+    .text-container {
+        column-count: 2;
+        column-gap: 60px;
+    }
 
+</style>
+@endsection
 @section('content')
 
     <div id="Article"  class="col-12">
         <div class="row " >
 
             <!-- TITULO NOTICIA -->
-                <div class="col-12 justify-content-center align-items-center Height5_2" >
 
-                    <h1 class="m-3" style="text-align: center;">{!!  html_entity_decode($vpn->name, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!}</h1>
-
-                </div>
 
             <!-- iMAGEN DESTACADA -->
-                <div  class="col-12 justify-content-center align-items-center Height70 img-portada" style="padding: 0 20%; margin-bottom: 40px;background-image: url({{ url('/multimedia/'.$vpn->file_path.'/'.$vpn->slug.'/'.$vpn->file) }});" >
+                {{-- <div  class="col-12 justify-content-center align-items-center Height70 img-portada" style="padding: 0 20%; margin-bottom: 40px;background-image: url({{ url('/multimedia/'.$vpn->file_path.'/'.$vpn->slug.'/'.$vpn->file) }});" >
 
-                </div>
+                </div> --}}
 
             <!-- Secccion-->
                 @for ($i=1 ; $i<=$vpn->sections; $i++)
                     <!-- DESCRIPCION -->
-                        <div  class="col-12 justify-content-center align-items-center text-justify " style="margin-bottom: 25px;  height: auto;  padding: 5px 10%; ">
-
+                        <div id="text-container" class="justify-content-center align-items-center text-justify text-container" style="margin-bottom: 25px;  height: auto;  padding: 6% 9% 2%;">
+                            {{-- <h1 class="m-3" style="text-align: center;">{!!  html_entity_decode($vpn->name, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!}</h1>
+                            <div class="h-20 date_ Bold">
+                                <p>{{ $vpn->date }}</p>
+                            </div> --}}
+                            <div class="h-20  Bold" style="color: #000 !important; ">
+                                <p style=" font-size: 2.5rem;">{{ html_entity_decode($vpn->name, ENT_QUOTES | ENT_XML1, 'UTF-8') }}</p>
+                            </div>
+                            <div class="h-20 date__ Bold"  style="color: #000 !important;">
+                                <p>{{ $vpn->date }}</p>
+                            </div>
                             @foreach ($descriptions as $description)
                                 @if ($description->section == $i)
                                     {!! html_entity_decode($description->content, ENT_QUOTES | ENT_XML1, 'UTF-8') !!}
@@ -56,7 +69,7 @@
                         </div>
 
                     <!--VIDEO -->
-                    @foreach ($videos as $video)
+                    {{-- @foreach ($videos as $video)
                         @if ($video->content != null )
                             @if ($video->section == $i)
                                 <div  class="col-12 justify-content-center align-items-center vimeo" style="padding: 0; height:50%; min-height:300px; margin-bottom: 25px;">
@@ -68,7 +81,7 @@
                                 </div>
                             @endif
                         @endif
-                    @endforeach
+                    @endforeach --}}
                 @endfor
         </div>
     </div>
@@ -76,11 +89,38 @@
 
 @section('scripts')
     <script>
+
+
         $(document).ready(function() {
-            $('.carousel').carousel({
-                interval: 5000 // Change slide every 5 seconds
+
+            $('.date__ p').each(function() {
+                var fechaOriginal = $(this).text();
+
+                var fechaObjeto = new Date(fechaOriginal + 'T00:00:00');
+
+                var dia = fechaObjeto.getDate();
+                var mes = fechaObjeto.toLocaleString('default', { month: 'long' });
+                var año = fechaObjeto.getFullYear();
+
+                var nuevaFecha = dia + ' de ' + mes + ' de ' + año;
+
+                $(this).text(nuevaFecha);
+
+
             });
         });
+
+        var textContent = document.getElementById('text-container').textContent;
+
+            // Contar los caracteres
+        var characterCount = textContent.length;
+console.log(characterCount);
+
+        if (characterCount <= 1500) {
+
+            $('#text-container').addClass('col-6');
+            $('#text-container').removeClass('text-container');
+        }
     </script>
 @endsection
 

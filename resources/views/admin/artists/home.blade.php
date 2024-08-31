@@ -60,7 +60,7 @@
                             <tr>
                                 <th>Imagen</th>
                                 <th>Nombre</th>
-                                <th>Número de Obras</th>
+                                {{-- <th>Número de Obras</th> --}}
                                 <th>Estatus</th>
                                 <th>Acciones</th>
                             </tr>
@@ -72,7 +72,7 @@
                                         <img src="{{ url('multimedia'.$new->file_path.'/'.$new->file) }}" width="65" height="65">
                                     </td>
                                     <td style="text-align: center;">{{ $new->name }} {{ $new->lastname }} </td>
-                                    <td style="text-align: center;">0</td>
+                                    {{-- <td style="text-align: center;">0</td> --}}
                                     <td>
                                         @if ($new->status == '1')
                                             <i class="fas fa-globe-americas" style="color: green;">Publicado</i>

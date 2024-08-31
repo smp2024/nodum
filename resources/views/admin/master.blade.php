@@ -34,7 +34,7 @@
                 transform: translate(-50%, -50%);
                 background-size: 100% auto;
                 z-index: 9999;
-                width: 80%;
+                width: 100%;
                 /* height: 100%;
                 justify-content: center;
                 display: flex;
@@ -47,7 +47,7 @@
             }
         </style>
             <body>
-                <div id="loading-animation" class="h-100 d-none" style="z-index: 999; background-color: #000; position:obsolute; width:80%;">
+                <div id="loading-animation" class="h-100 d-none" style="z-index: 999; background-color: #000; position:obsolute; width:100%;">
                     <img src="{{ asset('media/icons/loading-9.gif') }}" alt="Loading..." class="img-loading" />
                 </div>
                 <!--Body content-->
@@ -86,6 +86,9 @@
                                     @section('content')
                                         hola mundo
                                     @show
+
+                                <!--loading-->
+                                @include('admin.partials.loading')
 
                             </div>
 
