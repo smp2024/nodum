@@ -13,22 +13,21 @@
 
 @section('content')
     {{-- vista general de la obra --}}
-    <div id="Obra"  class="col-12" style="padding-top: 5%;;">
-        <div class="row " >
-            <div  class="col-lg-2 justify-content-center align-items-center p-0 w-100" >
+    <div id="Obra"  class="col-12" style="padding-top: 5px; height: 600px;">
+        <div class="row h-100" >
+            <div  class="col-2 justify-content-center align-items-center p-0 w-100" >
                 <div class="row justify-content-center align-items-center h-100 w-100">
-
-                    <
+                    <i id="close-window" class="fal fa-chevron-left"></i>
                 </div>
             </div>
-            <div id="img-obra" class="col-lg-8 col-md-12 col-12 d-flex justify-content-center align-items-center p-0 w-100" >
-                <div class="content-obra-img" style="background-size: 100% auto !important; background-color: #fff !important; ');" >
+            <div id="img-obra" class="col-lg-8 col-md-10 col-10 d-flex justify-content-center align-items-center p-0 w-100" >
+                <div class="content-obra-img " style="background-size: cover; background-color: #fff !important; ');" >
                     {{-- <img class="w-100 h-100 grayscale " src="{{ url('multimedia'.$vpn->file_path.'/'.$vpn->slug.'/'.$vpn->file) }}" alt="{{ $article->name }}" class="" style="filter: grayscale(100%);" > --}}
-                    <img id="fullscreen-img" class="w-100  grayscale clickable" src="{{ url('multimedia/'.$vpn->file_path.'/'.$vpn->slug.'/'.$vpn->file) }}" alt="{{ $article->name }}" style="    margin-bottom: 10%;" >
+                    <img id="fullscreen-img" class="w-100  grayscale clickable" src="{{ url('multimedia/'.$vpn->file_path.'/'.$vpn->slug.'/'.$vpn->file) }}" alt="{{ $article->name }}" style="    max-height: 580px; width: auto !important; max-width: 100%;  margin-bottom: 1%;" >
 
                 </div>
             </div>
-            <div class="col-lg-2  col-md-12 col-12" style="padding-top: 5rem !important;" >
+            <div class="col-lg-2  col-md-12 col-12 align-content-end" style="padding-top: 5rem !important;" >
                 <p class="w-100 m-0" style="font-weight: 700;">{!!  html_entity_decode($vpn->name, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!} </p>
                 <p class="w-100 m-0">{{ $vpn->getArtist->name }} {{ $vpn->getArtist->lastname }}</p>
                 <p class="w-100 m-0">{{ $vpn->getSubCategory->name }}</p>
@@ -43,6 +42,7 @@
             </div>
         </div>
     </div>
+    @include('blog.partials.footer')
     {{-- modal enviar email --}}
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
@@ -222,7 +222,14 @@
             var mensaje = 'Se pide inforación de la siguiente obra ' + name_article;
             window.open('https://wa.me/' + telefono + '?text=' + mensaje);
         });
+        document.addEventListener('DOMContentLoaded', () => {
+            const closeWindowButton = document.getElementById('close-window');
 
+            closeWindowButton.addEventListener('click', () => {
+                // Cierra la ventana actual
+                window.close();
+            });
+        });
     </script>
 @endsection
 

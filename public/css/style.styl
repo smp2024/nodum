@@ -17,12 +17,15 @@ body
     font-family 'Helvetica' !important
 footer
     background-image url('https//ciudadoceano.com/media/icons/imgF.png')
-    background-color colorBg2
+    background-color colorBg
     padding 0
     height auto
     width 100%
     background-size 100% 100%
     background-repeat no-repeat
+    div
+
+        color colorBg2
 nav
     position sticky !important
     padding-top 0 !important
@@ -113,7 +116,9 @@ nav
     font-family 'Helvetica' !important
     font-size calc(0.5rem + 0.4vw)
     color colorN
-
+#filterButton
+        display none !important
+        background colorBg
 .dropdown-menu a
     &:hover
         background colorN
@@ -236,7 +241,7 @@ body
         text-decoration none
         font-weight 700
 a:link, a:visited, a:active
-  text-decoration none
+    text-decoration none
 .redes
     display flex
     justify-content space-around
@@ -341,6 +346,7 @@ a:link, a:visited, a:active
     align-content end
     p
         margin 0
+
 @media (max-width 1140px)
     .pt-6
         padding-top 0%

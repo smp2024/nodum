@@ -1,5 +1,9 @@
 /*Escritorio*/
 @media (min-width: 990px)  {
+    #filterButton{
+        display: none !important;
+        /* display: block; */
+    }
     #Slider-mobile{
         display: none !important;
     }
@@ -12,8 +16,16 @@
 /*Tablet*/
 /*Portrait*/
 @media (min-width: 576px) and (max-width: 990px) and (orientation:portrait) {
-    #main_{
+    #filterButton{
+        width: 364px;
+        left: 50%;
+        z-index: 99;
+        position: absolute;
         display: none !important;
+        /* display: block; */
+    }
+    #main_{
+        /* display: none !important; */
     }
     #img-asesor {
         justify-content: center !important;
@@ -21,11 +33,14 @@
 }
 
 /*landscape*/
-@media (min-width: 800px) and (max-width: 990px)and (orientation:landscape) {
-    #main_{
+@media (min-width: 600px) and (max-width: 990px) and (orientation:landscape) {
+    #filterButton{
         display: none !important;
+        /* display: block; */
     }
-    body{background: blue;}
+    #main_{
+        /* display: none !important; */
+    }
 
     #img-asesor {
         justify-content: center !important;
@@ -36,9 +51,14 @@
 /*movil*/
 /*Portrait*/
 /*Default*/
-@media (max-width: 575px)and (orientation:portrait) {
-    #main_{
-        display: none !important;
+@media (max-width: 575px) and (orientation:portrait) {
+    #filterButton{
+        /* display: none !important; */
+        width: 100%;
+        z-index: 99;
+        position: absolute;
+        display: block !important;
+        text-align: center;
     }
     #Slider-mobile{
         display: block !important;
@@ -49,14 +69,39 @@
     #img-asesor {
         justify-content: center !important;
     }
+    .content-articles{
+        max-height: 325px !important;
+        margin-top: 35px !important;
+    }
+    #filter__ {
+        display: block !important;
+        text-align: end;
+    }
 }
 /*landscape*/
-@media (min-width: 576px) and (max-width: 800px) and (orientation:landscape) {
+@media (min-width: 320px) and (max-width: 575px) and (orientation:landscape) {
     #main_{
-        display: none !important;
+        /* display: none !important; */
+    }
+    #filterButton{
+        width: 100%;
+        z-index: 99;
+        position: absolute;
+        /* display: none !important; */
+        display: block !important;
+        text-align: center;
     }
     #carouselExampleIndicator{
         display: none !important;
+    }
+    .content-articles{
+        max-height: 325px !important;
+        margin-top: 35px !important;
+    }
+    #filter__ {
+        display: block !important;
+        text-align: end;
+
     }
 }
 /*fin movil*/

@@ -170,14 +170,14 @@ class ApiController extends Controller
         }
 
         if ($request->price_min) {
-            $query->where('price_min', '>=', $request->input('price_min'));
+            $query->where('price_min', '<=', $request->input('price_min'));
         }
-        if ($request->price_max) {
-            $query->where('price_max', '<=', $request->input('price_max'));
-        }
-        // if ($request->has('price_min_us')) {
-        //     $query->where('price_min_us', '>=', $request->input('price_min_us'));
+        // if ($request->price_max) {
+        //     $query->where('price_max', '<=', $request->input('price_max'));
         // }
+        if ($request->price_min_us) {
+            $query->where('price_min_us', '<=', $request->input('price_min_us'));
+        }
         // if ($request->has('price_max_us')) {
         //     $query->where('price_max_us', '<=', $request->input('price_max_us'));
         // }
