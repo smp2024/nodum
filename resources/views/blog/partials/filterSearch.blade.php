@@ -2,7 +2,7 @@
     {!! Form::open(['url' => '/filter-search', 'id' => 'filterForm', 'files' => true, 'method' => 'post']) !!}
 
         <div class="content ">
-            <h4 class="toggle-list-categoria" data-filter="cat"><span class="arrow"></span> Categorías </h4>
+            <h4 class="toggle-list-categoria" data-filter="cat"> <span>+</span> Categorías </h4>
             <ul class="cat medidas" >
 
                 <!-- Lista de categorías -->
@@ -24,7 +24,7 @@
         </div>
 
         <div class="content">
-            <h4 class="toggle-list-artista" data-filter="artist"> Artistas <span class="arrow"></span></h4>
+            <h4 class="toggle-list-artista" data-filter="artist"><span>+</span>  Artistas </h4>
             <ul class="artist medidas" >
 
                 @php
@@ -53,7 +53,7 @@
         </div>
 
         <div class="content">
-            <h4 class="toggle-list-tecnica" data-filter="tec"> Técnicas <span class="arrow"></span></h4>
+            <h4 class="toggle-list-tecnica" data-filter="tec"><span>+</span>  Técnicas </h4>
             <ul class="tec medidas" >
 
                 @php

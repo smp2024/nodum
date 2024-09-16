@@ -42,11 +42,6 @@
     .medidas {
         display: none;
     }
-
-    .arrow {
-        float: right;
-    }
-
     .rotate {
         transform: rotate(180deg);
     }
@@ -277,13 +272,13 @@
             $('.toggle-list-categoria').click(function() {
                 var filter = $(this).data('filter');
                 var $ul = $('ul.' + filter);
-                var $arrow = $(this).find('.arrow');
+
                 if ($ul.hasClass('medidas')) {
                     $ul.removeClass('medidas');
-                    $arrow.addClass('rotate');
+                    $(this).find('span').text('-');
                 } else {
                     $ul.addClass('medidas');
-                    $arrow.removeClass('rotate');
+                    $(this).find('span').text('+');
                 }
             });
             $('.toggle-list-artista').click(function() {
@@ -292,10 +287,10 @@
                 var $arrow = $(this).find('.arrow');
                 if ($ul.hasClass('medidas')) {
                     $ul.removeClass('medidas');
-                    $arrow.addClass('rotate');
+                    $(this).find('span').text('-');
                 } else {
                     $ul.addClass('medidas');
-                    $arrow.removeClass('rotate');
+                    $(this).find('span').text('+');
                 }
             });
             $('.toggle-list-tecnica').click(function() {
@@ -304,10 +299,10 @@
                 var $arrow = $(this).find('.arrow');
                 if ($ul.hasClass('medidas')) {
                     $ul.removeClass('medidas');
-                    $arrow.addClass('rotate');
+                    $(this).find('span').text('-');
                 } else {
                     $ul.addClass('medidas');
-                    $arrow.removeClass('rotate');
+                    $(this).find('span').text('+');
                 }
             });
         });
