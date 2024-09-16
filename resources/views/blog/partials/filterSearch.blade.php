@@ -2,7 +2,7 @@
     {!! Form::open(['url' => '/filter-search', 'id' => 'filterForm', 'files' => true, 'method' => 'post']) !!}
 
         <div class="content ">
-            <h4 class="toggle-list-categoria" data-filter="cat"> Categorías <span class="arrow"></span></h4>
+            <h4 class="toggle-list-categoria" data-filter="cat"><span class="arrow"></span> Categorías </h4>
             <ul class="cat medidas" >
 
                 <!-- Lista de categorías -->

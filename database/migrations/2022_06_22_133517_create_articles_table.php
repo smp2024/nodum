@@ -26,19 +26,23 @@ class CreateArticlesTable extends Migration
             $table->string('slug')->nullable();
             $table->string('file_path')->nullable();
             $table->string('file')->nullable();
+            $table->text('sku')->nullable();
             $table->text('description')->nullable();
             $table->double('height')->nullable();
             $table->double('width')->nullable();
+            $table->double('depth')->nullable();
             $table->double('price_min')->nullable();
             $table->double('price_max')->nullable();
-            //$table->double('priceMax')->nullable();
+            $table->double('price_min_us')->nullable();
+            $table->double('price_max_us')->nullable();
+            $table->text('year')->nullable();
 
             $table->softDeletes();
+            $table->timestamps();
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('subcategory_id')->references('id')->on('sub_categories');
             $table->foreign('artist_id')->references('id')->on('artists');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->timestamps();
         });
     }
 

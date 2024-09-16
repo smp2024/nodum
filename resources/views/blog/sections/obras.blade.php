@@ -193,14 +193,14 @@
             <!-- Sección de filtrado -->
             @include('blog.partials.filterSearch')
 
-                <div id="filter__" class="row w-100 justify-content-end pr- d-none">
+                {{-- <div id="filter__" class="row w-100 justify-content-end pr- d-none">
                     <button  type="button" class="btn btn-outline-danger mr-2" onclick="cerrar()"  data-whatever="Search" >
                         Cerrar
                     </button>
                     <button  type="button" class="btn btn-outline-dark"  data-whatever="Search" onclick="cerrar()">
                         Buscar
                     </button>
-                </div>
+                </div> --}}
 
         </div>
 

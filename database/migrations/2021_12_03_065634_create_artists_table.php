@@ -15,6 +15,7 @@ class CreateArtistsTable extends Migration
     {
         Schema::create('artists', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->integer('status')->default('0');
             $table->string('name')->nullable();
             $table->string('lastname')->nullable();
@@ -32,6 +33,7 @@ class CreateArtistsTable extends Migration
             $table->text('phone')->nullable();
             $table->softDeletes();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
