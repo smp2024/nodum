@@ -129,10 +129,10 @@
                                             <td>{{ $cat->name }}</td>
                                             <td class="text-center">
                                                 @if ($cat->status == '1')
-                                                    <i class="fas fa-globe-americas" style="color: green;"></i>
-                                                @else
-                                                    <i class="fas fa-globe-americas" style="color: red;"></i>
-                                                @endif
+                                                <i class="fal fa-toggle-on status-icon" style="color: green; cursor: pointer;" data-id="{{ $cat->id }}"></i>
+                                            @else
+                                                <i class="fad fa-toggle-off status-icon" style="color: red; cursor: pointer;" data-id="{{ $cat->id }}"></i>
+                                            @endif
                                             </td>                                            <td>
                                                 <div class="opts">
                                                     @if (kvfj(Auth::user()->permissions, 'carousel_edit'))
@@ -172,24 +172,23 @@
     $(document).ready(function() {
         $('#table_carousel').DataTable();
 
-        // $('.status-icon').on('click', function() {
-        //     var id = $(this).data('id');
-        //     $('#loading-animation').removeClass('d-none');
-        //     $.ajax({
-        //         type: 'POST',
-        //         url: '/api/category/change-status/',
-        //         data: {
-        //             id: id
-        //         },
-        //         success: function(response) {
-        //             location.reload();
-        //         },
-        //         error: function(xhr, status, error, response) {
-        //             $('#loading-animation').removeClass('d-none');
-        //             console.log(response);
-        //         }
-        //     });
-        // });
+        $('.status-icon').on('click', function() {
+            var id = $(this).data('id');
+            $('#loading-animation').removeClass('d-none');
+            $.ajax({
+                type: 'POST',
+                url: '/api/carousel/change-status/',
+                data: {
+                    id: id
+                },
+                success: function(response) {
+                    location.reload();
+                },
+                error: function(xhr, status, error, response) {
+                    $('#loading-animation').removeClass('d-none');
+                }
+            });
+        });
         $('#icon').on('input', function() {
             var iconHtml = $(this).val();
             var iconElement = $(iconHtml);

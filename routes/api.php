@@ -21,6 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/test', 'Blog\ApiController@test')->name('test');
 Route::post('/category/change-status/', 'Blog\ApiController@changeCategoryStatus');
 Route::post('/project/change-status/', 'Blog\ApiController@changeProjectStatus');
+Route::post('/carousel/change-status/', 'Blog\ApiController@changeCarouselStatus');
+Route::post('/technic/change-status/', 'Blog\ApiController@changeTechnicStatus');
 // APIS GET SEARCH
 Route::get('/categories/search', 'Blog\ApiController@getCategorySearch')->name('getCategorySearch');
 Route::post('/upload-massive', 'Blog\ApiController@uploadMassiveArticle')->name('massive_add');

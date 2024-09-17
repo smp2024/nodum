@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
+
     public function getCategorySearch(Request $request)
     {
         $categories = Category::where('name', 'like', '%'.$request->input('texto').'%')
@@ -61,6 +62,7 @@ class ApiController extends Controller
             }
         }
     }
+
     public function changeProjectStatus(Request $request)
     {
         $id = $request->input('id');
@@ -97,22 +99,40 @@ class ApiController extends Controller
         return response()->json(['success' => 'Status change successfully.']);
     }
 
-    public function changeTagStatus($id)
+    public function changeCarouselStatus(Request $request)
     {
-        $technic = Tag::find($id);
-        $technic->status = !$technic->status;
-        $technic->save();
-
-        return response()->json(['success' => 'Status change successfully.']);
+        $id = $request->input('id');
+        $c = Carousel::find($id);
+        $status = $c->status;
+        if ($status == 1) {
+            $c->status = 0;
+            if ($c->save()) {
+                return redirect('/admin/carousels')->with('message', ' Carousel desactivado con éxito.')->with('typealert', 'success');
+            }
+        } else {
+            $c->status = 1;
+            if ($c->save()) {
+                return redirect('/admin/carousels')->with('message', ' Carousel activado con éxito.')->with('typealert', 'success');
+            }
+        }
     }
 
-    public function changeCarouselStatus($id)
+    public function changeTechnicStatus(Request $request)
     {
-        $technic = Carousel::find($id);
-        $technic->status = !$technic->status;
-        $technic->save();
-
-        return response()->json(['success' => 'Status change successfully.']);
+        $id = $request->input('id');
+        $c = Project::find($id);
+        $status = $c->status;
+        if ($status == 1) {
+            $c->status = 0;
+            if ($c->save()) {
+                return redirect('/admin/projects/all')->with('message', ' Técnica desactivada con éxito.')->with('typealert', 'success');
+            }
+        } else {
+            $c->status = 1;
+            if ($c->save()) {
+                return redirect('/admin/projects/all')->with('message', ' Técnica activada con éxito.')->with('typealert', 'success');
+            }
+        }
     }
 
     public function changeUserStatus($id)
@@ -123,8 +143,6 @@ class ApiController extends Controller
 
         return response()->json(['success' => 'Status change successfully.']);
     }
-
-    // Resto de tus métodos de controlador aquí...
 
     public function test(Request $request)
     {
@@ -138,13 +156,10 @@ class ApiController extends Controller
     public function uploadMassiveArticle(Request $request)
     {
         $formData = $request->input('formData');
-        // dd($formData);
 
         return response()->json(['formData' => $request]);
-        // $response = $request;
-        // echo json_encode($formData);
-        // exit;
     }
+
     public function getTechniquesByCategory(Request $request)
     {
         $categoryId = $request->input('category_id');
@@ -152,6 +167,7 @@ class ApiController extends Controller
 
         return response()->json($techniques);
     }
+
     public function getTechniquesByExtent(Request $request)
     {
         $categoryId = $request->input('category_id');
@@ -159,7 +175,6 @@ class ApiController extends Controller
 
         return response()->json($techniques);
     }
-
 
     public function articleSearch(Request $request)
     {
@@ -190,15 +205,10 @@ class ApiController extends Controller
         if ($request->price_min) {
             $query->where('price_min', '<=', $request->input('price_min'));
         }
-        // if ($request->price_max) {
-        //     $query->where('price_max', '<=', $request->input('price_max'));
-        // }
+
         if ($request->price_min_us) {
             $query->where('price_min_us', '<=', $request->input('price_min_us'));
         }
-        // if ($request->has('price_max_us')) {
-        //     $query->where('price_max_us', '<=', $request->input('price_max_us'));
-        // }
 
         $measures = $request->input('measures', []);
         $has1 = in_array(1, $measures);
@@ -209,7 +219,6 @@ class ApiController extends Controller
             if ($has1 || $has2 || $has3) {
             $query->where(function (Builder $query) use ($has1, $has2, $has3) {
                 if ($has1 && !$has2 && !$has3) {
-                    // Solo 1: Menor a 40
                     $query->where(function ($query) {
                         $query->whereNull('height')->orWhere('height', '<=', 40);
                     })
@@ -220,7 +229,6 @@ class ApiController extends Controller
                         $query->whereNull('depth')->orWhere('depth', '<=', 40);
                     });
                 } elseif ($has2 && !$has1 && !$has3) {
-                    // Solo 2: Entre 40 y 100
                     $query->orWhereBetween('height', [40, 100])
                               ->orWhereNull('height');
                               $query->orWhereBetween('width', [40, 100])
@@ -228,7 +236,6 @@ class ApiController extends Controller
                               $query->orWhereBetween('depth', [40, 100])
                               ->orWhereNull('depth');
                 } elseif ($has3 && !$has1 && !$has2) {
-                    // Solo 3: Mayor a 100
                     $query->where('height', '>=', 100)
                               ->orWhereNull('height');
                               $query->where('width', '>=', 100)
@@ -236,7 +243,6 @@ class ApiController extends Controller
                               $query->where('depth', '>=', 100)
                               ->orWhereNull('depth');
                 } elseif ($has1 && $has2 && !$has3) {
-                    // 1 y 2: Menor a 40 y Entre 40 y 100
                     $query->whereBetween('height', [0, 100])
                     ->orWhereNull('height');
                     $query->whereBetween('width', [0, 100])
@@ -245,7 +251,6 @@ class ApiController extends Controller
                                   ->orWhereNull('depth');
 
                 } elseif ($has1 && $has3 && !$has2) {
-                    // 1 y 3: Menor a 40 y Mayor a 100
                     $query->where(function ($query) {
                         $query->whereNull('height')
                               ->orWhere('height', '<=', 40)
@@ -262,7 +267,6 @@ class ApiController extends Controller
                               ->orWhere('depth', '>=', 100);
                     });
                 } elseif ($has2 && $has3 && !$has1) {
-                    // 2 y 3: Entre 40 y 100 y Mayor a 100
                     $query->whereBetween('height', [40, 100])
                               ->orWhere('height', '>=', 100)
                               ->orWhereNull('height');
@@ -272,17 +276,7 @@ class ApiController extends Controller
                               $query->whereBetween('depth', [40, 100])
                               ->orWhere('depth', '>=', 100)
                               ->orWhereNull('depth');
-                    // $query->where(function ($query) {
-
-                    // })
-                    // ->where(function ($query) {
-
-                    // })
-                    // ->where(function ($query) {
-
-                    // });
                 } elseif ($has1 && $has2 && $has3) {
-                    // 1, 2 y 3: Menor a 40, Entre 40 y 100, y Mayor a 100
                     $query->where(function ($query) {
                         $query->where(function ($query) {
                             $query->whereNull('height')
@@ -363,4 +357,5 @@ class ApiController extends Controller
         return response()->json($response);
 
     }
+
 }

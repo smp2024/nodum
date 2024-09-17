@@ -24,22 +24,6 @@
 
             <div class="inside">
 
-                <div class="row mt16">
-                    <div class="col-md-2 offset-md-10">
-                        <div class="dropdown">
-                            <button  style="width:100%" class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-filter"  style="margin-right: 3px;"></i>Filtrar
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a href="{{ url('/admin/users/all') }}" class="dropdown-item"><i class="fas fa-stream"  style="margin-right: 3px;"></i>Todos</a>
-                                <a href="{{ url('/admin/users/0') }}" class="dropdown-item"><i class="fas fa-unlink"  style="margin-right: 3px;"></i>No verificados</a>
-                                <a href="{{ url('/admin/users/1') }}" class="dropdown-item"><i class="fas fa-user-check"  style="margin-right: 3px;"></i>verificados</a>
-                                <a href="{{ url('/admin/users/100') }}" class="dropdown-item"><i class="fas fa-heart-broken"  style="margin-right: 3px;"></i>Suspendidos</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="container" style="overflow: auto;">
                     <table id="tabla_artistas" class="table">
                         <thead>

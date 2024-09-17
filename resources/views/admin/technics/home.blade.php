@@ -138,9 +138,9 @@
                                             <td>{{ $cat->getCategory->name }}</td>
                                             <td class="text-center">
                                                 @if ($cat->status == '1')
-                                                    <i class="fas fa-globe-americas status-icon" style="color: green;"data-id="{{ $cat->id }}"></i>
+                                                    <i class="fal fa-toggle-on status-icon" style="color: green; cursor: pointer;" data-id="{{ $cat->id }}"></i>
                                                 @else
-                                                    <i class="fas fa-globe-americas status-icon" style="color: red;"data-id="{{ $cat->id }}"></i>
+                                                    <i class="fad fa-toggle-off status-icon" style="color: red; cursor: pointer;" data-id="{{ $cat->id }}"></i>
                                                 @endif
                                             </td>                                            <td>
                                                 <div class="opts">
@@ -181,38 +181,26 @@
         $('#table_technics').DataTable();
 
         $('#icon').on('input', function() {
-            // Obtener el valor del input
             var iconHtml = $(this).val();
-
-            // Crear un elemento jQuery a partir del HTML del icono
             var iconElement = $(iconHtml);
-
-            // Limpiar el contenido actual del span
             $('#preview_icon').empty();
-
-            // Agregar el nuevo icono al span
             $('#preview_icon').append(iconElement);
         });
 
         $('.status-icon').on('click', function() {
-            // Obtener el ID del elemento
             var id = $(this).data('id');
-            console.log(id);
-            // Llamar a la API con AJAX
+            $('#loading-animation').removeClass('d-none');
             $.ajax({
-                type: 'GET',
-                url: '/technic/change-status/' + id, // Ruta de la API
+                type: 'POST',
+                url: '/api/technic/change-status/',
+                data: {
+                    id: id
+                },
                 success: function(response) {
-                    // Recargar la página
                     location.reload();
-                    console.log(response);
-
-                    // Mostrar la respuesta en un alert
-                // $('#response-container').html('<div class="alert alert-success">' + response.message + '</div>');
                 },
                 error: function(xhr, status, error, response) {
-                    // Manejar errores aquí si es necesario
-                    console.log(response);
+                    $('#loading-animation').removeClass('d-none');
                 }
             });
         });
