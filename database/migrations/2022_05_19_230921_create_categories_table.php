@@ -17,10 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string  ('name')                    ->nullable();
             $table->string  ('slug')                    ->unique()->nullable();
-            $table->string  ('file_path')               ->nullable();
-            $table->string  ('file')                    ->nullable();
-            $table->string  ('icon')                    ->nullable();
-            $table->text    ('status')                  ->nullable();
+            $table->boolean ('status')                  ->nullable()->default('0');
             $table->softDeletes();
 
             $table->timestamps();
