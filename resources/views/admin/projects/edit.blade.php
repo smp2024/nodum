@@ -5,7 +5,7 @@
 
     <li class="breadcrumb-item">
         <a href="{{ url('/admin/projects/1') }}">
-            <i class="fal fa-newspaper"></i>
+            <i class="fal fa-books"></i>
             Proyectos
         </a>
     </li>
@@ -40,7 +40,7 @@
                         @csrf
                             <div class="row" style="padding: 16px;">
 
-                                <div class="col-md-9">
+                                <div class="col-md-9 col-12">
                                     {!! Form::label('name','Nombre:') !!}
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -52,82 +52,44 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3 .FechaN">
-                                    {!! Form::label('date','Fecha:') !!}
-                                    <div class="input-group" style="    height: 56%;">
-
-                                        {!! Form::date('date', $product->date,['class' => 'date', 'style' => 'border: 1px solid #ced4da !important;']) !!}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt16">
-
-                                <div class="col-md-9">
-                                    <div class="container-fluid">
-                                        <label for="name">Imagen destacada:</label>
-                                        <div class="input-group">
-                                            <div class="custom-file">
-                                                {!! Form::file('file', ['class' => 'custom-file-input', 'id' => 'customFile']) !!}
-                                                <label class="custom-file-label" for="customFile">Choose File</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
+                                <div class="col-md-3 col-12">
                                     <div class="container-fluid">
                                         {!! Form::label('status ','Estado:') !!}
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                {!! Form::select('status', [ '0' => 'Borrador', '1' => 'Publicado'], $product->status, ['class' => 'custom-select']) !!}
+                                                {!! Form::select('status', [ '0' => 'Borrador', '1' => 'Publicado'], $product->status, ['class' => ' form-control']) !!}
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    {!! Form::label('file','Imagen de portada:', [ 'class' => 'mt-3']) !!}
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fal fa-file-image"></i>
+                                            </span>
+                                        </div>
+                                        {!! Form::file('file', [ 'class' => 'form-control', 'style' => 'padding: 4px;']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    {!! Form::label('pdf','PDF:', [ 'class' => 'mt-3']) !!}
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fal fa-file-pdf"></i>
+                                            </span>
+                                        </div>
+                                        {!! Form::file('pdf', [ 'class' => 'form-control', 'style' => 'padding: 4px;']) !!}
                                     </div>
                                 </div>
 
                             </div>
 
-
-                            @for ($i = 1 ; $i<=$product->sections; $i++)
-
-                                <div name="" class="row mt16" style="padding: 16px;" >
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-
-                                            {{ Form::label('description','Descripcion:') }}
-                                            <div class="input-group-prepend">
-                                                @foreach ($descriptions as $description)
-                                                    @if ($description->section == $i)
-                                                        {!! Form::textarea('description[]', $description->content, ['class' => 'form-control ', 'id' => 'editor_'.$i]) !!}
-                                                    @endif
-                                                @endforeach
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row mt16" style="padding: 16px;">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-
-                                            {{ Form::label('video','Video:') }}
-                                            <div class="input-group-prepend">
-                                                @foreach ($videos as $video)
-                                                    @if ($video->section == $i)
-                                                        {!! Form::textarea('video[]', $video->content, ['class' => 'form-control ', 'id' => 'video_'.$i]) !!}
-                                                    @endif
-                                                @endforeach
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                            @endfor
-
-                            {!! Form::submit('Guardar', ['class' => 'btn btn-success mt16']) !!}
+                            {!! Form::submit('Guardar', ['class' => 'btn btn-success mt16', 'style' => 'float: right; bottom: 0;']) !!}
 
                         {!! Form::close() !!}
 
@@ -148,55 +110,28 @@
                             </h2>
                         </div>
                         <div class="inside">
-                            <img src="{{ url('/multimedia'.$product->file_path.'/'.$product->slug.'/'.$product->file) }}" class="img-fluid">
+                            <img src="{{ url('multimedia/'.$product->file_path.'/t_'.$product->file) }}" class="img-fluid">
                         </div>
 
                     </div>
                 </div>
+                <div class="container-fluid mt-2">
+                    <div class="panel shadow">
 
-                @for ($i=1 ; $i<=$product->sections; $i++)
-                    <div class="container-fluid">
-                        <div class="panel shadow mt16">
-
-                            <div class="header">
-                                <h2 class="title">
-                                    <i class="far fa-images"></i>
-                                    Galeria {{$i}}
-                                </h2>
-                            </div>
-
-                            <div class="inside product_gallery">
-
-                                {!! Form::open(['url' => '/admin/'.$product->module.'/'.$product->id.'/gallery/add/'.$i, 'files' => true, 'id' => 'form_product_gallery_'.$i]) !!}
-
-                                    {!! Form::file('file', ['id' => 'product_file_image_'.$i, 'accept' => 'image/*', 'style' => 'display:none;', 'required']) !!}
-
-                                {!! Form::close() !!}
-
-                                <div class="btn-submit">
-                                    <a href="#" id="btn_product_file_image_{{$i}}" onclick="Ngallery0{{$i}}()"><i class="fas fa-plus"></i></a>
-                                </div>
-
-                                <div class="tumbs">
-                                    @foreach ($galerias as $ima)
-                                        @if ($ima->after == $i)
-                                            <div class="tumb">
-
-                                                <a href="{{ url('/admin/project/'.$product->id.'/gallery/'.$ima->id.'/delete') }}" data-toggle="tooltip" data-placement="top" title="Eliminar">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>
-
-                                                <img src="{{ url('/multimedia/'.$ima->file_path.'/t_'.$ima->file_name) }}" class="img-fluid" />
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                </div>
-
-                            </div>
+                        <div class="header">
+                            <h2 class="title">
+                                <i class="far fa-image "></i>
+                                PDF
+                            </h2>
                         </div>
-                    </div>
-                @endfor
+                        <div class="inside">
+                            <a target="_blank" href="{{ url('multimedia/'.$product->file_path.'/'.$product->pdf) }}" class="Link_Not">
+                                Descargar
+                            </a>
+                        </div>
 
+                    </div>
+                </div>
             </div>
 
         </div>

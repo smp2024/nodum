@@ -10,13 +10,13 @@
 
                     <div class="col-md-3 col-6 mr-2 justify-content-center align-items-center p-0">
                         <a target="_blank" href="{{ url('multimedia/'.$article->file_path.'/'.$article->pdf) }}" class="Link_Not">
-                            {{-- <a href="#"   class="Link_Not"> --}}
-                                <div class="h-100 d-flex justify-content-center align-items-center">
 
-                                    <img style="position: relative !important;"  src="{{ url('multimedia/'.$article->file_path.'/'.$article->file) }}" class="d-block imagen_noticia w-100 mt-2" alt="{{$article->slug}}">
+                            <div class="h-100 d-flex justify-content-center align-items-center">
 
-                                </div>
-                            </a>
+                                <img style="position: relative !important;"  src="{{ url('multimedia/'.$article->file_path.'/'.$article->file) }}" class="d-block imagen_noticia w-100 mt-2" alt="{{$article->slug}}">
+
+                            </div>
+                        </a>
 
                     </div>
 

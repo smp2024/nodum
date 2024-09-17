@@ -110,6 +110,18 @@ class ProjectController extends Controller
         return back()->with('message', 'Se ha producido un error al guardar el proyecto.')->with('typealert', 'danger');
     }
 
+
+    public function getProjectEdit($id)
+    {
+        $product        = Project::findOrFail($id);
+        $data  = [
+            'product' => $product,
+        ];
+
+        return view('admin.projects.edit', $data);
+    }
+
+
     public function postProjectEdit(Request $request, $id)
     {
         $project = Project::find($id);
@@ -136,10 +148,11 @@ class ProjectController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator)->with('message', 'Se ha producido un error')->with('typealert', 'danger');
         }
-
-        $project_name = Str::slug($request->input('name'));
+        $oldProjectName = $project->slug;
+        $newProjectName = Str::slug($request->input('name'));
         $upload_path = Config::get('filesystems.disks.uploads.root');
-        $path = 'Projects/' . $project_name;
+        $oldPath = 'Projects/' . $oldProjectName;
+        $path = 'Projects/' . $newProjectName;
 
         $project->name = e($request->input('name'));
         $project->slug = Str::slug($request->input('name'));
@@ -187,6 +200,11 @@ class ProjectController extends Controller
 
             $project->pdf = $pdfname;
         }
+
+        if ($oldPath !== $path) {
+            Storage::disk('uploads')->move($oldPath, $path);
+        }
+
 
         $project->save();
 
