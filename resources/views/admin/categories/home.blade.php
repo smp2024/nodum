@@ -175,16 +175,15 @@
                 },
                 error: function(xhr, status, error, response) {
                     $('#loading-animation').removeClass('d-none');
-                    console.log(response);
                 }
             });
         });
-        $('#icon').on('input', function() {
-            var iconHtml = $(this).val();
-            var iconElement = $(iconHtml);
-            $('#preview_icon').empty();
-            $('#preview_icon').append(iconElement);
-        });
+        // $('#icon').on('input', function() {
+        //     var iconHtml = $(this).val();
+        //     var iconElement = $(iconHtml);
+        //     $('#preview_icon').empty();
+        //     $('#preview_icon').append(iconElement);
+        // });
     });
 
 

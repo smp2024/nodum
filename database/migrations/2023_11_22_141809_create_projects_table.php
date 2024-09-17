@@ -17,17 +17,13 @@ class CreateProjectsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('status')->nullable();
-            $table->string('module')->default('0')->nullable();
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
             $table->string('file_path')->nullable();
             $table->string('file')->nullable();
-            $table->string('mobile')->nullable();
-            $table->string('mobile_fit')->nullable();
+            $table->string('pdf')->nullable();
             $table->date('date')->nullable();
-            $table->string('sections')->nullable();
-            $table->softDeletes();
-            
+
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

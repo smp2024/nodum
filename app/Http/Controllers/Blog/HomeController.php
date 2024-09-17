@@ -72,7 +72,7 @@ class HomeController extends Controller
             $articles = DB::table('news')->where('status', '1')->where('deleted_at', null)->orderBy('id', 'DESC')->get();
         }
         if ($category == 'proyectos') {
-            $articles = DB::table('projects')->where('status', '1')->where('deleted_at', null)->orderBy('id', 'DESC')->get();
+            $articles = DB::table('projects')->where('status', '1')->orderBy('id', 'DESC')->get();
         }
         if ($category == 'obras') {
             $artistas = DB::table('artists')->where('status', '1')->orderBy('id', 'DESC')->get();

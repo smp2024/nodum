@@ -7,6 +7,7 @@ use App\Artist;
 use App\Carousel;
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Project;
 use App\SubCategory;
 use App\Tag;
 use App\User;
@@ -57,6 +58,23 @@ class ApiController extends Controller
             $c->status = 1;
             if ($c->save()) {
                 return redirect('/admin/categories')->with('message', ' Categoria activada con éxito.')->with('typealert', 'success');
+            }
+        }
+    }
+    public function changeProjectStatus(Request $request)
+    {
+        $id = $request->input('id');
+        $c = Project::findOrFail($id);
+        $status = $c->status;
+        if ($status == 1) {
+            $c->status = 0;
+            if ($c->save()) {
+                return redirect('/admin/projects/all')->with('message', ' Proyecto desactivado con éxito.')->with('typealert', 'success');
+            }
+        } else {
+            $c->status = 1;
+            if ($c->save()) {
+                return redirect('/admin/projects/all')->with('message', ' Proyecto activado con éxito.')->with('typealert', 'success');
             }
         }
     }

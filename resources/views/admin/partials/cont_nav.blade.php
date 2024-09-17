@@ -86,15 +86,6 @@
             </a>
         </li>
         @endif
-        {{--
-        @if (kvfj(Auth::user()->permissions, 'tags'))
-        <li>
-            <a href="{{ url('/admin/tags') }}" class="lk-tags lk-tag_add lk-tag_edit">
-                <i class="fal fa-tags"></i>
-                Etiquetas
-            </a>
-        </li>
-        @endif --}}
 
         @if (kvfj(Auth::user()->permissions, 'news'))
         <li>
@@ -108,7 +99,7 @@
         @if (kvfj(Auth::user()->permissions, 'projects'))
         <li>
             <a href="{{ url('/admin/projects/all') }}" class="lk-projects lk-project_add lk-project_edit">
-                <i class="fal fa-construction"></i>
+                <i class="fal fa-books"></i>
                 Proyectos
             </a>
         </li>
