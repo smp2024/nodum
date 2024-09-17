@@ -17,7 +17,8 @@ class CorporateAreaSeeder extends Seeder
             'name' => 'Logo y Descripción Corta',
             'slug' => 'logo-y-descripcion-corta',
             'orden_dash' => '1',
-
+            'file_path' => '/Company',
+            'file' => '892-nodum-logo-500x500px.png',
         ]);
         CorporateArea::create([
             'icon' => '<i class="far fa-cookie"></i>',
@@ -62,12 +63,17 @@ class CorporateAreaSeeder extends Seeder
             'name' => 'Nosotros',
             'slug' => 'nosotros',
             'orden_dash' => '4',
+            'status' => 'published',
+            'description' => '&lt;p&gt;&lt;span style=&quot;font-size:14px&quot;&gt;NODUM, con cinco a&amp;ntilde;os de trayectoria, se crea como un proyecto pionero en promoci&amp;oacute;n y gesti&amp;oacute;n cultural. Con una perspectiva &amp;uacute;nica, nos dedicamos a vincular el arte con el p&amp;uacute;blico, trascendiendo las barreras tradicionales. A trav&amp;eacute;s de diversos medios como subastas, exposiciones y ventas directas a la cartera de clientes, NODUM crea un espacio din&amp;aacute;mico para la apreciaci&amp;oacute;n art&amp;iacute;stica. Lo que realmente distingue a NODUM es su compromiso directo con un selecto portafolio de artistas, proporcion&amp;aacute;ndoles apoyo integral para posicionar y dar a conocer sus obras. NODUM no solo promueve el arte, sino que construye puentes entre la creatividad y aquellos que buscan experiencias art&amp;iacute;sticas significativas.&lt;/span&gt;&lt;/p&gt;',
         ]);
         CorporateArea::create([
             'icon' => '<i class="fal fa-id-card"></i>',
             'name' => 'Contacto',
             'slug' => 'contacto',
             'orden_dash' => '5',
+            'direction' => '&lt;p&gt;Av. Tamaulipas 56, Hip&amp;oacute;dromo, Cuauht&amp;eacute;moc, 06100 Ciudad de M&amp;eacute;xico, CDMX,M&amp;eacute;xico&lt;/p&gt;',
+            'phone' => '5555555555',
+            'email' => 'nodum@nodum.art',
         ]);
     }
 }

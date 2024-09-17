@@ -22,8 +22,8 @@ class CreateArtistsTable extends Migration
             $table->string('email', 128)->nullable();
             $table->date('birthday')->nullable();
             $table->string('gender')->nullable();
-            $table->string('description_short')->nullable();
-            $table->string('description_large')->nullable();
+            $table->longText('description_short')->nullable();
+            $table->longText('description_large')->nullable();
             $table->string('file_path')->nullable();
             $table->string('file')->nullable();
             $table->string('avatar')->nullable();
