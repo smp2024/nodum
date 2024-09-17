@@ -17,7 +17,6 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('role')->nullable();
             $table->integer('status')->default('0');
-            $table->unsignedBigInteger('artist_id')->nullable();
             $table->string('name')->nullable();
             $table->string('lastname')->nullable();
             $table->string('email', 128)->unique();
@@ -38,7 +37,6 @@ class CreateUsersTable extends Migration
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('artist_id')->references('id')->on('artists');
         });
     }
 
