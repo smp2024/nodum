@@ -86,6 +86,7 @@ class ArtistController extends Controller
             return back()->withErrors($validator)->with('message','Se ha producido un error')->with('typealert','danger');
 
         else:
+            $slug = Str::slug($request->input('name').' '.$request->input('lastname'));
 
             $path = '/Artists';
             $c = new Artist;
@@ -96,7 +97,7 @@ class ArtistController extends Controller
             $c ->birthday                       = e($request->input('birthday'));
             $c ->country                       = e($request->input('country'));
             $c ->description_large                       = e($request->input('description_large'));
-            $c ->slug                       = e($request->input('slug'));
+            $c ->slug                       = $slug;
 
             if($request->hasFile('file')):
                 $fileExt = trim($request->file('file')->getClientOriginalExtension());
@@ -193,6 +194,8 @@ class ArtistController extends Controller
             $c->categories()->sync($request->get('categories'));
             $c ->name                       = e($request->input('name'));
             $c ->lastname                       = e($request->input('lastname'));
+            $slug = Str::slug($request->input('name').' '.$request->input('lastname'));
+            $c ->slug                       = $slug;
             $c ->email                       = e($request->input('email'));
             $c ->phone                       = e($request->input('phone'));
             $c ->birthday                       = e($request->input('birthday'));

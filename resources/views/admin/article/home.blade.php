@@ -79,7 +79,7 @@
                             @foreach($articles as $user)
                                 <tr>
                                     <td style="text-align: center;"  width="65">
-                                        <img src="{{ url('multimedia'.$user->file_path.'/'.$user->slug.'/'.$user->file) }}" width="65" height="65">
+                                        <img src="{{ url('multimedia/'.$user->file_path.'/'.$user->file) }}" width="65" height="65">
                                     </td>
                                     <td style="text-align: center;">{{ $user->getArtist->name  }} {{ $user->getArtist->lastname  }}  </td>
                                     <td style="text-align: center;">{{ $user->name }}  </td>

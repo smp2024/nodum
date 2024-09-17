@@ -171,7 +171,7 @@
                     <div class="upload-container" id="drop-area">
                         <input class="d-none" type="file" id="fileElem" name="images[]" multiple accept="image/*" required>
                         <label class="btn btn-primary" for="fileElem" id="slectIMG">Seleccionar Archivos</label>
-                        <p>O arrastra y suelta las imágenes aquí</p>
+
                     </div>
                     <div class="gallery" id="gallery"></div>
                     <button type="submit" class="btn btn-success mt-3">Subir Imágenes</button>
@@ -237,9 +237,9 @@
                 progressBar.textContent = '0%';
             });
 
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                dropArea.addEventListener(eventName, preventDefaults, false);
-            });
+            // ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            //     dropArea.addEventListener(eventName, preventDefaults, false);
+            // });
 
             function preventDefaults(e) {
                 e.preventDefault();
@@ -287,41 +287,5 @@
         });
     </script>
 
-    <script>
-        // $(document).on("submit", "#uploadMassiveData", function(event) {
-        //     // $("#overlay").fadeIn();
-        //     event.preventDefault();
-        //     var formData = [];
-        //     // $('#tablaCSV tbody tr:gt(0)').each(function() { // Selecciona todas las filas excepto la primera (índice 0)
-        //     //     var rowData = {};
-        //     //     $(this).find('input').each(function() {
-        //     //         var fieldName = $(this).attr('name').replace('-', ''); // Elimina el guión para obtener el nombre del campo
-        //     //         rowData[fieldName] = $(this).val();
-        //     //     });
-        //     //     formData.push(rowData);
-        //     // });
-        //     console.log(formData);
-        //     // $.ajax({
-        //     //     url: "{{url('api/upload-massive')}}",
-        //     //     type: "POST",
-        //     //     dataType: "json",
-        //     //     data:{'formData': formData},
-        //     //     processData: false,
-        //     //     contentType: false,
-        //     //     beforeSend: function() {
-        //     //         // $("#overlay").fadeIn();
-        //     //     },
-        //     //     success: function(response) {
-        //     //         // event.preventDefault();
 
-        //     //         console.log(response);
-        //     //         // location.reload();
-
-        //     //     },
-        //     //     error: function(response) {
-        //     //         console.log(response.responseText);
-        //     //     },
-        //     // });
-        // });
-    </script>
 @endsection

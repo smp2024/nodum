@@ -83,7 +83,7 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <i class="fas fa-school"></i>
+                                        <i class="fal fa-send-backward"></i>
                                     </span>
                                 </div>
                                 <select class="custom-select" id="category_id_" name="category_id">
@@ -101,7 +101,7 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <i class="fas fa-signature"></i>
+                                        <i class="fal fa-pencil-paintbrush"></i>
                                     </span>
                                 </div>
                                 <select class="custom-select" id="technic" name="technic">
@@ -116,7 +116,7 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <i class="fas fa-percent"></i>
+                                        <i class="fal fa-ruler-vertical"></i>
                                     </span>
                                 </div>
                                 {!! Form::number('height', null, [ 'class' => 'form-control']) !!}
@@ -130,7 +130,7 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <i class="fas fa-percent"></i>
+                                        <i class="fal fa-ruler-horizontal"></i>
                                     </span>
                                 </div>
                                 {!! Form::number('width', null, [ 'class' => 'form-control']) !!}
@@ -144,7 +144,7 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <i class="fas fa-percent"></i>
+                                        <i class="fal fa-ruler"></i>
                                     </span>
                                 </div>
                                 {!! Form::number('depth', null, [ 'class' => 'form-control']) !!}
@@ -157,7 +157,7 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <i class="fas fa-percent"></i>
+                                        <i class="fal fa-calendar-alt"></i>
                                     </span>
                                 </div>
                                 {!! Form::number('year', null, [ 'class' => 'form-control']) !!}

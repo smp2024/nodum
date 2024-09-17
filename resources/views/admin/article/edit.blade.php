@@ -67,7 +67,7 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                    <i class="fas fa-school"></i>
+                                                    <i class="fal fa-head-side-brain"></i>
                                                 </span>
                                             </div>
                                             {{ Form::select('artist_id', $artists, $product->artist_id, ['class'=>'form-control']) }}
@@ -82,7 +82,7 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                    <i class="fas fa-school"></i>
+                                                    <i class="fal fa-send-backward"></i>
                                                 </span>
                                             </div>
                                             {{ Form::select('category_id', $subclasi, $product->category_id, ['class'=>'form-control']) }}
@@ -97,7 +97,7 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                    <i class="fas fa-signature"></i>
+                                                    <i class="fal fa-pencil-paintbrush"></i>
                                                 </span>
                                             </div>
                                             {!! Form::select('technic',$tecnicas, $product->subcategory_id, ['class' => 'form-control']) !!}
@@ -112,7 +112,7 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                    <i class="fas fa-percent"></i>
+                                                    <i class="fal fa-ruler-vertical"></i>
                                                 </span>
                                             </div>
                                             {!! Form::number('height', $product->height, [ 'class' => 'form-control']) !!}
@@ -126,7 +126,7 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                    <i class="fas fa-percent"></i>
+                                                    <i class="fal fa-ruler-horizontal"></i>
                                                 </span>
                                             </div>
                                             {!! Form::number('width', $product->width, [ 'class' => 'form-control']) !!}
@@ -140,7 +140,7 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                    <i class="fas fa-percent"></i>
+                                                    <i class="fal fa-ruler"></i>
                                                 </span>
                                             </div>
                                             {!! Form::number('depth', $product->depth, [ 'class' => 'form-control']) !!}
@@ -153,7 +153,7 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                    <i class="fas fa-percent"></i>
+                                                    <i class="fal fa-calendar-alt"></i>
                                                 </span>
                                             </div>
                                             {!! Form::number('year', $product->year, [ 'class' => 'form-control']) !!}
@@ -173,6 +173,19 @@
                                                 {!! Form::file('file', ['class' => 'custom-file-input', 'id' => 'customFile', 'required' => false]) !!}
                                                 <label class="custom-file-label h-100 m-0" for="customFile">Choose File</label>
                                             </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4 col-12">
+
+                                        {!! Form::label('sku','SKU:') !!}
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-barcode"></i>
+                                                </span>
+                                            </div>
+                                            {!! Form::text('sku', $product->sku, [ 'class' => 'form-control', 'disabled' => 'true']) !!}
                                         </div>
 
                                     </div>
@@ -279,7 +292,7 @@
                             </h2>
                         </div>
                         <div class="inside">
-                            <img src="{{ url('/multimedia/'.$product->file_path.'/'.$product->slug.'/'.$product->file) }}" class="img-fluid">
+                            <img src="{{ url('multimedia/'.$product->file_path.'/'.$product->file) }}" class="img-fluid">
                         </div>
 
                     </div>

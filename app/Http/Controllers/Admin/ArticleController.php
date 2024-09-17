@@ -235,17 +235,19 @@ class ArticleController extends Controller
         $tecnics = SubCategory::where('category_id', $product->category_id)->where('status', 1)->orderBy('name', 'ASC')->get();
         $tecnics_ = [] + $tecnics->pluck('name', 'id')->toArray();
 
-        // dd($tecnics_);
         $cats = Article::where('module', 'articulos')->pluck('name', 'id');
         $categories = Category::where('status', 1)->get();
         $tags = Tag::where('status', 1)->get();
-        $foods0 = DB::table('article_tag')->where('article_id', $id)
-
-        ->join('tags', 'article_tag.tag_id', '=', 'tags.id')->get();
-        // dd( $foods0);
-        $artists_ = Artist::where('status', 1)->orderBy('name', 'ASC')->get();
+        $foods0 = DB::table('article_tag')->where('article_id', $id) ->join('tags', 'article_tag.tag_id', '=', 'tags.id')->get();
         $technic = SubCategory::where('status', 1)->orderBy('name', 'ASC')->get();
-        $artists = [] + $artists_->pluck('name', 'id')->toArray();
+
+        $artists_ = Artist::where('status', 1)
+        ->orderBy('name', 'ASC')
+        ->get(['id', 'name', 'lastname']);
+        $artists = $artists_->mapWithKeys(function ($artist) {
+            return [$artist->id => $artist->name . ' ' . $artist->lastname];
+        })->toArray();
+
         $data = [
             'cats' => $cats,
             'product' => $product,
@@ -285,24 +287,26 @@ class ArticleController extends Controller
             return back()->withErrors($validator)->with('message', 'Se ha producido un error')->with('typealert', 'danger')->withInput();
         } else {
             $s = Str::slug($request->input('name'));
+
             $artist_id = $request->input('artist_id');
-            $path_ = 'Article';
-            $path = 'Article/'.$s;
-            $product = Article::findOrFail($id);
-            $carpeta = $artist_id.'/'.$s;
             $titleletter = strtoupper(substr($s, 0, 1));
             $artist = Artist::findOrFail($artist_id);
             $artisletter = strtoupper(substr($artist->slug, 0, 1));
             $numbers = rand(10000, 99999);
             $sku = $artisletter.$titleletter.$numbers;
+            $path_ = 'Article';
+            $path = 'Article/'.$sku;
+            $product = Article::findOrFail($id);
+            $carpeta = $product->file_path;
+
             $product->sku = $sku;
-            if ($carpeta != $s) {
+            if ($path != $carpeta) {
 
                 $upload_path = Config::get('filesystems.disks.uploads.root');
                 $file_absolute = $upload_path.'Article/'.$s;
 
                 if (File::exists($file_absolute)) {
-                    $nuevaRutaCarpeta = $upload_path.'Article/'.$s;
+                    $nuevaRutaCarpeta = $upload_path.'Article/'.$sku;
 
                     File::move($file_absolute, $nuevaRutaCarpeta);
 

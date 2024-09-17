@@ -92,18 +92,18 @@ class MassiveController extends Controller
 
                 $artista = Str::slug($datos[0]);
                 $user = Artist::where('slug',$artista)->first();
-                $product->artista_id = $user->id;
+                $product->artist_id = $user->id;
 
                 $product->name = $datos[1];
                 $product->slug = Str::slug($datos[1]);
 
                 $categoria = Str::slug($datos[2]);
                 $cat = Category::where('slug',$categoria)->first();
-                $product->catrgory_id = $cat->id;
+                $product->category_id = $cat->id;
 
                 $tecnica = Str::slug($datos[3]);
                 $tec = SubCategory::where('slug',$tecnica)->first();
-                $product->subcatrgory_id = $tec->id;
+                $product->subcategory_id = $tec->id;
 
                 $product->height = $datos[4];
                 $product->width = $datos[5];
@@ -149,18 +149,18 @@ class MassiveController extends Controller
 
                 $artista = Str::slug($datos[0]);
                 $user = Artist::where('slug',$artista)->first();
-                $product->artista_id = $user->id;
+                $product->artist_id = $user->id;
 
                 $product->name = $datos[1];
                 $product->slug = Str::slug($datos[1]);
 
                 $categoria = Str::slug($datos[2]);
                 $cat = Category::where('slug',$categoria)->first();
-                $product->catrgory_id = $cat->id;
+                $product->category_id = $cat->id;
 
                 $tecnica = Str::slug($datos[3]);
                 $tec = SubCategory::where('slug',$tecnica)->first();
-                $product->subcatrgory_id = $tec->id;
+                $product->subcategory_id = $tec->id;
 
                 $product->height = $datos[4];
                 $product->width = $datos[5];
@@ -215,7 +215,7 @@ class MassiveController extends Controller
         // $messages = [
         //     'images.*.required'     => 'Debe seleccionar al menos una imagen.',
         //     'images.*.image'        => 'El archivo no es una imagen.',
-        //     'images.*.mimes'        => 'Solo se permiten imágenes en formato jpeg, png, jpg, gif o svg.',
+        //     'images.*.mimes'        => 'Solo se permiten imágenes en formato jpeg, png, jpg.',
         //     'images.*.max'          => 'La imagen no puede tener más de 2MB.',
         // ];
         // $validator = Validator::make($request->all(), $rules, $messages);
@@ -231,24 +231,31 @@ class MassiveController extends Controller
                 $fileExt = trim($image->getClientOriginalExtension());
                 $upload_path = Config::get('filesystems.disks.uploads.root');
                 $name = Str::slug(str_replace($fileExt, '', $image->getClientOriginalName()));
-                $articuloExistente = Article::where('sku', $name)->first();
-                $path = 'Article/'.$articuloExistente->artist_id.'/'.$articuloExistente->slug;
+                $path = 'Article/'.$name;
                 $filename = $name.'.'.$fileExt;
                 $file_url = 'multimedia'.$path.'/t_'.$filename;
                 $file_absolute = $upload_path.'/'.$path.'/'.$filename;
+
+                $articuloExistente = Article::where('sku', $name)->first();
+                $product = Article::findOrFail($articuloExistente->id);
+
+                $product->file_path = $path;
+                $product->file = $filename;
+
+                $product->save();
+
                 $fl = $image->storeAs($path, $filename, 'uploads');
                 $imagT = Image::make($file_absolute);
-                $imagT->resize(256, 256, function ($constraint) {
+                $imagT->fit(256, 256, function ($constraint) {
                     $constraint->upsize();
                 });
                 $imagW = Image::make($file_absolute);
-                // $imagW->resize(1920, 1080, function ($constraint) {
-                //     $constraint->upsize();
-                // });
+                $imagW->resize(1920, 1080, function ($constraint) {
+                    $constraint->upsize();
+                });
                 $imagT->save($upload_path.'/'.$path.'/t_'.$filename);
                 $imagW->save($upload_path.'/'.$path.'/'.$filename);
 
-                // dd($filename);
             }
 
             return back()->with('message', 'Se actualizaron las imágenes')->with('typealert', 'success');
