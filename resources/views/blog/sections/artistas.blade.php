@@ -28,16 +28,6 @@
                 @endforeach
             @endif
         </div>
-        {{-- <div class="d-flex justify-content-end mt-3 w-100">
-            <div class="mr-3">
-                <a href="#" class="filter-link" data-filter="all">Todos</a>
-            </div>
-            @foreach (range('A', 'Z') as $letter)
-                <div class="mr-3">
-                    <a href="#" class="filter-link" data-filter="{{ $letter }}">{{ $letter }}</a>
-                </div>
-            @endforeach
-        </div> --}}
     </div>
 @endsection
 

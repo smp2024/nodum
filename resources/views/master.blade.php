@@ -27,7 +27,7 @@
                     <link rel="stylesheet" href="{{ url('/css/style.css?v='.time()) }}">
 
                     <link rel="stylesheet" href="{{ url('/css/font.css?v='.time()) }}">
-                    <link rel="stylesheet" href="{{ url('/css/querys.css?v='.time()) }}">
+                    {{-- <link rel="stylesheet" href="{{ url('/css/querys.css?v='.time()) }}"> --}}
                     <link rel="stylesheet" href="{{ url('/css/review.css?v='.time()) }}">
                     @yield('css')
 

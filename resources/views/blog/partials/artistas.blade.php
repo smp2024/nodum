@@ -184,11 +184,11 @@
 @endsection
 @section('content')
     <!-- info Artsta -->
-    <div class=" justify-content-center align-items-end pl-1 w-100 cont-artist">
+    <div class="row justify-content-center align-items-end pl-2 w-100 cont-artist">
         <div class="col-1 back_">
             <i id="back-button" class="fal fa-chevron-left"></i>
         </div>
-        <div id="img-asesor" class="col-lg-3 col-md-12 col-12 d-flex justify-content-end align-items-center p-0 w-100" >
+        <div id="img-asesor" class="col-lg-3 col-md-11 col-10 d-flex justify-content-end align-items-center p-0 w-100" >
             <div class="content-artist-img grayscale "  >
                 <img class="w-100 h-100 grayscale" src="{{ url('multimedia'.$post->file_path.'/'.$post->file) }}" alt="{{ $article->name }}" class="" style="filter: grayscale(100%);" >
             </div>
@@ -205,7 +205,7 @@
     </div>
 
     <!-- filtro  -->
-    <div class="row justify-content-center align-items-center h-100 w-100 mt-5" >
+    <div class="row justify-content-center align-items-start  w-100 mt-5 pl-2 pb-5" >
         <div id="filter" class=" col-lg-3 col-md-3 d-none d-sm-block col-12 justify-content-center align-items-center p-0 w-100 pt-5" style="padding-left: 20px !important; z-index:9999; background-color: #fff;">
             <!-- Sección de filtrado -->
             @include('blog.partials.filterSearch')

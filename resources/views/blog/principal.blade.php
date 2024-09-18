@@ -38,7 +38,7 @@
 
 </div>
 
-<div id="Slider-mobile" class=" row justify-content-center align-items-center h-100 w-100 m-0" style="padding: 0;">
+{{-- <div id="Slider-mobile" class=" row justify-content-center align-items-center h-100 w-100 m-0" style="padding: 0;">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 
         <ol class="carousel-indicators">
@@ -76,7 +76,7 @@
 
 
     </div>
-</div>
+</div> --}}
 
 @endsection
 

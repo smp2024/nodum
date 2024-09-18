@@ -55,7 +55,7 @@
                                         <i class="fas fa-signature"></i>
                                     </span>
                                 </div>
-                                {!! Form::text('name', null, [ 'class' => 'form-control']) !!}
+                                {!! Form::text('name', null, [ 'class' => 'form-control', 'id' => 'name']) !!}
                             </div>
 
                         </div>
@@ -164,7 +164,19 @@
                             </div>
 
                         </div>
+                        <div class="col-md-4 col-12">
 
+                            {!! Form::label('sku','SKU:') !!}
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="far fa-barcode"></i>
+                                    </span>
+                                </div>
+                                {!! Form::text('sku', null, [ 'class' => 'form-control', 'disabled' => 'true', 'id' => 'sku_new']) !!}
+                            </div>
+
+                        </div>
                         <div class="row" style="padding: 16px; padding-top: 1px;">
                             <div class="col-8    ">
                                 {!! Form::label('file', 'Imagen:') !!}
@@ -315,13 +327,11 @@
 
         $('#category_id_').on('change', function () {
             let categoryId = $(this).val();
-            // console.log(categoryId);
             $.ajax({
                 url: '/api/get-techniques-by-category',
                 type: 'POST',
                 data: {category_id: categoryId},
                 success: function (data) {
-                    console.log(data);
                     var techniqueSelect = $('#technic');
                     techniqueSelect.empty();
 
@@ -338,7 +348,6 @@
 
         $('#customFile').change(function() {
             var fileName = $(this).val().split('\\').pop();
-            // console.log(fileName);
 
             if (fileName) {
                 $('#confirm_img').html('<i class="fas fa-check text-success"></i>');
@@ -379,7 +388,6 @@
     $(document).ready(function () {
         $('#customFile').change(function () {
             var fileName = $(this).val().split('\\').pop();
-            // console.log(fileName);
             if (fileName) {
                 $('#confirm_img').html('<i class="fas fa-check text-success"></i>');
             } else {
@@ -387,6 +395,27 @@
             }
         });
     });
+</script>
+<script>
+    function generateSKU() {
+        const nameInput = document.getElementById('name').value;
+        const artistSelect = document.getElementById('artist_id');
+        const categorySelect = document.getElementById('category_id_');
+
+        const firstLetterName = nameInput.charAt(0).toUpperCase();
+        const firstLetterArtist = artistSelect.options[artistSelect.selectedIndex].text.charAt(0).toUpperCase();
+        const firstLetterCategory = categorySelect.options[categorySelect.selectedIndex].text.charAt(0).toUpperCase();
+
+        const randomNumbers = Math.floor(10000 + Math.random() * 90000);
+
+        const sku = `${firstLetterName}${firstLetterArtist}${firstLetterCategory}${randomNumbers}`;
+
+        document.getElementById('sku_new').value = sku;
+    }
+
+    document.getElementById('name').addEventListener('input', generateSKU);
+    document.getElementById('artist_id').addEventListener('change', generateSKU);
+    document.getElementById('category_id_').addEventListener('change', generateSKU);
 </script>
 
 @endsection
