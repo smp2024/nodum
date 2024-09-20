@@ -297,7 +297,7 @@
 
                 if ($ul.hasClass('medidas')) {
                     $ul.removeClass('medidas');
-                    $(this).find('span').text('-');
+                    $(this).find('span').text('_');
                 } else {
                     $ul.addClass('medidas');
                     $(this).find('span').text('+');
@@ -309,7 +309,7 @@
                 var $arrow = $(this).find('.arrow');
                 if ($ul.hasClass('medidas')) {
                     $ul.removeClass('medidas');
-                    $(this).find('span').text('-');
+                    $(this).find('span').text('_');
                 } else {
                     $ul.addClass('medidas');
                     $(this).find('span').text('+');
@@ -321,7 +321,7 @@
                 var $arrow = $(this).find('.arrow');
                 if ($ul.hasClass('medidas')) {
                     $ul.removeClass('medidas');
-                    $(this).find('span').text('-');
+                    $(this).find('span').text('_');
                 } else {
                     $ul.addClass('medidas');
                     $(this).find('span').text('+');

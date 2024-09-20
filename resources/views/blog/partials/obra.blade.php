@@ -27,7 +27,7 @@
 
                 </div>
             </div>
-            <div class="col-lg-2  col-md-12 col-12 align-content-end" style="padding-top: 5rem !important;" >
+            <div class="col-lg-2  col-md-12 col-12 align-content-center" >
                 <p class="w-100 m-0" style="font-weight: 700;">{!!  html_entity_decode($vpn->name, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!} </p>
                 <p class="w-100 m-0">{{ $vpn->getArtist->name }} {{ $vpn->getArtist->lastname }}</p>
                 <p class="w-100 m-0">{{ $vpn->getSubCategory->name }}</p>

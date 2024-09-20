@@ -36,12 +36,16 @@
                     <div id="" class="col-11 p-0  text-justify"  >
 
                         <p class="m-0" style="font-weight: 700;">Teléfono</p>
-                        <p>{{$contact->phone}}</p>
+                        <p class="m-0">{{$contact->phone}}</p>
+                        @if ($contact->phone2)
+
+                            <p class="m-0">{{$contact->phone2}}</p>
+                        @endif
                     </div>
-                    <div id="" class="col-1 p-0  justify-content-center align-content-center " style="text-align: center;" >
+                    <div id="" class="col-1 p-0  justify-content-center align-content-center" style="text-align: center;" >
                         <i class="fal fa-phone-volume"></i>
                     </div>
-                    <div id="" class="col-11 p-0  text-justify"  >
+                    <div id="" class="col-11 p-0  text-justify  mt-2"  >
 
                         <p class="m-0" style="font-weight: 700;">Correo</p>
                         <p>{{$contact->email}}</p>
@@ -156,7 +160,7 @@
             let panorama;
 
             function initMap() {
-                const myLatLng = { lat: 19.4122744, lng: -99.1728862 };
+                const myLatLng = { lat: 19.4122744, lng: -99.1703113 };
 
                 panorama = new google.maps.Map(document.getElementById('map'), {
                     zoom: 16,

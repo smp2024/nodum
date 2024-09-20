@@ -275,7 +275,7 @@
 
                 if ($ul.hasClass('medidas')) {
                     $ul.removeClass('medidas');
-                    $(this).find('span').text('-');
+                    $(this).find('span').text('_');
                 } else {
                     $ul.addClass('medidas');
                     $(this).find('span').text('+');
@@ -287,7 +287,7 @@
                 var $arrow = $(this).find('.arrow');
                 if ($ul.hasClass('medidas')) {
                     $ul.removeClass('medidas');
-                    $(this).find('span').text('-');
+                    $(this).find('span').text('_');
                 } else {
                     $ul.addClass('medidas');
                     $(this).find('span').text('+');
@@ -299,7 +299,7 @@
                 var $arrow = $(this).find('.arrow');
                 if ($ul.hasClass('medidas')) {
                     $ul.removeClass('medidas');
-                    $(this).find('span').text('-');
+                    $(this).find('span').text('_');
                 } else {
                     $ul.addClass('medidas');
                     $(this).find('span').text('+');
@@ -408,7 +408,7 @@
                             </div>
                             <div style="height: 40%;">
                                 <p class="m-0 text-start" style="font-size: calc(0.5rem + 0.4vw); font-weight: 700;">${article.artist_name}</p>
-                                <p class="m-0 text-start" style="font-size: calc(0.6rem + 0.4vw); ">${article.name}</p>
+                                <p class="m-0 text-start" style="font-size: calc(0.5rem + 0.4vw); ">${article.name}</p>
                                 <p class="m-0 text-start" style="font-size: calc(0.5rem + 0.4vw);">${article.subcategory_name}</p>
                                 <p class="m-0 text-start" style="font-size: 13px;">${article.year}</p>
                                 <p class="m-0 text-start" style="font-size: 13px;">${article.width} x ${article.height} cm</p>
