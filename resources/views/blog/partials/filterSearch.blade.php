@@ -28,26 +28,30 @@
             <ul class="artist medidas" >
 
                 @php
+                if (!$articles->isEmpty()) {
                     foreach ($articles as $article) {
                         $artists[] = $article->artist_id;
                     }
                     $artists = array_unique($artists);
                     sort($artists);
+                }
                 @endphp
-                @foreach ($artists as $artist)
-                    @foreach ($artistas as $artista)
-                        @if ($artista->id == $artist)
-                            <li>
-
-                            <label class="container c1" >
-                                <input onclick="filterByArtist()" type="checkbox" name="artista_checkbox[]" value="{{ $artista->id }}" id="artista_{{ $tecnica->id }}"  >
-                                <span class="checkmark"></span>
-                                <a href="#" >{{ $artista->name }} {{ $artista->lastname }} </a>
-                            </label>
-                            </li>
-                        @endif
+                @if (!empty($artists))
+                    @foreach ($artists as $artist)
+                        @foreach ($artistas as $artista)
+                            @if ($artista->id == $artist)
+                                <li>
+                                    <label class="container c1" >
+                                        <input onclick="filterByArtist()" type="checkbox" name="artista_checkbox[]" value="{{ $artista->id }}" id="artista_{{ $tecnica->id }}"  >
+                                        <span class="checkmark"></span>
+                                        <a href="#" >{{ $artista->name }} {{ $artista->lastname }} </a>
+                                    </label>
+                                </li>
+                            @endif
+                        @endforeach
                     @endforeach
-                @endforeach
+                @endif
+
             </ul>
             <hr>
         </div>
@@ -55,28 +59,32 @@
         <div class="content">
             <h4 class="toggle-list-tecnica" data-filter="tec"><span>+</span>  Técnicas </h4>
             <ul class="tec medidas" >
-
                 @php
-                    foreach ($articles as $article) {
-                        $technics[] = $article->subcategory_id;
+                    if (!$articles->isEmpty()) {
+                        foreach ($articles as $article) {
+                            $technics[] = $article->subcategory_id;
+                        }
+                        $technics = array_unique($technics);
+                        sort($technics);
                     }
-                    $technics = array_unique($technics);
-                    sort($technics);
                 @endphp
-                @foreach ($technics as $technic)
-                    @foreach ($tecnicas as $tecnica)
-                        @if ($tecnica->id == $technic)
-                        <li>
 
-                        <label class="container c1" >
-                            <input onclick="filterByTechnic()" type="checkbox" name="tecnica_checkbox[]" value="{{ $tecnica->id }}" id="tecnica_{{ $tecnica->id }}"  >
-                            <span class="checkmark"></span>
-                            <a href="#" >{{ $tecnica->name }}</a>
-                        </label>
-                        </li>
-                        @endif
+                @if (!empty($technics))
+                    @foreach ($technics as $technic)
+                        @foreach ($tecnicas as $tecnica)
+                            @if ($tecnica->id == $technic)
+                            <li>
+
+                            <label class="container c1" >
+                                <input onclick="filterByTechnic()" type="checkbox" name="tecnica_checkbox[]" value="{{ $tecnica->id }}" id="tecnica_{{ $tecnica->id }}"  >
+                                <span class="checkmark"></span>
+                                <a href="#" >{{ $tecnica->name }}</a>
+                            </label>
+                            </li>
+                            @endif
+                        @endforeach
                     @endforeach
-                @endforeach
+                @endif
             </ul>
             <hr>
         </div>

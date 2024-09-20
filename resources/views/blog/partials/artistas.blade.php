@@ -433,6 +433,7 @@
                     console.log(response);
                 },
                 success: function(response) {
+
                     updateArticles(response);
                 },
                 error: function(xhr, status, error) {
