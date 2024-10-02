@@ -14,6 +14,7 @@ use App\Category;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -75,18 +76,27 @@ class HomeController extends Controller
             $articles = DB::table('projects')->where('status', '1')->orderBy('id', 'DESC')->get();
         }
         if ($category == 'obras') {
-            $artistas = DB::table('artists')->where('status', '1')->orderBy('id', 'DESC')->get();
-            // $artistas->prepend((object) ['id' => 'Todos', 'name' => 'Todos']); // Agregar "Todos" al principio del array
-            $categories = DB::table('categories')->where('status', '1')->get();
-            // $categories->prepend((object) ['id' => 'Todos', 'name' => 'Todos']); // Agregar "Todos" al principio del array
-            $tecnicas = DB::table('sub_categories')->where('status', '1')->get();
-            // $tecnicas->prepend((object) ['id' => 'Todos', 'name' => 'Todos']); // Agregar "Todos" al principio del array
-            $articles = DB::table('articles')->where('status', 1)->where('deleted_at',NULL)->get();
-            $artistId = $request->input('artist_id');
-            // dd($artistId);
-        }
+            $artistas = Cache::remember('artistas', 60, function () {
+                return Artist::where('status', '1')
+                            ->orderBy('id', 'DESC')
+                            ->get();
+            });
 
-        // dd($articles);
+            $categories = Cache::remember('categories', 60, function () {
+                return Category::where('status', '1')->get();
+            });
+
+            $tecnicas = Cache::remember('tecnicas', 60, function () {
+                return SubCategory::where('status', '1')->get();
+            });
+
+            $articles = Cache::remember('articles', 60, function () {
+                return Article::where('status', 1)
+                            ->whereNull('deleted_at')
+                            ->get();
+            });
+            $artistId = $request->input('artist_id');
+        }
 
         if ($articles == null) {
             $countArt = 0;
@@ -136,7 +146,13 @@ class HomeController extends Controller
 
         $categories = DB::table('categories')->where('status', '1')->get();
         // $categories->prepend((object) ['id' => 'Todos', 'name' => 'Todos']);
-        $articles = DB::table('articles')->where('artist_id', $id)->where('status', 1)->get();
+        // $articles = DB::table('articles')->where('artist_id', $id)->where('status', 1)->get();
+        $articles = Cache::remember("artist_$id", 60, function () use ($id) {
+            return Article::with(['getArtist', 'getSubCategory'])
+                          ->where('id', $id)
+                          ->where('status', 1)
+                          ->first();
+        });
         $tecnicas = DB::table('sub_categories')->where('status', '1')->get();
         // $tecnicas->prepend((object) ['id' => 'Todos', 'name' => 'Todos']);
         $artistas = DB::table('artists')->where('status', '1')->orderBy('id', 'DESC')->get();
@@ -155,9 +171,17 @@ class HomeController extends Controller
             $imagenes = PGallery::where('project_id', $vpn->id)->whereNull('deleted_at')->get();
         }
         if ($category == 'obras') {
-            $vpn = Article::where('id', $id)->where('status', 1)->first();
+            $vpn = Cache::remember("article_$id", 60, function () use ($id) {
+                return Article::with(['getArtist', 'getSubCategory'])
+                              ->where('id', $id)
+                              ->where('status', 1)
+                              ->first();
+            });
 
-            $artistas_ = DB::table('artists')->where('status', '1')->orderBy('id', 'DESC')->get();
+            $artistas_ = Artist::select('id', 'name', 'lastname')
+                               ->where('status', 1)
+                               ->orderBy('id', 'DESC')
+                               ->get();
         }
         // dd($artistas_);
         $data = [

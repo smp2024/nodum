@@ -23,20 +23,21 @@
             <div id="img-obra" class="col-lg-8 col-md-10 col-10 d-flex justify-content-center align-items-center p-0 w-100" >
                 <div class="content-obra-img " style="background-size: cover; background-color: #fff !important; ');" >
                     {{-- <img class="w-100 h-100 grayscale " src="{{ url('multimedia'.$vpn->file_path.'/'.$vpn->slug.'/'.$vpn->file) }}" alt="{{ $article->name }}" class="" style="filter: grayscale(100%);" > --}}
-                    <img id="fullscreen-img" class="w-100  grayscale clickable" src="{{ url('multimedia/'.$vpn->file_path.'/'.$vpn->slug.'/'.$vpn->file) }}" alt="{{ $article->name }}" style="    max-height: 580px; width: auto !important; max-width: 100%;  margin-bottom: 1%;" >
+                    {{-- <img id="fullscreen-img" class="w-100  grayscale clickable" src="{{ url('multimedia/'.$vpn->file_path.'/'.$vpn->slug.'/'.$vpn->file) }}" alt="{{ $article->name }}" style="    max-height: 580px; width: auto !important; max-width: 100%;  margin-bottom: 1%;" > --}}
+                    <img id="fullscreen-img" class="w-100 grayscale clickable" src="{{ url('multimedia/'.$vpn->file_path.'/'.$vpn->slug.'/'.$vpn->file) }}" alt="{{ $article->name }}" style="max-height: 580px; width: auto; max-width: 100%; margin-bottom: 1%;" loading="lazy">
 
                 </div>
             </div>
             <div class="col-lg-2  col-md-12 col-12 align-content-center" >
-                <p class="w-100 m-0" style="font-weight: 700;">{!!  html_entity_decode($vpn->name, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!} </p>
-                <p class="w-100 m-0">{{ $vpn->getArtist->name }} {{ $vpn->getArtist->lastname }}</p>
-                <p class="w-100 m-0">{{ $vpn->getSubCategory->name }}</p>
-                <p class="w-100 m-0">{{ $vpn->year }}</p>
-                <p class="w-100 m-0">{{ $vpn->width }} x {{ $vpn->height }}  cm</p>
-                <p class="w-100 m-0">${{ $vpn->price_max }}.00</p>
+                <p class="w-100 m-0" style="font-weight: 700; font-size: calc(0.5rem + 0.4vw);">{!!  html_entity_decode($vpn->name, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!} </p>
+                <p class="w-100 m-0" style="font-size: calc(0.5rem + 0.4vw);">{{ $vpn->getArtist->name }} {{ $vpn->getArtist->lastname }}</p>
+                <p class="w-100 m-0" style="font-size: calc(0.5rem + 0.4vw);">{{ $vpn->getSubCategory->name }}</p>
+                <p class="w-100 m-0" style="font-size: calc(0.5rem + 0.4vw);">{{ $vpn->year }}</p>
+                <p class="w-100 m-0" style="font-size: calc(0.5rem + 0.4vw);">{{ $vpn->width }} x {{ $vpn->height }}  cm</p>
+                <p class="w-100 m-0" style="font-size: calc(0.5rem + 0.4vw);">${{ $vpn->price_max }}.00</p>
                 <br>
-                <button  type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#modalSelectContacto" data-whatever=" + info">
-                    + info
+                <button  type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#modalSelectContacto" data-whatever="lo quiero">
+                    Lo quiero
                 </button>
 
             </div>

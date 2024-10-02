@@ -2,7 +2,8 @@
 @section('title', $section)
 @section('content')
     <div id="main_" class="row w-100 d-flex justify-content-center align-items-center m-0 h-100" >
-        <div id="" class="col-6 h-100 p-3" >
+        <div id="" class="col-6 h-100" style="padding: 5% !important;">
+            <img src="{{asset('media/icons/nd.jpeg')}}" style="height: 30%;" alt="nodum">
         </div>
         @foreach ($sections as $politic)
             <div id="{{$politic->name}}" class="col-6 h-100 p-3" >
@@ -13,8 +14,6 @@
                     <div id="" class="col-12 p-0  text-justify">
                         {!! html_entity_decode($politic->description, ENT_QUOTES | ENT_XML1, 'UTF-8') !!}
                     </div>
-
-
                 </div>
 
             </div>

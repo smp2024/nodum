@@ -20,7 +20,7 @@
         <div id="{{$politic->name}}" class="col-md-6 col-12 h-100 p-3" >
             <div class="row  justify-content-center align-content-center" style="padding: 0% 13% 0% 12%; height: 40%;" >
                 <div id="" class="col-12 p-0 d-flex justify-content-end align-content-center h-100" style="text-align: end; " >
-                    <img src="{{ url('multimedia'.$company[0]->file_path.'/'.$company[0]->file) }}" alt="" class="" >
+                    <img src="{{asset('media/icons/nd.jpeg')}}" class="h-100" alt="nodum">
                 </div>
             </div>
             <div class="row  justify-content-center align-content-center" style="padding: 0% 13% 0% 12%" >

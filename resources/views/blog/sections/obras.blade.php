@@ -21,7 +21,6 @@
         width: 100%;
         background-size: auto 100%;
         height: auto;
-        max-height: 100%;
     }
     .image-container:hover img{
         box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
