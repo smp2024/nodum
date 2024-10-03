@@ -138,14 +138,18 @@
     $('.status-icon').on('click', function() {
             var id = $(this).data('id');
             $('#loading-animation').removeClass('d-none');
+            console.log(id);
+
             $.ajax({
                 type: 'POST',
-                url: '/api/project/change-status/',
+                url: '/api/project/change-status',
                 data: {
                     id: id
                 },
                 success: function(response) {
                     location.reload();
+                    // console.log(response);
+
                 },
                 error: function(xhr, status, error, response) {
                     $('#loading-animation').removeClass('d-none');

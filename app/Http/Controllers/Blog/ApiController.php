@@ -67,6 +67,7 @@ class ApiController extends Controller
     {
         $id = $request->input('id');
         $c = Project::findOrFail($id);
+
         $status = $c->status;
         if ($status == 1) {
             $c->status = 0;
@@ -79,6 +80,7 @@ class ApiController extends Controller
                 return redirect('/admin/projects/all')->with('message', ' Proyecto activado con éxito.')->with('typealert', 'success');
             }
         }
+        // return response()->json($status);
     }
 
     public function changeArtistStatus($id)

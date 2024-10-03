@@ -177,7 +177,7 @@
             $('#loading-animation').removeClass('d-none');
             $.ajax({
                 type: 'POST',
-                url: '/api/carousel/change-status/',
+                url: '/api/carousel/change-status',
                 data: {
                     id: id
                 },

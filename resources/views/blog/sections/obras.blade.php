@@ -136,7 +136,7 @@
         height: 15px;
         width: 15px;
         background-color: #eee;
-        border-radius: 3px;
+        border-radius: 10px;
     }
     .container:hover input ~ .checkmark {
     background-color: #000;
@@ -154,14 +154,14 @@
 
     .container .checkmark:after {
     left: 5px;
-    top: 1px;
+    top: 4.5px;
     width: 5px;
-    height: 10px;
+    height: 5px;
     border: solid white;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
+    border-radius: 10px;
+    }
+    .container input:checked ~ a {
+        font-weight: 700;
     }
     .d-show {
         display: block;
