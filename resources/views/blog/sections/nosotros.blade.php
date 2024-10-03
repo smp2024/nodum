@@ -19,6 +19,7 @@
             </div>
         @endforeach
     </div>
+    @include('blog.partials.footer')
 @endsection
 
 @section('scripts')

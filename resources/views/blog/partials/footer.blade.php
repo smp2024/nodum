@@ -3,7 +3,7 @@
     <!-- Copyright -->
     <div class="h-100" style=" text-align: end;" >
         {{-- Copyright &copy; <script>document.write(new Date().getFullYear());</script> nodum --}}
-        <img src="{{asset('media/icons/nd.png')}}" class="h-100" alt="nodum">
+        <img src="{{asset('media/icons/nd.png')}}" style="height: 50%;" alt="nodum">
     </div>
     <!--/ Copyright -->
 </footer>

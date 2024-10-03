@@ -3,10 +3,8 @@
 @section('css')
 <style>
     .cont-not{
-        background-position: center;
         background-repeat: no-repeat;
         background-size: 100%;
-        background-position-y: 25%;
     }
     @media (max-width: 767px) {
         .info-news {
@@ -27,7 +25,7 @@
 
             @foreach ($newsB as $big)
 
-            <a  href="{{  url('seccion/'.$big->module.'/'.$big->slug)}}"   class="w-100">
+            <a  href="{{  url('seccion/'.$big->module.'/'.$big->slug)}}"   class="w-100 mt-3">
                 <div class="col-12 cont-not p-0 noti" style="height: 300px; background-image: url(../multimedia/{{$big->file_path}}/{{$big->slug}}/{{$big->file}});">
 
                     <div class="info-news">
@@ -45,6 +43,7 @@
 
         @endif
     </div>
+    @include('blog.partials.footer')
 @endsection
 
 @section('scripts')

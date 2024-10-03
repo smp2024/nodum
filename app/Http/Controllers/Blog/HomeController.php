@@ -12,6 +12,7 @@ use App\Article;
 use App\Artist;
 use App\Category;
 use App\User;
+use App\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -112,7 +113,7 @@ class HomeController extends Controller
         $news = DB::table('news')->where('deleted_at', null)->where('status', 1)->orderBy('id', 'DESC')->get();
         unset($news[0], $news[1], $news[2]);
         $newsmbolie = DB::table('news')->where('deleted_at', null)->where('status', 1)->orderBy('id', 'DESC')->get();
-        $newsB = DB::table('news')->where('deleted_at', null)->where('status', 1)->orderBy('id', 'DESC')->paginate(1);
+        $newsB = News::where('status', 1)->orderBy('id', 'DESC')->get();
 
         $mediana1 = DB::table('news')->where('deleted_at', null)->where('status', 1)->orderBy('id', 'desc')->skip(1)->take(1)->get();
         $mediana2 = DB::table('news')->where('deleted_at', null)->where('status', 1)->orderBy('id', 'desc')->skip(2)->take(1)->get();
@@ -147,12 +148,8 @@ class HomeController extends Controller
         $categories = DB::table('categories')->where('status', '1')->get();
         // $categories->prepend((object) ['id' => 'Todos', 'name' => 'Todos']);
         // $articles = DB::table('articles')->where('artist_id', $id)->where('status', 1)->get();
-        $articles = Cache::remember("artist_$id", 60, function () use ($id) {
-            return Article::with(['getArtist', 'getSubCategory'])
-                          ->where('id', $id)
-                          ->where('status', 1)
-                          ->first();
-        });
+        $articles = DB::table('articles')->where('artist_id', $id)->where('status', 1)->get();
+
         $tecnicas = DB::table('sub_categories')->where('status', '1')->get();
         // $tecnicas->prepend((object) ['id' => 'Todos', 'name' => 'Todos']);
         $artistas = DB::table('artists')->where('status', '1')->orderBy('id', 'DESC')->get();

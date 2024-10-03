@@ -10,16 +10,13 @@
     }
     .image-container {
         height: 100%;
-    background-size: contain;
-    width: 100%;
-    background-repeat: no-repeat;
+        background-repeat: no-repeat;
         justify-content: start;
         display: flex;
         align-items: end;
     }
     .image-container img{
         width: 100%;
-        background-size: auto 100%;
         height: auto;
         max-height: 100%;
     }
@@ -179,6 +176,12 @@
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+    }
+    h4, a {
+        font-size: calc(0.8rem + 0.4vw);
+    }
+    .content li a {
+        text-transform:lowercase;
     }
 </style>
 @endsection

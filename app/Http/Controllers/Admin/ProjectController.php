@@ -157,7 +157,7 @@ class ProjectController extends Controller
         $project->name = e($request->input('name'));
         $project->slug = Str::slug($request->input('name'));
         $project->file_path = $path;
-
+        $project->status = $request->input('status');
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $fileExt = $file->getClientOriginalExtension();
