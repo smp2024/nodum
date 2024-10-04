@@ -1,13 +1,27 @@
 @extends('master')
 @section('title', 'Home')
 @section('css')
-
+<style>
+    .imagen-container_ {
+        height: 85%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        position: fixed;
+        z-index: 999;
+    }
+    .imagen-container_ img {
+        max-width: 25%;
+        height: auto;
+    }
+</style>
 @section('content')
 
-
-<div id="main_" class="row w-100 d-flex justify-content-center align-items-center m-0 h-100" style="background-color: #1a1a1a; padding-top: 0px;">
-
-    {{-- <img  id="main_image" src="{{ url('multimedia'.$home[0]->file_path.'/'.$home[0]->file) }}" alt="{{$home[0]->name}}" class="responsive-image"> --}}
+<div class="imagen-container_">
+    <img src="{{asset('media/icons/nd_.png')}}" alt="nodum">
+</div>
+<div id="main_" class="row w-100 d-flex justify-content-center align-items-center m-0 h-100" style="padding-top: 0px;">
 
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 
@@ -18,7 +32,7 @@
                 @if($i == 0)
                     <div class="carousel-item active h-100" >
 
-                        <img src=" {{ url('/multimedia'.$carrousels[$i]->file_path.'/'.$carrousels[$i]->file) }}" class="d-block  h-100 " style="max-width: 100%;" alt="{{$carrousels[$i]->name}}" >
+                        <img src=" {{ url('/multimedia'.$carrousels[$i]->file_path.'/'.$carrousels[$i]->file) }}" class="d-block  h-100  " style=" max-width: 100%;" alt="{{$carrousels[$i]->name}}" >
 
                     </div>
 
@@ -26,7 +40,7 @@
 
                     <div class="carousel-item h-100">
 
-                        <img src=" {{ url('/multimedia'.$carrousels[$i]->file_path.'/'.$carrousels[$i]->file) }}" class="d-block h-100 " style="max-width: 100%;" alt="{{$carrousels[$i]->name}}" >
+                        <img src=" {{ url('/multimedia'.$carrousels[$i]->file_path.'/'.$carrousels[$i]->file) }}" class="d-block h-100  " style="max-width: 100%;" alt="{{$carrousels[$i]->name}}" >
 
                     </div>
                 @endif
@@ -82,7 +96,11 @@
 
 @section('scripts')
     <script>
-
+        $(document).ready(function(){
+            $('#carouselExampleIndicators').carousel({
+                interval: 1500 // Cambia la imagen cada 2 segundos
+            });
+        });
         if (screen.width < 800) {
         console.log('oo');
         $('#main_').removeClass("row");
