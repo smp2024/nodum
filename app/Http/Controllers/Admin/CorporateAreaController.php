@@ -119,9 +119,9 @@ class CorporateAreaController extends Controller
                         $constraint->upsize();
                     });
                     $imagW = Image::make($file_absolute);
-                    $imagW->resize(500, 500, function($constraint){
-                        $constraint->upsize();
-                    });
+                    // $imagW->resize(500, 500, function($constraint){
+                    //     $constraint->upsize();
+                    // });
                     $imagT->save($upload_path.'/'.$path.'/t_'.$filename);
                     $imagW->save($upload_path.'/'.$path.'/'.$filename);
                     Storage::disk('uploads')->delete('/'.$imagepp.'/'.$imagep);

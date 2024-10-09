@@ -3,54 +3,66 @@
 @section('css')
 <style>
     .imagen-container_ {
+        width: 100%;
         height: 85%;
         display: flex;
         justify-content: center;
         align-items: center;
         margin: 0;
         position: fixed;
-        z-index: 999;
+        z-index: 9;
     }
     .imagen-container_ img {
         max-width: 25%;
         height: auto;
     }
+    .carousel-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .carousel-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
 </style>
 @section('content')
 
-<div class="imagen-container_">
-    <img src="{{asset('media/icons/nd_.png')}}" alt="nodum">
-</div>
-<div id="main_" class="row w-100 d-flex justify-content-center align-items-center m-0 h-100" style="padding-top: 0px;">
+    <div class="imagen-container_">
+        <img src="{{asset('media/icons/nd_.png')}}" alt="nodum">
+    </div>
+    <div id="main_" class="row w-100 d-flex justify-content-center align-items-center m-0 h-100 w-100" style="padding-top: 0px; display: flex;">
 
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <div id="carouselExampleIndicators" class="carousel slide w-100" data-ride="carousel">
 
-        <div class="carousel-inner h-100 ">
+            <div class="carousel-inner h-100 ">
 
-            @for($i = 0; $i < sizeof($carrousels); $i++)
+                @for($i = 0; $i < sizeof($carrousels); $i++)
 
-                @if($i == 0)
-                    <div class="carousel-item active h-100" >
+                    @if($i == 0)
+                        <div class="carousel-item active h-100" >
 
-                        <img src=" {{ url('/multimedia'.$carrousels[$i]->file_path.'/'.$carrousels[$i]->file) }}" class="d-block  h-100  " style=" max-width: 100%;" alt="{{$carrousels[$i]->name}}" >
+                            <img src=" {{ url('/multimedia'.$carrousels[$i]->file_path.'/'.$carrousels[$i]->file) }}" class="d-block  h-100  w-100"  alt="{{$carrousels[$i]->name}}" >
 
-                    </div>
+                        </div>
 
-                @else
+                    @else
 
-                    <div class="carousel-item h-100">
+                        <div class="carousel-item h-100">
 
-                        <img src=" {{ url('/multimedia'.$carrousels[$i]->file_path.'/'.$carrousels[$i]->file) }}" class="d-block h-100  " style="max-width: 100%;" alt="{{$carrousels[$i]->name}}" >
+                            <img src=" {{ url('/multimedia'.$carrousels[$i]->file_path.'/'.$carrousels[$i]->file) }}" class="d-block h-100 w-100"  alt="{{$carrousels[$i]->name}}" >
 
-                    </div>
-                @endif
-            @endfor
+                        </div>
+                    @endif
+                @endfor
+
+            </div>
 
         </div>
 
     </div>
-
-</div>
 
 {{-- <div id="Slider-mobile" class=" row justify-content-center align-items-center h-100 w-100 m-0" style="padding: 0;">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -98,13 +110,10 @@
     <script>
         $(document).ready(function(){
             $('#carouselExampleIndicators').carousel({
-                interval: 1500 // Cambia la imagen cada 2 segundos
+                interval: 2000 ,
             });
+
         });
-        if (screen.width < 800) {
-        console.log('oo');
-        $('#main_').removeClass("row");
-        }
     </script>
 
 @endsection

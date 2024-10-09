@@ -152,9 +152,9 @@ class ArticleController extends Controller
                     $constraint->upsize();
                 });
                 $imagW = Image::make($file_absolute);
-                $imagW->resize(1920, 1080, function ($constraint) {
-                    $constraint->upsize();
-                });
+                // $imagW->resize(1920, 1080, function ($constraint) {
+                //     $constraint->upsize();
+                // });
                 $imagT->save($upload_path.'/'.$path.'/t_'.$filename);
                 $imagW->save($upload_path.'/'.$path.'/'.$filename);
             }
@@ -284,9 +284,9 @@ class ArticleController extends Controller
                     $constraint->upsize();
                 });
                 $imagW = Image::make($file_absolute);
-                $imagW->resize(1920, 1080, function ($constraint) {
-                    $constraint->upsize();
-                });
+                // $imagW->resize(1920, 1080, function ($constraint) {
+                //     $constraint->upsize();
+                // });
                 $imagT->save($upload_path.'/'.$path.'/t_'.$filename);
                 $imagW->save($upload_path.'/'.$path.'/'.$filename);
             }
