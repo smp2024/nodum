@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md  " style="padding-top: 0; padding-bottom: 0 ">
 
     <a class="navbar-brand text-center d-inline-flex" href="{{url('/')}}">
-        <img src="{{ url('multimedia'.$company[0]->file_path.'/'.$company[0]->file) }}" alt="" class="" >
+        <img src="{{ url('multimedia'.$company[0]->file_path.'/'.$company[0]->file) }}" alt="" class="ml-2" >
         <p class="Logo">{!! html_entity_decode($company[0]->company_name, ENT_QUOTES | ENT_XML1, 'UTF-8') !!}</p>
     </a>
 

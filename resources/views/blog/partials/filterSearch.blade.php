@@ -13,7 +13,7 @@
                         <label class="container c1" >
                             <input  onclick="filterByCategory()" type="checkbox" name="categoria_checkbox[]" value="{{ $category->id }}" id="category_{{ $category->id }}"  >
                             <span class="checkmark"></span>
-                            <a href="#" >{{ $category->name }}</a>
+                            <a href="#" style="font-size: calc(0.5rem + 0.4vw);">{{ $category->name }}</a>
                         </label>
                     </li>
 
@@ -24,67 +24,18 @@
         </div>
 
         <div class="content">
-            <h4 class="toggle-list-artista" data-filter="artist"><span>+</span>  Artistas </h4>
-            <ul class="artist medidas" >
-
-                @php
-                if (!$articles->isEmpty()) {
-                    foreach ($articles as $article) {
-                        $artists[] = $article->artist_id;
-                    }
-                    $artists = array_unique($artists);
-                    sort($artists);
-                }
-                @endphp
-                @if (!empty($artists))
-                    @foreach ($artists as $artist)
-                        @foreach ($artistas as $artista)
-                            @if ($artista->id == $artist)
-                                <li>
-                                    <label class="container c1" >
-                                        <input onclick="filterByArtist()" type="checkbox" name="artista_checkbox[]" value="{{ $artista->id }}" id="artista_{{ $tecnica->id }}"  >
-                                        <span class="checkmark"></span>
-                                        <a href="#" >{{ $artista->name }} {{ $artista->lastname }} </a>
-                                    </label>
-                                </li>
-                            @endif
-                        @endforeach
-                    @endforeach
-                @endif
-
-            </ul>
-            <hr>
-        </div>
-
-        <div class="content">
             <h4 class="toggle-list-tecnica" data-filter="tec"><span>+</span>  Técnicas </h4>
             <ul class="tec medidas" >
-                @php
-                    if (!$articles->isEmpty()) {
-                        foreach ($articles as $article) {
-                            $technics[] = $article->subcategory_id;
-                        }
-                        $technics = array_unique($technics);
-                        sort($technics);
-                    }
-                @endphp
 
-                @if (!empty($technics))
-                    @foreach ($technics as $technic)
-                        @foreach ($tecnicas as $tecnica)
-                            @if ($tecnica->id == $technic)
-                            <li>
-
-                            <label class="container c1" >
-                                <input onclick="filterByTechnic()" type="checkbox" name="tecnica_checkbox[]" value="{{ $tecnica->id }}" id="tecnica_{{ $tecnica->id }}"  >
-                                <span class="checkmark"></span>
-                                <a href="#" >{{ $tecnica->name }}</a>
-                            </label>
-                            </li>
-                            @endif
-                        @endforeach
-                    @endforeach
-                @endif
+                @foreach ($tecnicas as $tecnica)
+                    <li  class="tecnica-item"  data-category="{{$tecnica->category_id}}">
+                        <label class="container c1" >
+                            <input onclick="filterByTechnic()"  type="checkbox" name="tecnica_checkbox[]" value="{{ $tecnica->id }}" id="tecnica_{{ $tecnica->id }}"  >
+                            <span class="checkmark"></span>
+                            <a href="#" style="font-size: calc(0.5rem + 0.4vw);" >{{ $tecnica->name }}</a>
+                        </label>
+                    </li>
+                @endforeach
             </ul>
             <hr>
         </div>
@@ -123,7 +74,7 @@
             <hr>
         </div>
 
-        <div class="content">
+        {{-- <div class="content">
             <h4>Medidas</h4>
             <!-- Rango de medidas -->
             <ul>
@@ -148,6 +99,25 @@
                     </label>
                 </li>
             </ul>
+        </div> --}}
+
+
+        <div class="content">
+            <h4 class="toggle-list-artista" data-filter="artist"><span>+</span>  Artistas </h4>
+            <ul class="artist medidas" >
+
+                @foreach ($artistas as $artista)
+                <li>
+                    <label class="container c1" >
+                        <input onclick="filterByArtist()" type="checkbox" name="artista_checkbox[]" value="{{ $artista->id }}" id="artista_{{ $artista->id }}"  >
+                        <span class="checkmark"></span>
+                        <a href="#"  style="text-transform: capitalize; font-size: calc(0.5rem + 0.4vw);">{{ $artista->name }} {{ $artista->lastname }} </a>
+                    </label>
+                </li>
+            @endforeach
+
+            </ul>
+            <hr>
         </div>
 
         {{-- {!! Form::submit('Buscar', ['class' => 'btn btn-outline-dark mt16']) !!} --}}

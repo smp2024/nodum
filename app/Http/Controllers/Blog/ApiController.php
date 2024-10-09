@@ -189,6 +189,7 @@ class ApiController extends Controller
             if (is_array($categories)) {
                 $query->whereIn('category_id', $categories);
             }
+
         }
         if ($request->artista_checkbox) {
             $artists = $request->artista_checkbox;

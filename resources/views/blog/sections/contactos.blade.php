@@ -18,14 +18,14 @@
     </div>
     @foreach ($sections as $politic)
         <div id="{{$politic->name}}" class="col-md-6 col-12 h-100 p-3" >
-            <div class="row  justify-content-center align-content-center" style="padding: 0% 13% 0% 12%; height: 40%;" >
-                <div id="" class="col-12 p-0 d-flex justify-content-end align-content-center h-100" style="text-align: end; " >
+            <div class="row  justify-content-center align-content-top" style="padding: 0% 13% 0% 12%; height: 40%;" >
+                <div id="" class="col-12 p-0 d-flex justify-content-end align-content-center h-50" style="text-align: end; " >
                     <img src="{{asset('media/icons/nd.png')}}" class="h-100" alt="nodum">
                 </div>
             </div>
             <div class="row  justify-content-center align-content-center" style="padding: 0% 13% 0% 12%" >
                 @foreach ($contacto as $contact)
-                    <h4 class="p-0 mb-2 w-100" style="font-weight: 700; text-align: start;">Contacto</h4>
+                    <p class="p-0 mb-2 w-100" style="font-weight: 700; text-align: start; font-size: calc(2rem + 14px);">Contacto</p>
                     <div id="" class="col-11 p-0  text-justify"  >
                         <p class="m-0" style="font-weight: 700;">Direccion</p>
                             {!! html_entity_decode($contact->direction, ENT_QUOTES | ENT_XML1, 'UTF-8') !!}

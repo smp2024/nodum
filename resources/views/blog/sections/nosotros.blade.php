@@ -9,9 +9,9 @@
             <div id="{{$politic->name}}" class="col-6 h-100 p-3" >
                 <div class="row h-100  justify-content-center align-content-end" style="padding: 0% 13% 13% 12%" >
                     <div id="" class="col-12 p-0" >
-                        <h4 style="font-weight: 700;">{{$politic->name}}</h4>
+                        <p style="font-weight: 700; font-size: calc(2rem + 14px);">{{$politic->name}}</p>
                     </div>
-                    <div id="" class="col-12 p-0  text-justify">
+                    <div id="" class="col-12 p-0  text-justify" style="font-size: calc(0.5rem + 0.4vw) !important;">
                         {!! html_entity_decode($politic->description, ENT_QUOTES | ENT_XML1, 'UTF-8') !!}
                     </div>
                 </div>

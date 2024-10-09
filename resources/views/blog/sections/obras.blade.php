@@ -187,7 +187,7 @@
             </button>
         </div>
 
-        <div id="filter" class=" col-lg-3 col-md-3 d-none d-sm-block col-12 justify-content-center align-items-center p-0 w-100 pt-5" style="padding-left: 20px !important; z-index:9999; background-color: #fff;">
+        <div id="filter" class=" col-lg-2 col-md-3 d-none d-sm-block col-12 justify-content-center align-items-center p-0 w-100 pt-5" style="padding-left: 20px !important; z-index:9999; background-color: #fff;">
             <!-- Sección de filtrado -->
             @include('blog.partials.filterSearch')
 
@@ -203,7 +203,7 @@
         </div>
 
         <!-- info Obras erg-->
-        <div id="content-articles" class="col-lg-9 col-md-9 col-12 h-100 w-100 d-flex justify-content-center align-items-center p-0 pt-2" >
+        <div id="content-articles" class="col-lg-10 col-md-10 col-12 h-100 w-100 d-flex justify-content-center align-items-center p-0 pt-2" >
             <!-- Listado de artículos -->
             <div class="row w-100 h-100" id="articles-list">
 
@@ -312,6 +312,22 @@
 
         function filterByCategory() {
             sendForm();
+            var selectedCategories = [];
+            $("input[name='categoria_checkbox[]']:checked").each(function() {
+                selectedCategories.push($(this).val());
+                console.log(selectedCategories);
+
+            });
+
+            $(".tecnica-item").each(function() {
+                var tecnicaCategory = $(this).data("category");
+
+                if (selectedCategories.length === 0 || selectedCategories.indexOf(tecnicaCategory.toString()) !== -1) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
         }
 
         function filterByTechnic(year) {
@@ -390,7 +406,7 @@
                 // Construir el HTML para cada artículo
                 var articleHtml = `
                     <div class="col-lg-4 col-md-6 col-6 content-articles mt-2"
-
+                        style="display: flex; align-items: center;"
                         alt="${article.name}"
                         data-year="${article.year}"
                         data-category="${article.category_id}"

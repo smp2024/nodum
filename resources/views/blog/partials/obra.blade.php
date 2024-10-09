@@ -34,7 +34,7 @@
                 <p class="w-100 m-0" style="font-size: calc(0.5rem + 0.4vw);">{{ $vpn->getSubCategory->name }}</p>
                 <p class="w-100 m-0" style="font-size: calc(0.5rem + 0.4vw);">{{ $vpn->year }}</p>
                 <p class="w-100 m-0" style="font-size: calc(0.5rem + 0.4vw);">{{ $vpn->width }} x {{ $vpn->height }}  cm</p>
-                <p class="w-100 m-0" style="font-size: calc(0.5rem + 0.4vw);">${{ $vpn->price_max }}.00</p>
+                <p class="w-100 m-0" style="font-size: calc(0.5rem + 0.4vw);">${{ number_format($vpn->price_max, 2, '.', ',') }}</p>
                 <br>
                 <button  type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#modalSelectContacto" data-whatever="lo quiero">
                     Lo quiero

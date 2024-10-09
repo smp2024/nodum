@@ -26,17 +26,21 @@
             <!-- Secccion-->
                 @for ($i=1 ; $i<=$vpn->sections; $i++)
                     <!-- DESCRIPCION -->
-                        <div id="text-container" class="justify-content-center align-items-center text-justify text-container" style="margin-bottom: 25px;  height: auto;  padding: 6% 9% 2%;">
+                    <div id="text-container" class="justify-content-center align-items-center text-justify text-container" style= "height: auto;  padding: 0 0 0 6%;">
+
+                        <div class="h-20  Bold" style="color: #000 !important; ">
+                            <p style=" font-size: 2.5rem;">{{ html_entity_decode($vpn->name, ENT_QUOTES | ENT_XML1, 'UTF-8') }}</p>
+                        </div>
+                        <div class="h-20 date__ Bold"  style="color: #000 !important;">
+                            <p>{{ $vpn->date }}</p>
+                        </div>
+                    </div>
+                        <div id="text-container" class="justify-content-center align-items-center text-justify text-container" style="margin-bottom: 25px;  height: auto;  padding: 0% 6% 0% 6%;">
                             {{-- <h1 class="m-3" style="text-align: center;">{!!  html_entity_decode($vpn->name, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!}</h1>
                             <div class="h-20 date_ Bold">
                                 <p>{{ $vpn->date }}</p>
                             </div> --}}
-                            <div class="h-20  Bold" style="color: #000 !important; ">
-                                <p style=" font-size: 2.5rem;">{{ html_entity_decode($vpn->name, ENT_QUOTES | ENT_XML1, 'UTF-8') }}</p>
-                            </div>
-                            <div class="h-20 date__ Bold"  style="color: #000 !important;">
-                                <p>{{ $vpn->date }}</p>
-                            </div>
+
                             @foreach ($descriptions as $description)
                                 @if ($description->section == $i)
                                     {!! html_entity_decode($description->content, ENT_QUOTES | ENT_XML1, 'UTF-8') !!}

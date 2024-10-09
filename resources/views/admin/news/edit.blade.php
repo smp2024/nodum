@@ -106,7 +106,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+{{--
                                 <div class="row mt16" style="padding: 16px;">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -123,7 +123,7 @@
 
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                             @endfor
 

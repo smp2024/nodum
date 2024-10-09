@@ -201,7 +201,7 @@
             <div class=" h-100 w-100  info-artist">
                 <p class="w-100 artist-name">{!!  html_entity_decode($post->name, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!} {!!  html_entity_decode($post->lastname, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!}</p>
                 <p class="w-100 artist-year">{{substr($post->birthday, 0, 4)}} - {!!  html_entity_decode($post->country, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!} </p>
-                {!!  html_entity_decode($post->description_large, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!}
+                <span style="font-size: calc(0.5rem + 0.4vw) !important;">{!!  html_entity_decode($post->description_large, ENT_QUOTES | ENT_XML1, 'UTF-8')  !!}</span>
             </div>
         </div>
     </div>
@@ -212,14 +212,14 @@
             <!-- Sección de filtrado -->
             @include('blog.partials.filterSearch')
 
-                {{-- <div id="filter__" class="row w-100 justify-content-end pr- d-none">
+                <div id="filter__" class="row w-100 justify-content-end pr- d-none">
                     <button  type="button" class="btn btn-outline-danger mr-2" onclick="cerrar()"  data-whatever="Search" >
                         Cerrar
                     </button>
                     <button  type="button" class="btn btn-outline-dark"  data-whatever="Search" onclick="cerrar()">
                         Buscar
                     </button>
-                </div> --}}
+                </div>
 
         </div>
 
@@ -372,6 +372,22 @@
 
         function filterByCategory() {
             sendForm();
+            var selectedCategories = [];
+            $("input[name='categoria_checkbox[]']:checked").each(function() {
+                selectedCategories.push($(this).val());
+                console.log(selectedCategories);
+
+            });
+
+            $(".tecnica-item").each(function() {
+                var tecnicaCategory = $(this).data("category");
+
+                if (selectedCategories.length === 0 || selectedCategories.indexOf(tecnicaCategory.toString()) !== -1) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
         }
 
         function filterByTechnic(year) {
@@ -452,7 +468,7 @@
                 // Construir el HTML para cada artículo
                 var articleHtml = `
                     <div class="col-lg-4 col-md-6 col-6 content-articles mt-2"
-
+                        style="display: flex; align-items: center;"
                         alt="${article.name}"
                         data-year="${article.year}"
                         data-category="${article.category_id}"

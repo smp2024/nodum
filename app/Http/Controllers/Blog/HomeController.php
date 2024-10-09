@@ -59,16 +59,6 @@ class HomeController extends Controller
         if ($category == 'artistas') {
             $articles = DB::table('artists')->where('status', '1')->orderBy('lastname', 'ASC')->get();
 
-            // Add 50 test elements to $articles
-            // for ($i = 0; $i < 50; $i++) {
-            //     $articles[] = (object) [
-            //         'id' => $i + 1,
-            //         'name' => 'Artist ' . ($i + 1),
-            //         'status' => '1',
-            //         'lastname' => 'Lastname ' . ($i + 1),
-            //         // Add more properties as needed
-            //     ];
-            // }
         }
         if ($category == 'noticias') {
             $articles = DB::table('news')->where('status', '1')->where('deleted_at', null)->orderBy('id', 'DESC')->get();
@@ -79,7 +69,7 @@ class HomeController extends Controller
         if ($category == 'obras') {
             $artistas = Cache::remember('artistas', 60, function () {
                 return Artist::where('status', '1')
-                            ->orderBy('id', 'DESC')
+                            ->orderBy('lastname', 'ASC')
                             ->get();
             });
 
@@ -105,10 +95,9 @@ class HomeController extends Controller
             $countArt = count($articles);
         }
 
-        $url = $request->url(); // Obtiene la URL completa
-        $lastSegment = strrchr($url, '/'); // Obtiene la última parte después de la última barra
-        $lastWord = trim($lastSegment, '/'); // Elimina las barras adicionales al principio o final
-        // Esto contendrá la última palabra de la URL
+        $url = $request->url();
+        $lastSegment = strrchr($url, '/');
+        $lastWord = trim($lastSegment, '/');
         $contacto = DB::table('corporate_areas')->where('slug', $category)->get();
         $news = DB::table('news')->where('deleted_at', null)->where('status', 1)->orderBy('id', 'DESC')->get();
         unset($news[0], $news[1], $news[2]);
@@ -150,9 +139,9 @@ class HomeController extends Controller
         // $articles = DB::table('articles')->where('artist_id', $id)->where('status', 1)->get();
         $articles = DB::table('articles')->where('artist_id', $id)->where('status', 1)->get();
 
-        $tecnicas = DB::table('sub_categories')->where('status', '1')->get();
+        $tecnicas =SubCategory::where('status', '1')->get();
         // $tecnicas->prepend((object) ['id' => 'Todos', 'name' => 'Todos']);
-        $artistas = DB::table('artists')->where('status', '1')->orderBy('id', 'DESC')->get();
+        $artistas = DB::table('artists')->where('status', '1')->orderBy('lastname', 'ASC')->get();
         // $artistas->prepend((object) ['id' => 'Todos', 'name' => 'Todos']);
 
         if ($category == 'new') {
@@ -177,7 +166,7 @@ class HomeController extends Controller
 
             $artistas_ = Artist::select('id', 'name', 'lastname')
                                ->where('status', 1)
-                               ->orderBy('id', 'DESC')
+                               ->orderBy('lastname', 'ASC')
                                ->get();
         }
         // dd($artistas_);

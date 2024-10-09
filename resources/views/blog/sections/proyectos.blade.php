@@ -8,14 +8,11 @@
             @else
                 @foreach ($articles as $article)
 
-                    <div class="col-md-3 col-6 mr-2 justify-content-center align-items-center p-0">
-                        <a target="_blank" href="{{ url('multimedia/'.$article->file_path.'/'.$article->pdf) }}" class="Link_Not">
+                    <div class="col-md-3 col-6 mr-2 justify-content-center align-items-center p-0" style="display: flex;">
 
-                            <div class="h-100 d-flex justify-content-center align-items-center">
-
-                                <img style="position: relative !important;"  src="{{ url('multimedia/'.$article->file_path.'/'.$article->file) }}" class="d-block imagen_noticia w-100 mt-2" alt="{{$article->slug}}">
-
-                            </div>
+                        <a target="_blank" href="{{ url('multimedia/'.$article->file_path.'/'.$article->pdf) }}" class="Link_Not" style=" height: 500px; width: 300px;">
+                            <h5>{{$article->name}}</h5>
+                            <img style="position: relative !important;"  src="{{ url('multimedia/'.$article->file_path.'/'.$article->file) }}" class="d-block imagen_noticia w-100 mt-2" alt="{{$article->slug}}">
                         </a>
 
                     </div>
