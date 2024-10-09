@@ -6,20 +6,43 @@
             height: 500px; /* Ajusta la altura del mapa */
             width: 100%;   /* Ajusta el ancho del mapa */
         }
+
+    @media (max-width: 575px) and (orientation:portrait) {
+        #map_ {
+            height: 50% !important;
+        }
+        #map {
+            height: 100% !important;
+        }
+
+        #logo {
+            height: 15% !important;
+        }
+    }
+    @media (min-width: 320px) and (max-width: 575px) and (orientation:landscape) {
+        #map_ {
+            height: 50% !important;
+        }
+        #map {
+            height: 100% !important;
+        }
+        #logo {
+            height: 15% !important;
+        }
+    }
 </style>
 @endsection
 @section('content')
-<div id="main_" class="row w-100 d-flex justify-content-center align-items-center m-0 h-100" >
-    <div id="" class="col-md-6 col-12 h-100  p-3" >
+<div id="main_" class="row w-100 justify-content-center align-items-center m-0 h-100" >
+    <div id="map_" class="col-lg-6 col-sm-12 h-100  p-3" >
         <div class="row h-100 justify-content-center align-items-center">
-
             <div id="map" style="filter: grayscale(1); width: 85%;"></div>
         </div>
     </div>
     @foreach ($sections as $politic)
-        <div id="{{$politic->name}}" class="col-md-6 col-12 h-100 p-3" >
-            <div class="row  justify-content-center align-content-top" style="padding: 0% 13% 0% 12%; height: 40%;" >
-                <div id="" class="col-12 p-0 d-flex justify-content-end align-content-center h-50" style="text-align: end; " >
+        <div id="{{$politic->name}}" class="col-lg-6 col-sm-12 h-100 p-3" >
+            <div  id="logo" class="row  justify-content-center align-content-top" style="padding: 0% 13% 0% 12%; height: 40%;" >
+                <div class="col-12 p-0 d-flex justify-content-end align-content-center h-50" style="text-align: end; " >
                     <img src="{{asset('media/icons/nd.png')}}" class="h-100" alt="nodum">
                 </div>
             </div>
@@ -141,7 +164,7 @@
         </div> --}}
       </div>
     </div>
-  </div>
+</div>
 @endsection
 
 @section('scripts')

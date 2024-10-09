@@ -172,6 +172,44 @@
     .content li a {
         text-transform:lowercase;
     }
+    @media (max-width: 575px) and (orientation:portrait) {
+        #filterButton{
+            /* display: none !important; */
+            width: 100%;
+            z-index: 99;
+            position: absolute;
+            display: block !important;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        #content-articles {
+            padding-top: 45px !important;
+        }
+        #filter__ {
+            display: block !important;
+            text-align: end;
+        }
+    }
+    @media (min-width: 320px) and (max-width: 575px) and (orientation:landscape) {
+
+        #filterButton{
+            width: 100%;
+            z-index: 99;
+            position: absolute;
+            /* display: none !important; */
+            display: block !important;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        #content-articles {
+            padding-top: 45px !important;
+        }
+        #filter__ {
+            display: block !important;
+            text-align: end;
+
+        }
+    }
 </style>
 
 @endsection

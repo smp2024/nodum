@@ -8,6 +8,16 @@
         top: calc(50% - 10%);
         left: calc(50% - 50%);
     }
+    @media (max-width: 575px) and (orientation:portrait) {
+        #Obra {
+            margin-bottom: 20px;
+        }
+    }
+    @media (min-width: 320px) and (max-width: 575px) and (orientation:landscape) {
+        #Obra {
+            margin-bottom: 20px;
+        }
+    }
 </style>
 @endsection
 
